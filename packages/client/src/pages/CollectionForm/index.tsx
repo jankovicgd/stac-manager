@@ -16,10 +16,12 @@ export function CollectionForm(props: CollectionFormProps) {
     useCollectionPlugins(undefined);
     const { update, state: updateState } = useUpdateCollection();
 
+
   const onSubmit = (newData) => {
-    const exitData = toOutData(newData);
-    console.log('🚀 ~ onSubmit ~ exitData:', exitData);
-    update(exitData);
+    console.log('newData', newData);
+    // const exitData = toOutData(newData);
+    // console.log('🚀 ~ onSubmit ~ exitData:', exitData);
+    // update(exitData);
   };
 
   return (
@@ -56,7 +58,7 @@ export function EditForm({ plugins, data, onSubmit }: EditFormProps) {
         {plugins.map((pl, index) => (
           <PluginBox key={index} plugin={pl}>
             {({ field }) => (
-              <Box p='4' border='1px dashed grey'>
+              <Box p='16' borderRadius='lg' bg='base.50a'>
                 <Heading size='sm'>{pl.name}</Heading>
                 <WidgetRenderer pointer='' field={field} />
               </Box>
