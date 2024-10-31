@@ -31,7 +31,12 @@ export class PluginMeta extends Plugin {
           label: 'Spatial Extent',
           type: 'array',
           items: {
-            type: 'string'
+            type: 'array',
+            minItems: 4,
+            maxItems: 4,
+            items: {
+              type: 'string'
+            }
           }
         },
         temporal: {
