@@ -7,4 +7,5 @@ export * from './components/error-box';
 export * from './components/widget-renderer';
 
 export * from './schema/types';
+export * from './schema';
 export * from './components/types';

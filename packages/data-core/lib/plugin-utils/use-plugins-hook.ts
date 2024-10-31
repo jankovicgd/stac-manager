@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { defaultsDeep } from 'lodash-es';
 
 import { Plugin, PluginConfigItem } from './plugin';
 import { resolvePlugins } from './resolve';
 import { usePluginConfig } from '../context/plugin-config';
+import { FormDataStructure, schemaToDataStructure } from '../schema';
 
 type UsePluginsHook =
   | {
@@ -32,18 +34,27 @@ const usePlugins = (plugins: PluginConfigItem[], data: any): UsePluginsHook => {
     load();
   }, [plugins, data]);
 
-  const formData = useMemo(
-    () =>
-      readyPlugins &&
-      readyPlugins.reduce(
-        (acc: any, pl: Plugin) => ({
+  const formData = useMemo(() => {
+    if (!readyPlugins) return;
+
+    const emptyStructure = readyPlugins.reduce<FormDataStructure>(
+      (acc, pl: Plugin) => {
+        const schema = pl.editSchema();
+        if (!schema || typeof schema === 'symbol') return acc;
+
+        return {
           ...acc,
-          ...pl.enterData(data)
-        }),
-        {}
-      ),
-    [readyPlugins]
-  );
+          ...(schemaToDataStructure(schema) as FormDataStructure)
+        };
+      },
+      {}
+    );
+
+    return readyPlugins.reduce(
+      (acc: any, pl: Plugin) => defaultsDeep(acc, pl.enterData(data)),
+      emptyStructure
+    );
+  }, [readyPlugins]);
 
   const toOutData = useCallback(
     (formData: any) =>
