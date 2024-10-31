@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, IconButton, List, ListItem } from '@chakra-ui/react';
 import {
   CollecticonPlusSmall,
@@ -8,7 +8,8 @@ import { useFieldArray } from 'react-hook-form';
 import {
   WidgetRenderer,
   SchemaFieldArray,
-  WidgetProps
+  WidgetProps,
+  schemaToDataStructure
 } from '@stac-manager/data-core';
 
 export function WidgetArray(props: WidgetProps) {
@@ -16,28 +17,21 @@ export function WidgetArray(props: WidgetProps) {
   const field = props.field as SchemaFieldArray;
 
   const { fields, append, remove } = useFieldArray({
-    name: pointer
+    name: pointer,
+    shouldUnregister: true
   });
-
-  useEffect(() => {
-    if (!fields.length) {
-      const toAdd = (field.minItems || 0) - fields.length;
-      const items = Array.from({ length: toAdd }).map(() => ({}));
-      append(items);
-    }
-  }, []);
 
   const minItems = field.minItems || 0;
   const maxItems = field.maxItems || Infinity;
 
   return (
-    <Box as='fieldset' p={4} bg='base.100a'>
+    <Box as='fieldset' p={4} bg='base.50a' borderRadius='md'>
       <Box as='legend' display='flex' w='100%' alignItems='center' gap={4}>
         <IconButton
           colorScheme='primary'
           size='xs'
           onClick={() => {
-            append({});
+            append({ value: schemaToDataStructure(field.items) });
           }}
           aria-label='Add item'
           icon={<CollecticonPlusSmall />}
@@ -62,7 +56,7 @@ export function WidgetArray(props: WidgetProps) {
               Item #{index + 1}
               <Box p={4}>
                 <WidgetRenderer
-                  pointer={`${pointer}.${index}`}
+                  pointer={`${pointer}.${index}.value`}
                   field={field.items}
                   isRequired={isRequired}
                 />

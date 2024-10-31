@@ -1,49 +1,42 @@
-import React, { useEffect } from 'react';
-import { Box, IconButton, List, ListItem, Flex, Input } from '@chakra-ui/react';
+import React from 'react';
+import {
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  Flex,
+  Input,
+  Button
+} from '@chakra-ui/react';
 import {
   CollecticonPlusSmall,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { SchemaFieldArray, WidgetProps } from '@stac-manager/data-core';
+import {
+  SchemaFieldArray,
+  schemaToDataStructure,
+  WidgetProps
+} from '@stac-manager/data-core';
 
 export function WidgetArrayString(props: WidgetProps) {
   const { pointer } = props;
   const field = props.field as SchemaFieldArray;
 
   const { fields, append, remove } = useFieldArray({
-    name: pointer
+    name: pointer,
+    shouldUnregister: true
   });
 
   const { register } = useFormContext();
-
-  useEffect(() => {
-    if (!fields.length) {
-      const toAdd = (field.minItems || 0) - fields.length;
-      const items = Array.from({ length: toAdd }).map(() => ({}));
-      append(items);
-    }
-  }, []);
 
   const minItems = field.minItems || 0;
   const maxItems = field.maxItems || Infinity;
   const isFixed = minItems === maxItems;
 
   return (
-    <Box as='fieldset' bg='base.100a' p={4}>
+    <Box as='fieldset' bg='base.50a' p={4} borderRadius='md'>
       <Flex as='legend' gap={4}>
-        {!isFixed && (
-          <IconButton
-            colorScheme='blue'
-            size='xs'
-            onClick={() => {
-              append({ value: '' });
-            }}
-            aria-label='Add item'
-            icon={<CollecticonPlusSmall />}
-            isDisabled={fields.length >= maxItems}
-          />
-        )}
         {field.label}
       </Flex>
 
@@ -73,6 +66,20 @@ export function WidgetArrayString(props: WidgetProps) {
         </List>
       ) : (
         <p>No items</p>
+      )}
+      {!isFixed && (
+        <Button
+          colorScheme='base'
+          size='sm'
+          onClick={() => {
+            append({ value: schemaToDataStructure(field.items) });
+          }}
+          aria-label='Add another'
+          leftIcon={<CollecticonPlusSmall />}
+          isDisabled={fields.length >= maxItems}
+        >
+          Add another
+        </Button>
       )}
     </Box>
   );
