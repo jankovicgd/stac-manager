@@ -1,23 +1,23 @@
 import React from 'react';
 import {
-  Box,
   IconButton,
   List,
   ListItem,
-  Flex,
   Input,
-  Button
+  FormControl,
+  FormLabel,
+  Box,
+  Flex
 } from '@chakra-ui/react';
-import {
-  CollecticonPlusSmall,
-  CollecticonTrashBin
-} from '@devseed-ui/collecticons-chakra';
+import { CollecticonTrashBin } from '@devseed-ui/collecticons-chakra';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import {
   SchemaFieldArray,
   schemaToDataStructure,
   WidgetProps
 } from '@stac-manager/data-core';
+import { getArrayLabel } from '../utils';
+import { ArrayFieldset, FieldLabel } from './elements';
 
 export function WidgetArrayString(props: WidgetProps) {
   const { pointer } = props;
@@ -35,52 +35,58 @@ export function WidgetArrayString(props: WidgetProps) {
   const isFixed = minItems === maxItems;
 
   return (
-    <Box as='fieldset' bg='base.50a' p={4} borderRadius='md'>
-      <Flex as='legend' gap={4}>
-        {field.label}
-      </Flex>
-
+    <ArrayFieldset
+      label={field.label}
+      onAdd={
+        isFixed
+          ? undefined
+          : () => {
+              append({ value: schemaToDataStructure(field.items) });
+            }
+      }
+      addDisabled={fields.length >= maxItems}
+    >
       {fields.length ? (
-        <List>
+        <List display='flex' gap={4} flexDir={isFixed ? 'row' : 'column'}>
           {fields.map((item, index) => (
-            <ListItem key={item.id} display='flex'>
-              <Input
-                key={item.id}
-                size='sm'
-                {...register(`${pointer}.${index}.value`)}
-              />
-              {!isFixed && (
-                <IconButton
-                  colorScheme='danger'
-                  size='xs'
-                  onClick={() => {
-                    remove(index);
-                  }}
-                  aria-label='Remove item'
-                  icon={<CollecticonTrashBin />}
-                  isDisabled={fields.length <= minItems}
+            <ListItem key={item.id} display='flex' width='100%'>
+              <FormControl>
+                <Flex gap={4} justifyContent='space-between'>
+                  <FormLabel>
+                    <FieldLabel size='xs'>
+                      {getArrayLabel(field.items, index)?.formatted}
+                    </FieldLabel>
+                  </FormLabel>
+                  <Box>
+                    {!isFixed && (
+                      <IconButton
+                        colorScheme='base'
+                        variant='soft-outline'
+                        size='xs'
+                        onClick={() => {
+                          remove(index);
+                        }}
+                        aria-label='Remove item'
+                        icon={<CollecticonTrashBin />}
+                        isDisabled={fields.length <= minItems}
+                      />
+                    )}
+                  </Box>
+                </Flex>
+                <Input
+                  size='sm'
+                  {...register(`${pointer}.${index}.value`)}
+                  bg='surface.500'
+                  borderColor='base.200'
+                  borderRadius='md'
                 />
-              )}
+              </FormControl>
             </ListItem>
           ))}
         </List>
       ) : (
         <p>No items</p>
       )}
-      {!isFixed && (
-        <Button
-          colorScheme='base'
-          size='sm'
-          onClick={() => {
-            append({ value: schemaToDataStructure(field.items) });
-          }}
-          aria-label='Add another'
-          leftIcon={<CollecticonPlusSmall />}
-          isDisabled={fields.length >= maxItems}
-        >
-          Add another
-        </Button>
-      )}
-    </Box>
+    </ArrayFieldset>
   );
 }

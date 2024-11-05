@@ -32,9 +32,16 @@ export class PluginMeta extends Plugin {
           type: 'array',
           items: {
             type: 'array',
+            label: 'Extent',
             minItems: 4,
             maxItems: 4,
             items: {
+              label: [
+                'Min Longitude',
+                'Min Latitude',
+                'Max Longitude',
+                'Max Latitude'
+              ],
               type: 'string'
             }
           }
@@ -43,6 +50,7 @@ export class PluginMeta extends Plugin {
           label: 'Temporal Extent',
           type: 'array',
           items: {
+            label: 'Item',
             type: 'string'
           }
         }

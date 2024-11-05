@@ -1,12 +1,24 @@
 import React from 'react';
-import { Box, Flex, forwardRef, Heading, IconButton } from '@chakra-ui/react';
-import { CollecticonTrashBin } from '@devseed-ui/collecticons-chakra';
+import {
+  Box,
+  Flex,
+  forwardRef,
+  Heading,
+  IconButton,
+  Button,
+  HeadingProps,
+  IconButtonProps,
+  FlexProps
+} from '@chakra-ui/react';
+import {
+  CollecticonTrashBin,
+  CollecticonPlusSmall
+} from '@devseed-ui/collecticons-chakra';
 
-export const Fieldset = forwardRef((props, ref) => {
+export const Fieldset = forwardRef<FlexProps, 'div'>((props, ref) => {
   return (
-    <Box
+    <Flex
       as='fieldset'
-      display='flex'
       flexDirection='column'
       gap={8}
       p={4}
@@ -18,22 +30,22 @@ export const Fieldset = forwardRef((props, ref) => {
   );
 });
 
-export const FieldsetHeader = forwardRef((props, ref) => {
+export const FieldsetHeader = forwardRef<FlexProps, 'div'>((props, ref) => {
   return <Flex justifyContent='space-between' gap={4} ref={ref} {...props} />;
 });
 
-export const FieldsetBody = forwardRef((props, ref) => {
+export const FieldsetBody = forwardRef<FlexProps, 'div'>((props, ref) => {
   return <Flex flexDirection='column' ref={ref} {...props} />;
 });
 
-export const FieldsetFooter = forwardRef((props, ref) => {
+export const FieldsetFooter = forwardRef<FlexProps, 'div'>((props, ref) => {
   return <Flex gap={4} ref={ref} {...props} />;
 });
 
-export const FieldsetLabel = forwardRef((props, ref) => {
+export const FieldLabel = forwardRef<HeadingProps, 'span'>((props, ref) => {
   return (
     <Heading
-      as='p'
+      as='span'
       size='sm'
       display='flex'
       alignItems='center'
@@ -54,16 +66,65 @@ export const FieldsetLabel = forwardRef((props, ref) => {
   );
 });
 
-export const FieldsetDeleteBtn = forwardRef((props, ref) => {
+export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
+  (props, ref) => {
+    return (
+      <IconButton
+        colorScheme='base'
+        variant='soft-outline'
+        size='sm'
+        icon={<CollecticonTrashBin />}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+
+interface ArrayFieldsetProps {
+  label: React.ReactNode;
+  children: React.ReactNode;
+  onRemove?: () => void;
+  onAdd?: () => void;
+  addDisabled?: boolean;
+  removeDisabled?: boolean;
+}
+
+export function ArrayFieldset(props: ArrayFieldsetProps) {
+  const { label, children, onRemove, onAdd, addDisabled, removeDisabled } =
+    props;
+
   return (
-    <IconButton
-      colorScheme='base'
-      aria-label='Delete item'
-      variant='soft-outline'
-      size='sm'
-      icon={<CollecticonTrashBin />}
-      ref={ref}
-      {...props}
-    />
+    <Fieldset className='widget--array'>
+      <FieldsetHeader>
+        <Box>
+          <FieldLabel>{label}</FieldLabel>
+        </Box>
+        {onRemove && (
+          <Box>
+            <FieldsetDeleteBtn
+              onClick={onRemove}
+              isDisabled={removeDisabled}
+              aria-label='Remove item'
+            />
+          </Box>
+        )}
+      </FieldsetHeader>
+      <FieldsetBody>{children}</FieldsetBody>
+      {onAdd && (
+        <FieldsetFooter>
+          <Button
+            colorScheme='base'
+            size='sm'
+            onClick={onAdd}
+            aria-label='Add item'
+            leftIcon={<CollecticonPlusSmall />}
+            isDisabled={addDisabled}
+          >
+            Add another
+          </Button>
+        </FieldsetFooter>
+      )}
+    </Fieldset>
   );
-});
+}

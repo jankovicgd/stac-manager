@@ -23,8 +23,8 @@ export function mod(a: number, n: number) {
 }
 
 export function getArrayLabel(field: SchemaField, index: number) {
-  const label = field.label;
-  if (!label) {
+  const label = field.label === undefined ? 'Item' : field.label;
+  if (label === null) {
     return null;
   }
 

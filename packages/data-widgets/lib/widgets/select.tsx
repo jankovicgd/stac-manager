@@ -3,6 +3,8 @@ import { Select, FormControl, FormLabel } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 
+import { FieldLabel } from './elements';
+
 export function WidgetSelect(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldString;
@@ -15,8 +17,12 @@ export function WidgetSelect(props: WidgetProps) {
 
   return (
     <FormControl isRequired={isRequired}>
-      {field.label && <FormLabel>{field.label}</FormLabel>}
-      <Select placeholder='Select option' {...register(pointer)}>
+      {field.label && (
+        <FormLabel>
+          <FieldLabel size='xs'>{field.label}</FieldLabel>
+        </FormLabel>
+      )}
+      <Select placeholder='Select option' size='sm' {...register(pointer)}>
         {field.enum.map(([label, value]) => (
           <option key={value} value={value}>
             {label}

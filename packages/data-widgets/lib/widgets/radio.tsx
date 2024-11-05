@@ -3,6 +3,8 @@ import { FormControl, FormLabel, Radio, RadioGroup } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 
+import { FieldLabel } from './elements';
+
 export function WidgetRadio(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldString;
@@ -15,8 +17,12 @@ export function WidgetRadio(props: WidgetProps) {
 
   return (
     <FormControl isRequired={isRequired}>
-      {field.label && <FormLabel>{field.label}</FormLabel>}
-      <RadioGroup>
+      {field.label && (
+        <FormLabel>
+          <FieldLabel size='xs'>{field.label}</FieldLabel>
+        </FormLabel>
+      )}
+      <RadioGroup size='sm' gap={4} display='flex'>
         {field.enum.map(([label, value]) => (
           <Radio key={label} value={value} {...register(pointer)}>
             {label}

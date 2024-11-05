@@ -7,6 +7,8 @@ import {
   WidgetProps
 } from '@stac-manager/data-core';
 
+import { FieldLabel } from './elements';
+
 export function WidgetCheckbox(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldArray<SchemaFieldString>;
@@ -19,10 +21,14 @@ export function WidgetCheckbox(props: WidgetProps) {
 
   return (
     <FormControl isRequired={isRequired}>
-      {field.label && <FormLabel>{field.label}</FormLabel>}
+      {field.label && (
+        <FormLabel>
+          <FieldLabel size='xs'>{field.label}</FieldLabel>
+        </FormLabel>
+      )}
       <Flex gap={4}>
         {field.items.enum.map(([label, value]) => (
-          <Checkbox key={label} value={value} {...register(pointer)}>
+          <Checkbox key={label} value={value} size='sm' {...register(pointer)}>
             {label}
           </Checkbox>
         ))}
