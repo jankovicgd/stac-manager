@@ -7,3 +7,4 @@ export * from './widgets/array';
 export * from './widgets/array-string';
 
 export * from './config';
+export * from './utils';
