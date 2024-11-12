@@ -81,6 +81,7 @@ export function EditForm({ plugins, data, onAction, view }: EditFormProps) {
   return (
     <Flex direction='column' gap={4}>
       <Formik
+        validateOnChange={false}
         enableReinitialize
         initialValues={data}
         onSubmit={(values /*, actions*/) => {
