@@ -5,6 +5,12 @@ export interface SchemaFieldString {
   enum?: [string, string][];
 }
 
+export interface SchemaFieldNumber {
+  type: 'number';
+  'ui:widget'?: string;
+  label?: string | string[];
+}
+
 export interface SchemaFieldArray<I extends SchemaField = SchemaField> {
   type: 'array';
   'ui:widget'?: string;
@@ -25,4 +31,5 @@ export interface SchemaFieldObject {
 export type SchemaField =
   | SchemaFieldString
   | SchemaFieldArray
-  | SchemaFieldObject;
+  | SchemaFieldObject
+  | SchemaFieldNumber;

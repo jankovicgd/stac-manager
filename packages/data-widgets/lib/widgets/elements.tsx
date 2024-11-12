@@ -18,39 +18,39 @@ import {
 export const Fieldset = forwardRef<FlexProps, 'div'>((props, ref) => {
   return (
     <Flex
+      ref={ref}
       as='fieldset'
       flexDirection='column'
       gap={8}
       p={4}
       bg='base.50a'
       borderRadius='md'
-      ref={ref}
       {...props}
     />
   );
 });
 
 export const FieldsetHeader = forwardRef<FlexProps, 'div'>((props, ref) => {
-  return <Flex justifyContent='space-between' gap={4} ref={ref} {...props} />;
+  return <Flex ref={ref} justifyContent='space-between' gap={4} {...props} />;
 });
 
 export const FieldsetBody = forwardRef<FlexProps, 'div'>((props, ref) => {
-  return <Flex flexDirection='column' ref={ref} {...props} />;
+  return <Flex ref={ref} flexDirection='column' gap={4} {...props} />;
 });
 
 export const FieldsetFooter = forwardRef<FlexProps, 'div'>((props, ref) => {
-  return <Flex gap={4} ref={ref} {...props} />;
+  return <Flex ref={ref} gap={4} {...props} />;
 });
 
 export const FieldLabel = forwardRef<HeadingProps, 'span'>((props, ref) => {
   return (
     <Heading
+      ref={ref}
       as='span'
       size='sm'
-      display='flex'
+      display='inline-flex'
       alignItems='center'
       gap={2}
-      ref={ref}
       {...props}
       sx={{
         ...(props?.sx ?? {}),
@@ -70,11 +70,11 @@ export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
   (props, ref) => {
     return (
       <IconButton
+        ref={ref}
         colorScheme='base'
         variant='soft-outline'
         size='sm'
         icon={<CollecticonTrashBin />}
-        ref={ref}
         {...props}
       />
     );

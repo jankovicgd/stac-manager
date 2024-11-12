@@ -48,7 +48,7 @@ function ArrayItem(props: ArrayItemProps) {
   // Check if the nested array is special like an array of strings (Checkboxes)
   // for example. Same logic as widget renderer.
   const isRegularNestedArray =
-    items.type === 'array' && items.items.type !== 'string';
+    items.type === 'array' && !['string', 'number'].includes(items.items.type);
 
   return (
     <FieldArray

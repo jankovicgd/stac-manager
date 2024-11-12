@@ -49,3 +49,15 @@ export function getArrayLabel(field: SchemaField, index: number) {
     formatted: l
   };
 }
+
+/**
+ * Converts a given value to a number.
+ *
+ * @param v - The value to convert.
+ * @returns The numeric representation of the value, or null if the value cannot
+ * be converted to a number.
+ */
+export function toNumber(v: any) {
+  const n = Number(v);
+  return isNaN(n) ? null : n;
+}

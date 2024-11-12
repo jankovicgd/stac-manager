@@ -41,7 +41,7 @@ export function WidgetRenderer(props: WidgetProps) {
       return renderWidget('checkbox');
     }
 
-    if (field.items.type === 'string') {
+    if (['string', 'number'].includes(field.items.type)) {
       return renderWidget('array:string');
     }
 
@@ -54,6 +54,10 @@ export function WidgetRenderer(props: WidgetProps) {
 
   if (field.type === 'string' && field.enum) {
     return renderWidget('radio');
+  }
+
+  if (field.type === 'number') {
+    return renderWidget('number');
   }
 
   return renderWidget('text');
