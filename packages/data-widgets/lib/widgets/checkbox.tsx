@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox, Flex, FormControl, FormLabel } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
+import { FastField, FastFieldProps } from 'formik';
 import {
   SchemaFieldArray,
   SchemaFieldString,
@@ -12,8 +12,6 @@ import { FieldLabel } from './elements';
 export function WidgetCheckbox(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldArray<SchemaFieldString>;
-
-  const { register } = useFormContext();
 
   if (!field.items.enum?.length) {
     throw new Error('WidgetCheckbox: items.enum is required');
@@ -27,10 +25,24 @@ export function WidgetCheckbox(props: WidgetProps) {
         </FormLabel>
       )}
       <Flex gap={4}>
-        {field.items.enum.map(([label, value]) => (
-          <Checkbox key={label} value={value} size='sm' {...register(pointer)}>
-            {label}
-          </Checkbox>
+        {field.items.enum.map(([label, checkboxVal]) => (
+          <FastField name={pointer} type='checkbox' key={label}>
+            {({
+              /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+              field: { value: groupValues, checked, ...fieldProps }
+            }: FastFieldProps) => {
+              return (
+                <Checkbox
+                  {...fieldProps}
+                  size='sm'
+                  value={checkboxVal}
+                  isChecked={groupValues.includes(checkboxVal)}
+                >
+                  {label}
+                </Checkbox>
+              );
+            }}
+          </FastField>
         ))}
       </Flex>
     </FormControl>

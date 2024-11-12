@@ -4,7 +4,7 @@ import { defaultsDeep } from 'lodash-es';
 import { Plugin, PluginConfigItem } from './plugin';
 import { resolvePlugins } from './resolve';
 import { usePluginConfig } from '../context/plugin-config';
-import { FormDataStructure, schemaToDataStructure } from '../schema';
+import { schemaToFormDataStructure, FormDataStructure } from '../schema';
 
 type UsePluginsHook =
   | {
@@ -19,6 +19,10 @@ type UsePluginsHook =
       formData: any;
       toOutData: (formData: any) => any;
     };
+
+type FormDataStructureObject = {
+  [key: string]: FormDataStructure;
+};
 
 const usePlugins = (plugins: PluginConfigItem[], data: any): UsePluginsHook => {
   const [readyPlugins, setReadyPlugins] = useState<Plugin[]>();
@@ -37,21 +41,21 @@ const usePlugins = (plugins: PluginConfigItem[], data: any): UsePluginsHook => {
   const formData = useMemo(() => {
     if (!readyPlugins) return;
 
-    const emptyStructure = readyPlugins.reduce<FormDataStructure>(
+    const emptyStructure = readyPlugins.reduce<FormDataStructureObject>(
       (acc, pl: Plugin) => {
         const schema = pl.editSchema();
         if (!schema || typeof schema === 'symbol') return acc;
 
-        return {
-          ...acc,
-          ...(schemaToDataStructure(schema) as FormDataStructure)
-        };
+        return defaultsDeep(
+          schemaToFormDataStructure(schema) as FormDataStructureObject,
+          acc
+        );
       },
       {}
     );
 
     return readyPlugins.reduce(
-      (acc: any, pl: Plugin) => defaultsDeep(acc, pl.enterData(data)),
+      (acc: any, pl: Plugin) => defaultsDeep(pl.enterData(data), acc),
       emptyStructure
     );
   }, [readyPlugins]);

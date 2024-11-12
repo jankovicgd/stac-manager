@@ -1,15 +1,13 @@
 import React from 'react';
 import { FormControl, FormLabel, Radio, RadioGroup } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
+import { FastField } from 'formik';
 
 import { FieldLabel } from './elements';
 
 export function WidgetRadio(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldString;
-
-  const { register } = useFormContext();
 
   if (!field.enum?.length) {
     throw new Error('WidgetRadio: enum is required');
@@ -24,9 +22,16 @@ export function WidgetRadio(props: WidgetProps) {
       )}
       <RadioGroup size='sm' gap={4} display='flex'>
         {field.enum.map(([label, value]) => (
-          <Radio key={label} value={value} {...register(pointer)}>
+          <FastField
+            key={label}
+            as={Radio}
+            name={pointer}
+            type='radio'
+            value={value}
+            size='sm'
+          >
             {label}
-          </Radio>
+          </FastField>
         ))}
       </RadioGroup>
     </FormControl>

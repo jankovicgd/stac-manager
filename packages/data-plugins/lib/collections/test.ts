@@ -15,37 +15,6 @@ export class PluginTest extends Plugin {
             type: 'string'
           }
         },
-        select: {
-          label: 'Select one string',
-          type: 'string',
-          'ui:widget': 'select',
-          enum: [
-            ['viridis', 'viridis'],
-            ['plasma', 'plasma'],
-            ['inferno', 'inferno']
-          ]
-        },
-        radio: {
-          label: 'Select one string radio (default)',
-          type: 'string',
-          enum: [
-            ['viridis', 'viridis'],
-            ['plasma', 'plasma'],
-            ['inferno', 'inferno']
-          ]
-        },
-        checkbox: {
-          label: 'Select multiple strings',
-          type: 'array',
-          items: {
-            type: 'string',
-            enum: [
-              ['viridis', 'viridis'],
-              ['plasma', 'plasma'],
-              ['inferno', 'inferno']
-            ]
-          }
-        },
         arrObj: {
           label: 'Array of Objects (with limits)',
           type: 'array',
@@ -65,39 +34,56 @@ export class PluginTest extends Plugin {
             }
           }
         },
-        arrNested: {
+        spatial: {
+          label: 'Spatial Extent',
           type: 'array',
-          label: 'Array no limit',
+          minItems: 1,
           items: {
             type: 'array',
-            label: 'Array with limits',
-            minItems: 1,
-            maxItems: 2,
+            label: 'Extent',
+            minItems: 4,
+            maxItems: 4,
             items: {
-              type: 'array',
-              label: 'Array fixed',
-              minItems: 2,
-              maxItems: 2,
-              items: {
-                label: ['Label', 'Value'],
-                type: 'string'
-              }
+              label: [
+                'Min Longitude',
+                'Min Latitude',
+                'Max Longitude',
+                'Max Latitude'
+              ],
+              type: 'string'
             }
           }
         },
-        arrayRadios: {
-          label: 'Array of Radios',
+        checkbox: {
+          label: 'Select multiple strings',
           type: 'array',
           items: {
-            label: 'Radios options',
             type: 'string',
-            'ui:widget': 'select',
             enum: [
               ['viridis', 'viridis'],
               ['plasma', 'plasma'],
               ['inferno', 'inferno']
             ]
           }
+        },
+        radio: {
+          label: 'Select one string radio (default)',
+          type: 'string',
+          enum: [
+            ['viridis', 'viridis'],
+            ['plasma', 'plasma'],
+            ['inferno', 'inferno']
+          ]
+        },
+        select: {
+          label: 'Select one string',
+          type: 'string',
+          'ui:widget': 'select',
+          enum: [
+            ['viridis', 'viridis'],
+            ['plasma', 'plasma'],
+            ['inferno', 'inferno']
+          ]
         },
         arrayCheckboxes: {
           label: 'Array of Checkboxes',
@@ -120,13 +106,21 @@ export class PluginTest extends Plugin {
     };
   }
 
-  // enterData(data: any = {}) {
-  enterData() {
-    return {};
+  enterData({ arr, extent, ...rest }: any = {}) {
+    return {
+      ...rest,
+      arrObj: arr,
+      spatial: extent?.spatial
+    };
   }
 
-  // exitData(data: any) {
-  exitData() {
-    return {};
+  exitData({ arrObj, spatial, ...rest }: any = {}) {
+    return {
+      arr: arrObj,
+      extent: {
+        spatial: spatial?.map((inner: string[]) => inner.map((v: string) => v))
+      },
+      ...rest
+    };
   }
 }

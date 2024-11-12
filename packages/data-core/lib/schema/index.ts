@@ -1,28 +1,30 @@
 import { SchemaField, SchemaFieldObject } from './types';
 
-export interface FormDataStructure {
-  [key: string]: string | FormDataStructure | FormDataStructure[];
-}
+export type FormDataStructure =
+  | string
+  | { [key: string]: FormDataStructure }
+  | FormDataStructure[]
+  | string[];
 
-export function schemaToDataStructure(
+export function schemaToFormDataStructure(
   field: SchemaField
-): string | FormDataStructure | FormDataStructure[] {
+): FormDataStructure {
   if (['root', 'object'].includes(field.type)) {
-    return Object.entries(
-      (field as SchemaFieldObject).properties
-    ).reduce<FormDataStructure>((acc, [key, value]) => {
+    return Object.entries((field as SchemaFieldObject).properties).reduce<{
+      [key: string]: FormDataStructure;
+    }>((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: schemaToDataStructure(value)
+        [key]: schemaToFormDataStructure(value)
       };
     }, {});
   }
 
   if (field.type === 'array') {
     if ((field.minItems || 0) > 0) {
-      return Array.from({ length: field.minItems as number }).map(() => ({
-        value: schemaToDataStructure(field.items)
-      }));
+      return Array.from({ length: field.minItems as number }).map(() =>
+        schemaToFormDataStructure(field.items)
+      );
     }
     return [];
   }
