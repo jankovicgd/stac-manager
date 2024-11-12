@@ -5,10 +5,12 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "source": "lib/index.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "rollup -c ../../rollup.config.mjs",
     "watch": "rollup -c ../../rollup.config.mjs -w",
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./dist node_modules",
     "lint": "eslint ./lib --no-error-on-unmatched-pattern"
   },
   "engines": {

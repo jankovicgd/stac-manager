@@ -19,7 +19,8 @@ const outputOptions = {
  * {@link https://github.com/developmentseed}
  * @copyright Development Seed
  * @license MIT
- */`
+ */`,
+  sourcemap: true
 };
 
 export default [
@@ -34,7 +35,7 @@ export default [
         'process.env.NODE_ENV': JSON.stringify(env),
         'process.env.PACKAGE_VERSION': pkg.version
       }),
-      typescript({ useTsconfigDeclarationDir: true })
+      typescript({ useTsconfigDeclarationDir: true, clean: true })
     ],
     output: [
       { file: pkg.main, format: 'cjs', ...outputOptions },
