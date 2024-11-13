@@ -56,6 +56,10 @@ export function WidgetRenderer(props: WidgetProps) {
     return renderWidget('radio');
   }
 
+  if (field.type === 'json') {
+    return renderWidget('json');
+  }
+
   if (field.type === 'number') {
     return renderWidget('number');
   }

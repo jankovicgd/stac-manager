@@ -9,7 +9,7 @@ import { FieldArray, useFormikContext } from 'formik';
 import { get } from 'lodash-es';
 
 import { getArrayLabel } from '../utils';
-import { ArrayFieldset } from './elements';
+import { ArrayFieldset } from '../components/elements';
 import { WidgetInput } from './input';
 
 export function WidgetArrayInput(props: WidgetProps) {

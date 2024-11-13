@@ -101,16 +101,25 @@ export class PluginTest extends Plugin {
               ]
             }
           }
+        },
+        json: {
+          label: 'Json field',
+          type: 'json'
         }
       }
     };
   }
 
-  enterData({ arr, extent, ...rest }: any = {}) {
+  enterData({ arr, extent, json, ...rest }: any = {}) {
     return {
       ...rest,
       arrObj: arr,
-      spatial: extent?.spatial
+      spatial: extent?.spatial,
+      json: json || {
+        key: 'value',
+        arr: [1, 2, 3, 4],
+        obj: { key: 'value' }
+      }
     };
   }
 

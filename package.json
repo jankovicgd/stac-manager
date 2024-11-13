@@ -7,6 +7,7 @@
   "scripts": {
     "plugins:watch": "lerna watch --ignore='@stac-manager/client' -- lerna run build --scope=$LERNA_PACKAGE_NAME --ignore='@stac-manager/client'",
     "plugins:build": "lerna run build --ignore='@stac-manager/client'",
+    "plugins:clean": "lerna run clean --ignore='@stac-manager/client'",
     "client:serve": "lerna run serve --scope='@stac-manager/client'",
     "client:build": "lerna run build --scope='@stac-manager/client'",
     "client:stage": "lerna run stage --scope='@stac-manager/client'",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-replace": "^6.0.1",
     "@types/rollup-plugin-peer-deps-external": "^2.2.5",
@@ -26,6 +28,7 @@
     "prettier": "^3.3.3",
     "rollup": "^4.24.2",
     "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-import-css": "^3.5.6",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.6.3",

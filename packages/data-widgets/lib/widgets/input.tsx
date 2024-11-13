@@ -1,18 +1,16 @@
 import React from 'react';
 import {
-  Box,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  IconButton,
   Input
 } from '@chakra-ui/react';
 import { useField } from 'formik';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 import { CollecticonTrashBin } from '@devseed-ui/collecticons-chakra';
 
-import { FieldLabel } from './elements';
+import { FieldIconBtn, FieldLabel } from '../components/elements';
 
 interface WidgetInputProps extends WidgetProps {
   label?: React.ReactNode;
@@ -48,19 +46,16 @@ export function WidgetInput(props: WidgetInputProps) {
             <FieldLabel size='xs'>{fieldLabel}</FieldLabel>
           </FormLabel>
         )}
-        <Box ml='auto'>
+        <Flex ml='auto' gap={2}>
           {isDeletable && (
-            <IconButton
-              colorScheme='base'
-              variant='soft-outline'
-              size='xs'
-              onClick={onDeleteClick}
+            <FieldIconBtn
               aria-label='Remove item'
-              icon={<CollecticonTrashBin />}
+              onClick={onDeleteClick}
+              icon={<CollecticonTrashBin size={3} />}
               isDisabled={isDeleteDisabled}
             />
           )}
-        </Box>
+        </Flex>
       </Flex>
       <Input
         type={type}

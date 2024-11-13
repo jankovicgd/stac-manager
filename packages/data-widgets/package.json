@@ -31,11 +31,13 @@
     "@stac-manager/data-core": "*",
     "formik": "^2.4.6",
     "framer-motion": "^10.16.5",
+    "jsoneditor": "^10.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@types/jsoneditor": "^9.9.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/uuid": "^10.0.0"

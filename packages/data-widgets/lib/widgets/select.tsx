@@ -3,7 +3,7 @@ import { Select, FormControl, FormLabel } from '@chakra-ui/react';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 import { FastField } from 'formik';
 
-import { FieldLabel } from './elements';
+import { FieldLabel } from '../components/elements';
 
 export function WidgetSelect(props: WidgetProps) {
   const { pointer, isRequired } = props;

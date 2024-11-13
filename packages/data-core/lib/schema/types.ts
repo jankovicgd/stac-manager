@@ -11,6 +11,12 @@ export interface SchemaFieldNumber {
   label?: string | string[];
 }
 
+export interface SchemaFieldJson {
+  type: 'json';
+  'ui:widget'?: string;
+  label?: string;
+}
+
 export interface SchemaFieldArray<I extends SchemaField = SchemaField> {
   type: 'array';
   'ui:widget'?: string;
@@ -32,4 +38,5 @@ export type SchemaField =
   | SchemaFieldString
   | SchemaFieldArray
   | SchemaFieldObject
-  | SchemaFieldNumber;
+  | SchemaFieldNumber
+  | SchemaFieldJson;

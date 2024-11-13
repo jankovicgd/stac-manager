@@ -3,7 +3,7 @@ import { FormControl, FormLabel, Radio, RadioGroup } from '@chakra-ui/react';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 import { FastField } from 'formik';
 
-import { FieldLabel } from './elements';
+import { FieldLabel } from '../components/elements';
 
 export function WidgetRadio(props: WidgetProps) {
   const { pointer, isRequired } = props;

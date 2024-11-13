@@ -66,13 +66,25 @@ export const FieldLabel = forwardRef<HeadingProps, 'span'>((props, ref) => {
   );
 });
 
-export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
+export const FieldIconBtn = forwardRef<IconButtonProps, 'button'>(
   (props, ref) => {
     return (
       <IconButton
         ref={ref}
         colorScheme='base'
         variant='soft-outline'
+        size='xs'
+        {...props}
+      />
+    );
+  }
+);
+
+export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
+  (props, ref) => {
+    return (
+      <FieldIconBtn
+        ref={ref}
         size='sm'
         icon={<CollecticonTrashBin />}
         {...props}

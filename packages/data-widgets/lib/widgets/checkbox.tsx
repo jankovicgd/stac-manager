@@ -7,7 +7,7 @@ import {
   WidgetProps
 } from '@stac-manager/data-core';
 
-import { FieldLabel } from './elements';
+import { FieldLabel } from '../components/elements';
 
 export function WidgetCheckbox(props: WidgetProps) {
   const { pointer, isRequired } = props;
@@ -36,7 +36,7 @@ export function WidgetCheckbox(props: WidgetProps) {
                   {...fieldProps}
                   size='sm'
                   value={checkboxVal}
-                  isChecked={groupValues.includes(checkboxVal)}
+                  isChecked={groupValues?.includes(checkboxVal)}
                 >
                   {label}
                 </Checkbox>

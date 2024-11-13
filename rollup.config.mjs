@@ -6,6 +6,8 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import typescript from 'rollup-plugin-typescript2';
 import { dts } from 'rollup-plugin-dts';
+import commonjs from '@rollup/plugin-commonjs';
+import css from 'rollup-plugin-import-css';
 
 const dirname = process.cwd();
 const pkg = JSON.parse(readFileSync(path.join(dirname, './package.json')));
@@ -20,7 +22,8 @@ const outputOptions = {
  * @copyright Development Seed
  * @license MIT
  */`,
-  sourcemap: true
+  sourcemap: true,
+  inlineDynamicImports: true
 };
 
 export default [
@@ -30,12 +33,14 @@ export default [
     plugins: [
       peerDepsExternal(),
       nodeResolve(),
+      commonjs(),
       replace({
         preventAssignment: true,
         'process.env.NODE_ENV': JSON.stringify(env),
         'process.env.PACKAGE_VERSION': pkg.version
       }),
-      typescript({ useTsconfigDeclarationDir: true, clean: true })
+      typescript({ useTsconfigDeclarationDir: true, clean: true }),
+      css()
     ],
     output: [
       { file: pkg.main, format: 'cjs', ...outputOptions },
