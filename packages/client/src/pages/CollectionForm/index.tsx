@@ -8,6 +8,7 @@ import {
 import { Box, Button, Flex, Heading, Textarea } from '@chakra-ui/react';
 import useUpdateCollection from './useUpdateCollection';
 import { Field, FieldProps, Formik } from 'formik';
+import { WidgetJSON } from '@stac-manager/data-widgets';
 
 interface CollectionFormProps {}
 
@@ -30,8 +31,8 @@ export function CollectionForm(props: CollectionFormProps) {
       console.log('🚀 ~ onSubmit ~ exitData:', exitData);
     } else if (action === 'switch-view') {
       if (view === 'json') {
-        console.log('JSON.parse(data.jsonData)', JSON.parse(data.jsonData));
-        setStacData(JSON.parse(data.jsonData));
+        console.log('data.jsonData', data.jsonData);
+        setStacData(data.jsonData);
         setView('fields');
       } else {
         const d = toOutData(data);
@@ -45,7 +46,8 @@ export function CollectionForm(props: CollectionFormProps) {
   const editorData = useMemo(
     () =>
       view === 'json'
-        ? { jsonData: JSON.stringify(stacData, null, 2) }
+        ? // ? { jsonData: JSON.stringify(stacData, null, 2) }
+          { jsonData: stacData }
         : formData,
     [view, formData]
   );
@@ -108,14 +110,13 @@ export function EditForm({ plugins, data, onAction, view }: EditFormProps) {
                 });
               }}
             >
-              {view}
+              {view === 'json' ? 'Switch to Form view' : 'Switch to JSON view'}
             </Button>
             {view === 'json' ? (
-              <Field name='jsonData'>
-                {(props: FieldProps) => (
-                  <Textarea {...props.field} minH='20rem' />
-                )}
-              </Field>
+              <WidgetJSON
+                field={{ type: 'json', label: 'Json Document' }}
+                pointer='jsonData'
+              />
             ) : (
               plugins.map((pl) => (
                 <PluginBox key={pl.name} plugin={pl}>
