@@ -182,6 +182,10 @@ export class PluginCore extends Plugin {
               }
             }
           }
+        },
+        summaries: {
+          type: 'json',
+          label: 'Summaries'
         }
       }
     };
@@ -204,7 +208,8 @@ export class PluginCore extends Plugin {
           id: key,
           ...value
         })
-      )
+      ),
+      summaries: data?.summaries || {}
     };
   }
 
@@ -238,7 +243,8 @@ export class PluginCore extends Plugin {
           };
         },
         {}
-      )
+      ),
+      summaries: data.summaries
     };
   }
 }
