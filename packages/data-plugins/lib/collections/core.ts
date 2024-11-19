@@ -1,11 +1,14 @@
 import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
+import { emptyString2Null, fieldIf, null2EmptyString } from '../utils';
 
 export class PluginCore extends Plugin {
   name = 'CollectionsCore';
 
-  // async init(data) {
-  //   await new Promise((resolve) => setTimeout(resolve, 100));
-  // }
+  isNew: boolean = false;
+
+  async init(data: any) {
+    this.isNew = !data?.id;
+  }
 
   editSchema(): SchemaFieldObject {
     return {
@@ -19,10 +22,10 @@ export class PluginCore extends Plugin {
       //   'links'
       // ],
       properties: {
-        id: {
+        ...fieldIf(this.isNew, 'id', {
           label: 'Collection ID',
           type: 'string'
-        },
+        }),
         title: {
           label: 'Title',
           type: 'string'
@@ -136,7 +139,36 @@ export class PluginCore extends Plugin {
               },
               type: {
                 label: 'Type',
-                type: 'string'
+                type: 'string',
+                'ui:widget': 'select',
+                enum: [
+                  ['application/geo+json', 'geo+json'],
+                  ['application/geopackage+sqlite3', 'geopackage+sqlite3'],
+                  ['application/json', 'json'],
+                  ['application/schema+json', 'schema+json'],
+                  [
+                    'application/vnd.google-earth.kml+xml',
+                    'vnd.google-earth.kml+xml'
+                  ],
+                  ['application/vnd.google-earth.kmz', 'vnd.google-earth.kmz'],
+                  [
+                    'application/vnd.oai.openapi+json;version=3.0',
+                    'vnd.oai.openapi+json;version=3.0'
+                  ],
+                  ['application/x-hdf', 'x-hdf'],
+                  ['application/x-hdf5', 'x-hdf5'],
+                  ['application/xml', 'xml'],
+                  ['image/jp2', 'jp2'],
+                  ['image/jpeg', 'jpeg'],
+                  ['image/png', 'png'],
+                  [
+                    'image/tiff; application=geotiff; profile=cloud-optimized',
+                    'COG'
+                  ],
+                  ['image/tiff; application=geotiff', 'Geotiff'],
+                  ['text/html', 'HTML'],
+                  ['text/plain', 'Text']
+                ]
               },
               title: {
                 label: 'Title',
@@ -201,7 +233,7 @@ export class PluginCore extends Plugin {
       providers: data?.providers || [],
       stac_extensions: data?.stac_extensions,
       spatial: data?.extent?.spatial.bbox || [],
-      temporal: data?.extent?.temporal.bbox || [],
+      temporal: data?.extent?.temporal.interval.map(null2EmptyString) || [],
       links: data?.links || [],
       assets: Object.entries<Record<string, any>>(data?.assets || {}).map(
         ([key, value]) => ({
@@ -227,10 +259,10 @@ export class PluginCore extends Plugin {
 
       extent: {
         spatial: {
-          bbox: [data.spatial?.map(({ value }: any) => Number(value))]
+          bbox: data.spatial
         },
         temporal: {
-          interval: [data.temporal?.map(({ value }: any) => value)]
+          interval: data.temporal.map(emptyString2Null)
         }
       },
 
