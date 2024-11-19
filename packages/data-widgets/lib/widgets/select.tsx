@@ -27,7 +27,7 @@ export function WidgetSelect(props: WidgetProps) {
         placeholder='Select option'
         size='sm'
       >
-        {field.enum.map(([label, value]) => (
+        {field.enum.map(([value, label]) => (
           <option key={value} value={value}>
             {label}
           </option>

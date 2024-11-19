@@ -6,7 +6,7 @@ import {
   FormControl,
   FormLabel
 } from '@chakra-ui/react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 import {
   CollecticonArrowSemiSpinCcw,
   CollecticonArrowSemiSpinCw,
@@ -20,6 +20,7 @@ import { CollecticonIndent } from '../components/icons/indent';
 
 const JsonEditor = React.lazy(() => import('../components/json-jsoneditor'));
 
+// Extend to have access to internal methods provided by the textmode.
 interface JSONEditorCodeMode extends JSONEditor {
   compact: () => void;
   format: () => void;
@@ -33,28 +34,30 @@ export function WidgetJSON(props: WidgetProps) {
   const editorRef = useRef<JSONEditorCodeMode>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const [{ value }, , { setValue }] = useField<any>(props.pointer);
-
   return (
-    <FormControl>
-      <Flex gap={4}>
-        {field.label && (
-          <FormLabel>
-            <FieldLabel size='xs'>{field.label}</FieldLabel>
-          </FormLabel>
-        )}
-        {isLoaded && <ControlBar editor={editorRef.current!} />}
-      </Flex>
+    <FastField name={props.pointer}>
+      {({ field: { value }, form: { setFieldValue } }: FastFieldProps) => (
+        <FormControl>
+          <Flex gap={4}>
+            {field.label && (
+              <FormLabel>
+                <FieldLabel size='xs'>{field.label}</FieldLabel>
+              </FormLabel>
+            )}
+            {isLoaded && <ControlBar editor={editorRef.current!} />}
+          </Flex>
 
-      <Suspense fallback={<Loading />}>
-        <JsonEditor
-          value={value}
-          onChange={setValue}
-          editorRef={editorRef}
-          onLoad={() => setIsLoaded(true)}
-        />
-      </Suspense>
-    </FormControl>
+          <Suspense fallback={<Loading />}>
+            <JsonEditor
+              value={value}
+              onChange={(v) => setFieldValue(props.pointer, v)}
+              editorRef={editorRef}
+              onLoad={() => setIsLoaded(true)}
+            />
+          </Suspense>
+        </FormControl>
+      )}
+    </FastField>
   );
 }
 

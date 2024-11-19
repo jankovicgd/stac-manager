@@ -4,9 +4,10 @@ import {
   CheckboxGroup,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel
 } from '@chakra-ui/react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 import {
   SchemaFieldArray,
   SchemaFieldString,
@@ -19,34 +20,45 @@ export function WidgetCheckbox(props: WidgetProps) {
   const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldArray<SchemaFieldString>;
 
-  const [{ value }, , { setValue, setTouched }] = useField(pointer);
+  const options = field.items.enum;
 
-  if (!field.items.enum?.length) {
+  if (!options?.length) {
     throw new Error('WidgetCheckbox: items.enum is required');
   }
 
   return (
-    <FormControl isRequired={isRequired}>
-      {field.label && (
-        <FormLabel>
-          <FieldLabel size='xs'>{field.label}</FieldLabel>
-        </FormLabel>
+    <FastField name={pointer}>
+      {({
+        field: { value },
+        meta,
+        form: { setFieldValue, setFieldTouched }
+      }: FastFieldProps) => (
+        <FormControl isRequired={isRequired}>
+          {field.label && (
+            <FormLabel>
+              <FieldLabel size='xs'>{field.label}</FieldLabel>
+            </FormLabel>
+          )}
+          <Flex gap={4}>
+            <CheckboxGroup
+              value={value}
+              onChange={(v) => {
+                setFieldValue(pointer, v);
+                setFieldTouched(pointer, true);
+              }}
+            >
+              {options.map(([checkboxVal, label]) => (
+                <Checkbox key={checkboxVal} size='sm' value={checkboxVal}>
+                  {label}
+                </Checkbox>
+              ))}
+            </CheckboxGroup>
+          </Flex>
+          {meta.touched && meta.error && (
+            <FormErrorMessage>{meta.error}</FormErrorMessage>
+          )}
+        </FormControl>
       )}
-      <Flex gap={4}>
-        <CheckboxGroup
-          value={value}
-          onChange={(v) => {
-            setValue(v);
-            setTouched(true);
-          }}
-        >
-          {field.items.enum.map(([label, checkboxVal]) => (
-            <Checkbox key={label} size='sm' value={checkboxVal}>
-              {label}
-            </Checkbox>
-          ))}
-        </CheckboxGroup>
-      </Flex>
-    </FormControl>
+    </FastField>
   );
 }

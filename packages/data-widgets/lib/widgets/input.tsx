@@ -6,7 +6,7 @@ import {
   FormLabel,
   Input
 } from '@chakra-ui/react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
 import { CollecticonTrashBin } from '@devseed-ui/collecticons-chakra';
 
@@ -21,6 +21,8 @@ interface WidgetInputProps extends WidgetProps {
   isDeleteDisabled?: boolean;
 }
 
+const identity = (v: any) => v;
+
 export function WidgetInput(props: WidgetInputProps) {
   const {
     label,
@@ -30,47 +32,56 @@ export function WidgetInput(props: WidgetInputProps) {
     pointer,
     isRequired,
     type,
-    transformValue = (v) => v
+    transformValue = identity
   } = props;
   const field = props.field as SchemaFieldString;
-
-  const [{ onBlur }, meta, { setValue }] = useField<number>(props.pointer);
 
   const fieldLabel = label || field.label;
 
   return (
-    <FormControl isRequired={isRequired}>
-      <Flex gap={4}>
-        {fieldLabel && (
-          <FormLabel>
-            <FieldLabel size='xs'>{fieldLabel}</FieldLabel>
-          </FormLabel>
-        )}
-        <Flex ml='auto' gap={2}>
-          {isDeletable && (
-            <FieldIconBtn
-              aria-label='Remove item'
-              onClick={onDeleteClick}
-              icon={<CollecticonTrashBin size={3} />}
-              isDisabled={isDeleteDisabled}
-            />
+    <FastField name={pointer}>
+      {({
+        field: { value, onBlur },
+        meta,
+        form: { setFieldValue }
+      }: FastFieldProps) => (
+        <FormControl isRequired={isRequired}>
+          <Flex gap={4}>
+            {fieldLabel && (
+              <FormLabel>
+                <FieldLabel size='xs'>{fieldLabel}</FieldLabel>
+              </FormLabel>
+            )}
+            <Flex ml='auto' gap={2}>
+              {isDeletable && (
+                <FieldIconBtn
+                  aria-label='Remove item'
+                  onClick={onDeleteClick}
+                  icon={<CollecticonTrashBin size={3} />}
+                  isDisabled={isDeleteDisabled}
+                />
+              )}
+            </Flex>
+          </Flex>
+          <Input
+            type={type}
+            size='sm'
+            name={pointer}
+            bg='surface.500'
+            borderColor='base.200'
+            borderRadius='md'
+            value={value === null ? '' : value}
+            onBlur={onBlur}
+            onChange={(e) => {
+              setFieldValue(pointer, transformValue(e.target.value));
+            }}
+            isInvalid={meta.touched && meta.error ? true : false}
+          />
+          {meta.touched && meta.error && (
+            <FormErrorMessage>{meta.error}</FormErrorMessage>
           )}
-        </Flex>
-      </Flex>
-      <Input
-        type={type}
-        size='sm'
-        name={pointer}
-        bg='surface.500'
-        borderColor='base.200'
-        borderRadius='md'
-        onBlur={onBlur}
-        onChange={(e) => setValue(transformValue(e.target.value))}
-        isInvalid={meta.touched && meta.error ? true : false}
-      />
-      {meta.touched && meta.error && (
-        <FormErrorMessage>{meta.error}</FormErrorMessage>
+        </FormControl>
       )}
-    </FormControl>
+    </FastField>
   );
 }

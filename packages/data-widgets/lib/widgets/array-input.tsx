@@ -55,6 +55,13 @@ export function WidgetArrayInput(props: WidgetProps) {
                     onDeleteClick={() => {
                       remove(index);
                     }}
+                    transformValue={(v) => {
+                      if (field.items.type === 'number') {
+                        const n = Number(v);
+                        return isNaN(n) ? null : n;
+                      }
+                      return v;
+                    }}
                     isDeleteDisabled={fields.length <= minItems}
                   />
                 </ListItem>
