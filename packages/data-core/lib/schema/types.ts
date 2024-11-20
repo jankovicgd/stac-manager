@@ -31,6 +31,7 @@ export interface SchemaFieldObject {
   'ui:widget'?: string;
   label?: string | string[];
   properties: Record<string, SchemaField>;
+  additionalProperties?: boolean;
   required?: string[];
 }
 

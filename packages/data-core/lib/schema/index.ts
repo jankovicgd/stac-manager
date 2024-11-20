@@ -29,5 +29,9 @@ export function schemaToFormDataStructure(
     return [];
   }
 
+  if (field.type === 'json') {
+    return {};
+  }
+
   return '';
 }
