@@ -35,29 +35,29 @@ export function WidgetJSON(props: WidgetProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <FastField name={props.pointer}>
-      {({ field: { value }, form: { setFieldValue } }: FastFieldProps) => (
-        <FormControl>
-          <Flex gap={4}>
-            {field.label && (
-              <FormLabel>
-                <FieldLabel size='xs'>{field.label}</FieldLabel>
-              </FormLabel>
-            )}
-            {isLoaded && <ControlBar editor={editorRef.current!} />}
-          </Flex>
+    <FormControl>
+      <Flex gap={4}>
+        {field.label && (
+          <FormLabel>
+            <FieldLabel size='xs'>{field.label}</FieldLabel>
+          </FormLabel>
+        )}
+        {isLoaded && <ControlBar editor={editorRef.current!} />}
+      </Flex>
 
-          <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
+        <FastField name={props.pointer}>
+          {({ field: { value }, form: { setFieldValue } }: FastFieldProps) => (
             <JsonEditor
               value={value}
               onChange={(v) => setFieldValue(props.pointer, v)}
               editorRef={editorRef}
               onLoad={() => setIsLoaded(true)}
             />
-          </Suspense>
-        </FormControl>
-      )}
-    </FastField>
+          )}
+        </FastField>
+      </Suspense>
+    </FormControl>
   );
 }
 
