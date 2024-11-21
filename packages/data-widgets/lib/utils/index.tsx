@@ -61,3 +61,7 @@ export function toNumber(v: any) {
   const n = Number(v);
   return isNaN(n) ? null : n;
 }
+
+export function castArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
+}

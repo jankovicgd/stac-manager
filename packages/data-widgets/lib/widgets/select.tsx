@@ -1,17 +1,50 @@
-import React from 'react';
-import { Select, FormControl, FormLabel } from '@chakra-ui/react';
-import { SchemaFieldString, WidgetProps } from '@stac-manager/data-core';
-import { FastField } from 'formik';
+import React, { useMemo } from 'react';
+import { FormControl, FormLabel } from '@chakra-ui/react';
+import { useField } from 'formik';
+import ReactSelect from 'react-select';
+import {
+  SchemaFieldArray,
+  SchemaFieldString,
+  WidgetProps
+} from '@stac-manager/data-core';
 
 import { FieldLabel } from '../components/elements';
+import { castArray } from '../utils';
+
+interface Option {
+  readonly label: string;
+  readonly value: string;
+}
 
 export function WidgetSelect(props: WidgetProps) {
-  const { pointer, isRequired } = props;
-  const field = props.field as SchemaFieldString;
+  const { pointer, isRequired, field } = props;
 
-  if (!field.enum?.length) {
+  const isMulti = field.type === 'array';
+
+  if (
+    isMulti
+      ? !(field as SchemaFieldArray<SchemaFieldString>).items?.enum?.length
+      : !(field as SchemaFieldString).enum?.length
+  ) {
     throw new Error('WidgetSelect: enum is required');
   }
+
+  const options = useMemo(() => {
+    const enums = isMulti
+      ? (field as SchemaFieldArray<SchemaFieldString>).items?.enum
+      : (field as SchemaFieldString).enum;
+
+    return enums!.map<Option>(([value, label]) => ({
+      value,
+      label
+    }));
+  }, [field]);
+
+  const [{ value }, , { setValue }] = useField(pointer);
+
+  const selectedOpts = options.filter((option) =>
+    castArray(value).includes(option.value)
+  );
 
   return (
     <FormControl isRequired={isRequired}>
@@ -20,19 +53,22 @@ export function WidgetSelect(props: WidgetProps) {
           <FieldLabel size='xs'>{field.label}</FieldLabel>
         </FormLabel>
       )}
-      <FastField
-        as={Select}
-        type='select'
+      <ReactSelect
         name={pointer}
-        placeholder='Select option'
-        size='sm'
-      >
-        {field.enum.map(([value, label]) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </FastField>
+        options={options}
+        isMulti={isMulti}
+        isClearable={!isRequired}
+        onChange={(option) => {
+          if (option) {
+            setValue(
+              castArray(option as Option | Option[]).map((o) => o.value)
+            );
+          } else {
+            setValue(isMulti ? [] : undefined);
+          }
+        }}
+        value={selectedOpts}
+      />
     </FormControl>
   );
 }

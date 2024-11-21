@@ -9,6 +9,7 @@ import { WidgetArray } from '../widgets/array';
 import { WidgetArrayInput } from '../widgets/array-input';
 import { WidgetSelect } from '../widgets/select';
 import { WidgetJSON } from '../widgets/json';
+import { WidgetTags } from '../widgets/tags';
 
 export const defaultPluginWidgetConfig = extendPluginConfig({
   'ui:widget': {
@@ -18,6 +19,7 @@ export const defaultPluginWidgetConfig = extendPluginConfig({
     radio: WidgetRadio,
     checkbox: WidgetCheckbox,
     select: WidgetSelect,
+    tags: WidgetTags,
     array: WidgetArray,
     'array:string': WidgetArrayInput,
     json: WidgetJSON
