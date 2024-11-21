@@ -24,21 +24,31 @@ interface Option {
   readonly value: string;
 }
 
-export function WidgetTags(props: WidgetProps) {
+export function WidgetTagger(props: WidgetProps) {
   const { field } = props;
 
-  if (field.type !== 'array') {
-    throw new Error('WidgetTags only supports array fields');
+  if (field.type === 'string') {
+    if (!field.enum) {
+      throw new Error("WidgetTagger: 'enum' is required for string fields");
+    }
+
+    return <WidgetTaggerWithOptions {...props} />;
   }
 
-  if (field.items.type === 'string' && field.items.enum) {
-    return <WidgetTagsWithOptions {...props} />;
+  if (field.type === 'array' && field.items.type === 'string') {
+    return field.items.enum ? (
+      <WidgetTaggerWithOptions {...props} isMulti />
+    ) : (
+      <WidgetTaggerNoOptions {...props} />
+    );
   }
 
-  return <WidgetTagsNoOptions {...props} />;
+  throw new Error(
+    `WidgetTagger: Field type must be 'string' or 'array'. Got: ${field.type}`
+  );
 }
 
-function WidgetTagsNoOptions(props: WidgetProps) {
+function WidgetTaggerNoOptions(props: WidgetProps) {
   const { pointer, isRequired, field } = props;
 
   const [inputValue, setInputValue] = useState('');
@@ -89,17 +99,26 @@ function WidgetTagsNoOptions(props: WidgetProps) {
   );
 }
 
-function WidgetTagsWithOptions(props: WidgetProps) {
-  const { pointer, isRequired } = props;
-  const field = props.field as SchemaFieldArray<SchemaFieldString>;
+function WidgetTaggerWithOptions(props: WidgetProps & { isMulti?: boolean }) {
+  const { pointer, isRequired, isMulti, field } = props;
 
   const [inputValue, setInputValue] = useState('');
 
   const [{ value }, , { setValue }] = useField(pointer);
-  const selectedValues = Array.isArray(value) ? value.map(createOption) : [];
+  const selectedValues = value
+    ? isMulti
+      ? value.map(createOption)
+      : createOption(value)
+    : isMulti
+      ? []
+      : undefined;
 
   const options = useMemo(() => {
-    return field.items.enum!.map<Option>(([value, label]) => ({
+    const enums = isMulti
+      ? (field as SchemaFieldArray<SchemaFieldString>).items.enum
+      : (field as SchemaFieldString).enum;
+
+    return enums!.map<Option>(([value, label]) => ({
       value,
       label
     }));
@@ -128,14 +147,20 @@ function WidgetTagsWithOptions(props: WidgetProps) {
       <CreatableSelect
         inputValue={inputValue}
         isClearable
-        isMulti
+        isMulti={isMulti}
         onChange={(newValue) => {
-          setValue(newValue.map((option) => option.value));
+          if (isMulti) {
+            setValue(
+              ((newValue as Option[]) || []).map((option) => option.value)
+            );
+          } else {
+            setValue(newValue?.value);
+          }
         }}
         onInputChange={(newValue) => setInputValue(newValue)}
         onKeyDown={handleKeyDown}
         options={options}
-        placeholder='Select or type to add options'
+        placeholder='Select or type to add'
         value={selectedValues}
       />
     </FormControl>
