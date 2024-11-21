@@ -1,22 +1,47 @@
 import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
 
-export class PluginTest extends Plugin {
-  name = 'FieldsTest';
+export class PluginKitchenSink extends Plugin {
+  name = 'Kitchen Sink';
 
   editSchema(): SchemaFieldObject {
     return {
       type: 'root',
       properties: {
+        title: {
+          type: 'string',
+          label: 'Simple text'
+        },
         arr_strings: {
-          label: 'Array of Strings',
+          label: 'Array of Strings (default)',
           type: 'array',
           items: {
             label: 'String',
             type: 'string'
           }
         },
-        arrObj: {
-          label: 'Array of Objects (with limits)',
+        arr_strings_tags: {
+          label: 'Array of Strings (Tags widget)',
+          type: 'array',
+          'ui:widget': 'tags',
+          items: {
+            type: 'string'
+          }
+        },
+        arr_strings_tags_opts: {
+          label: 'Array of Strings (Tags widget with options)',
+          type: 'array',
+          'ui:widget': 'tags',
+          items: {
+            type: 'string',
+            enum: [
+              ['viridis', 'Viridis'],
+              ['plasma', 'Plasma'],
+              ['inferno', 'Inferno']
+            ]
+          }
+        },
+        arr_obj: {
+          label: 'Array of Objects (with limits 1-3)',
           type: 'array',
           minItems: 1,
           maxItems: 3,
@@ -31,11 +56,12 @@ export class PluginTest extends Plugin {
                 label: 'Nickname',
                 type: 'string'
               }
-            }
+            },
+            additionalProperties: true
           }
         },
         spatial: {
-          label: 'Spatial Extent',
+          label: 'Array of array of 4 fields',
           type: 'array',
           minItems: 1,
           items: {
@@ -55,7 +81,7 @@ export class PluginTest extends Plugin {
           }
         },
         checkbox: {
-          label: 'Select multiple strings',
+          label: 'Select multiple strings (default)',
           type: 'array',
           items: {
             type: 'string',
@@ -66,8 +92,21 @@ export class PluginTest extends Plugin {
             ]
           }
         },
+        checkbox_as_select: {
+          label: 'Select multiple strings (Select widget)',
+          type: 'array',
+          'ui:widget': 'select',
+          items: {
+            type: 'string',
+            enum: [
+              ['viridis', 'viridis'],
+              ['plasma', 'plasma'],
+              ['inferno', 'inferno']
+            ]
+          }
+        },
         radio: {
-          label: 'Select one string radio (default)',
+          label: 'Select one string (default)',
           type: 'string',
           enum: [
             ['viridis', 'viridis'],
@@ -76,7 +115,7 @@ export class PluginTest extends Plugin {
           ]
         },
         select: {
-          label: 'Select one string',
+          label: 'Select one string (Select widget)',
           type: 'string',
           'ui:widget': 'select',
           enum: [
@@ -85,12 +124,30 @@ export class PluginTest extends Plugin {
             ['inferno', 'inferno']
           ]
         },
-        arrayCheckboxes: {
-          label: 'Array of Checkboxes',
+        array_checkboxes: {
+          label: 'Array of array of strings (default) ',
           type: 'array',
           items: {
             label: 'Group',
             type: 'array',
+            items: {
+              label: 'Checkbox option',
+              type: 'string',
+              enum: [
+                ['viridis', 'viridis'],
+                ['plasma', 'plasma'],
+                ['inferno', 'inferno']
+              ]
+            }
+          }
+        },
+        array_checkboxes_as_select: {
+          label: 'Array of array of strings (Select widget) ',
+          type: 'array',
+          items: {
+            label: 'Group',
+            type: 'array',
+            'ui:widget': 'select',
             items: {
               label: 'Checkbox option',
               type: 'string',
@@ -113,7 +170,7 @@ export class PluginTest extends Plugin {
   enterData({ arr, extent, json, ...rest }: any = {}) {
     return {
       ...rest,
-      arrObj: arr,
+      arr_obj: arr,
       spatial: extent?.spatial,
       json: json || {
         key: 'value',
@@ -123,9 +180,9 @@ export class PluginTest extends Plugin {
     };
   }
 
-  exitData({ arrObj, spatial, ...rest }: any = {}) {
+  exitData({ arr_obj, spatial, ...rest }: any = {}) {
     return {
-      arr: arrObj,
+      arr: arr_obj,
       extent: {
         spatial: spatial?.map((inner: string[]) => inner.map((v: string) => v))
       },
