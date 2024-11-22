@@ -64,6 +64,9 @@ jobs:
           path: packages/client/dist
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
 
+      - name: Copy index as 400 file for github pages
+        run: cp packages/client/dist/index.html packages/client/dist/400.html
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
