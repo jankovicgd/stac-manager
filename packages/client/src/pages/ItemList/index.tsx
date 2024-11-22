@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { Heading, Box } from "@chakra-ui/react";
-import { useStacSearch } from "@developmentseed/stac-react";
+import React, { useEffect } from 'react';
+import { Heading, Flex } from '@chakra-ui/react';
+import { useStacSearch } from '@developmentseed/stac-react';
 
-import { usePageTitle } from "../../hooks";
-import ItemListFilter from "./ItemListFilter";
-import ItemResults from "../../components/ItemResults";
+import { usePageTitle } from '../../hooks';
+import ItemListFilter from './ItemListFilter';
+import ItemResults from '../../components/ItemResults';
 
 function ItemList() {
-  usePageTitle("Items");
+  usePageTitle('Items');
   const {
     results,
     state,
@@ -29,10 +29,8 @@ function ItemList() {
   }, [submit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
-      <Box display="flex" alignItems="baseline" gap="4">
-        <Heading as="h1" flex="1">Items</Heading>
-      </Box>
+    <Flex direction='column' gap={8}>
+      <Heading>Items</Heading>
       <ItemListFilter submit={submit} {...searchState} />
       <ItemResults
         results={results}
@@ -45,7 +43,7 @@ function ItemList() {
         state={state}
         submit={submit}
       />
-    </>
+    </Flex>
   );
 }
 

@@ -1,144 +1,148 @@
-import React, { useMemo, useState } from 'react';
-import {
-  Plugin,
-  PluginBox,
-  useCollectionPlugins,
-  WidgetRenderer
-} from '@stac-manager/data-core';
-import { Box, Button, Flex, Heading, Textarea } from '@chakra-ui/react';
-import useUpdateCollection from './useUpdateCollection';
-import { Field, FieldProps, Formik } from 'formik';
-import { WidgetJSON } from '@stac-manager/data-widgets';
+import React, { useEffect, useState } from 'react';
+import { Box, useToast } from '@chakra-ui/react';
+import { FormikHelpers } from 'formik';
+import { useParams } from 'react-router-dom';
+import { useCollection } from '@developmentseed/stac-react';
+import { StacCollection } from 'stac-ts';
 
-interface CollectionFormProps {}
+import usePageTitle from '$hooks/usePageTitle';
+import Api from 'src/api';
+import { EditForm } from './EditForm';
 
-type FormView = 'fields' | 'json';
-type FormAction = 'submit' | 'switch-view';
+export function CollectionForm() {
+  const { collectionId } = useParams();
 
-export function CollectionForm(props: CollectionFormProps) {
-  const [stacData, setStacData] = useState({});
+  return collectionId ? (
+    <CollectionFormEdit id={collectionId} />
+  ) : (
+    <CollectionFormNew />
+  );
+}
 
-  const { plugins, formData, toOutData, isLoading } =
-    useCollectionPlugins(stacData);
+export function CollectionFormNew() {
+  usePageTitle('New collection');
 
-  const [view, setView] = useState<FormView>('fields');
+  const toast = useToast();
 
-  const onAction: EditFormProps['onAction'] = (action, { view, data }) => {
-    console.log(action, view, data);
-    if (action === 'submit') {
-      const exitData =
-        view === 'json' ? JSON.parse(data.jsonData) : toOutData(data);
-      console.log('🚀 ~ onSubmit ~ exitData:', exitData);
-    } else if (action === 'switch-view') {
-      if (view === 'json') {
-        console.log('data.jsonData', data.jsonData);
-        setStacData(data.jsonData);
-        setView('fields');
-      } else {
-        const d = toOutData(data);
-        console.log('d', d);
-        setStacData(d);
-        setView('json');
-      }
+  const onSubmit = async (data: any, formikHelpers: FormikHelpers<any>) => {
+    try {
+      toast({
+        id: 'collection-submit',
+        title: 'Creating collection...',
+        status: 'loading',
+        duration: null,
+        position: 'bottom-right'
+      });
+
+      await collectionTransaction().create(data);
+
+      toast.update('collection-submit', {
+        title: 'Collection created',
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+    } catch (error: any) {
+      toast.update('collection-submit', {
+        title: 'Collection creation failed',
+        description: error.detail?.code,
+        status: 'error',
+        duration: 8000,
+        isClosable: true
+      });
     }
+    formikHelpers.setSubmitting(false);
   };
 
-  const editorData = useMemo(
-    () =>
-      view === 'json'
-        ? // ? { jsonData: JSON.stringify(stacData, null, 2) }
-          { jsonData: stacData }
-        : formData,
-    [view, formData]
-  );
-
-  console.log('🚀 ~ CollectionForm ~ editorData:', editorData);
-  return (
-    <Box>
-      {isLoading ? (
-        <Box>Loading plugins...</Box>
-      ) : (
-        <EditForm
-          data={editorData}
-          plugins={plugins}
-          onAction={onAction}
-          view={view}
-        />
-      )}
-    </Box>
-  );
+  return <EditForm onSubmit={onSubmit} />;
 }
 
-interface EditFormProps {
-  data: Record<string, any>;
-  plugins: Plugin[];
-  onAction: (
-    action: FormAction,
-    { view, data }: { view: FormView; data: any }
-  ) => void;
-  view: FormView;
+export function CollectionFormEdit(props: { id: string }) {
+  const { id } = props;
+  const { collection, state, error } = useCollection(id);
+  const [triedLoading, setTriedLoading] = useState(!!collection);
+
+  usePageTitle(collection ? `Edit collection ${id}` : 'Edit collection');
+
+  const toast = useToast();
+
+  useEffect(() => {
+    if (state === 'LOADING') {
+      setTriedLoading(true);
+    }
+  }, [state]);
+
+  if (state === 'LOADING' || !triedLoading) {
+    return <Box>Loading collection...</Box>;
+  }
+
+  if (error) {
+    return <Box>Error loading collection: {error.detail}</Box>;
+  }
+
+  const onSubmit = async (data: any, formikHelpers: FormikHelpers<any>) => {
+    try {
+      toast({
+        id: 'collection-submit',
+        title: 'Updating collection...',
+        status: 'loading',
+        duration: null,
+        position: 'bottom-right'
+      });
+
+      await collectionTransaction().update(id, data);
+
+      toast.update('collection-submit', {
+        title: 'Collection updated',
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+    } catch (error: any) {
+      toast.update('collection-submit', {
+        title: 'Collection update failed',
+        description: error.detail?.code,
+        status: 'error',
+        duration: 8000,
+        isClosable: true
+      });
+    }
+    formikHelpers.setSubmitting(false);
+  };
+
+  return <EditForm onSubmit={onSubmit} initialData={collection} />;
 }
 
-export function EditForm({ plugins, data, onAction, view }: EditFormProps) {
-  return (
-    <Flex direction='column' gap={4}>
-      <Formik
-        validateOnChange={false}
-        enableReinitialize
-        initialValues={data}
-        onSubmit={(values /*, actions*/) => {
-          onAction('submit', {
-            view,
-            data: values
-          });
-        }}
-      >
-        {(props) => (
-          <Flex
-            as='form'
-            direction='column'
-            gap={4}
-            // @ts-expect-error Can't detect the as=form and throws error
-            onSubmit={props.handleSubmit}
-          >
-            <input type='submit' />
-            <Button
-              onClick={() => {
-                onAction('switch-view', {
-                  view,
-                  data: props.values
-                });
-              }}
-            >
-              {view === 'json' ? 'Switch to Form view' : 'Switch to JSON view'}
-            </Button>
-            {view === 'json' ? (
-              <WidgetJSON
-                field={{ type: 'json', label: 'Json Document' }}
-                pointer='jsonData'
-              />
-            ) : (
-              plugins.map((pl) => (
-                <PluginBox key={pl.name} plugin={pl}>
-                  {({ field }) => (
-                    <Box
-                      p='16'
-                      borderRadius='lg'
-                      bg='base.50a'
-                      display='flex'
-                      flexDir='column'
-                      gap={8}
-                    >
-                      <Heading size='sm'>{pl.name}</Heading>
-                      <WidgetRenderer pointer='' field={field} />
-                    </Box>
-                  )}
-                </PluginBox>
-              ))
-            )}
-          </Flex>
-        )}
-      </Formik>
-    </Flex>
-  );
+type collectionTransactionType = {
+  update: (id: string, data: StacCollection) => Promise<StacCollection>;
+  create: (data: StacCollection) => Promise<StacCollection>;
+};
+
+function collectionTransaction(): collectionTransactionType {
+  const createRequest = async (
+    url: string,
+    method: string,
+    data: StacCollection
+  ) => {
+    return Api.fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  };
+
+  return {
+    update: (id: string, data: StacCollection) =>
+      createRequest(
+        `${process.env.REACT_APP_STAC_API}/collections/${id}`,
+        'PUT',
+        data
+      ),
+    create: (data: StacCollection) =>
+      createRequest(
+        `${process.env.REACT_APP_STAC_API}/collections/`,
+        'POST',
+        data
+      )
+  };
 }

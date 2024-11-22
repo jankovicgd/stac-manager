@@ -21,13 +21,7 @@ export const App = () => (
     <StacApiProvider apiUrl={process.env.REACT_APP_STAC_API!}>
       <PluginConfigProvider config={config}>
         <Router>
-          <Container
-            mx='auto'
-            p='5'
-            bgColor='white'
-            boxShadow='md'
-            maxW='container.lg'
-          >
+          <Container mx='auto' p='5' bgColor='white' maxW='container.lg'>
             <Box
               as='header'
               borderBottom='1px dashed'

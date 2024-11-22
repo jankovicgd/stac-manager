@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   TableContainer,
   Table,
-  Text,
+  Button,
   Thead,
   Tr,
   Th,
   Td,
-  Tbody
+  Tbody,
+  Heading,
+  Flex
 } from '@chakra-ui/react';
 import { useCollections } from '@developmentseed/stac-react';
 import type { StacCollection } from 'stac-ts';
@@ -21,8 +23,18 @@ function CollectionList() {
   const { collections, state } = useCollections();
 
   return (
-    <>
-      <Text as='h1'>Collections</Text>
+    <Flex direction='column' gap={8}>
+      <Flex alignItems='center' justifyContent='space-between'>
+        <Heading>Collections</Heading>
+        <Button
+          as={NavLink}
+          to='/collections/new'
+          colorScheme='primary'
+          size='sm'
+        >
+          New Collection
+        </Button>
+      </Flex>
       <TableContainer>
         <Table size='sm'>
           <Thead>
@@ -69,7 +81,7 @@ function CollectionList() {
           </Tbody>
         </Table>
       </TableContainer>
-    </>
+    </Flex>
   );
 }
 
