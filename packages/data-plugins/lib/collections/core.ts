@@ -13,14 +13,14 @@ export class PluginCore extends Plugin {
   editSchema(): SchemaFieldObject {
     return {
       type: 'root',
-      // required: [
-      //   'id',
-      //   'description',
-      //   'license',
-      //   'spatial',
-      //   'temporal',
-      //   'links'
-      // ],
+      required: [
+        'id',
+        'description',
+        'license',
+        'spatial',
+        'temporal',
+        'links'
+      ],
       properties: {
         ...fieldIf(this.isNew, 'id', {
           label: 'Collection ID',
@@ -37,6 +37,7 @@ export class PluginCore extends Plugin {
         keywords: {
           type: 'array',
           label: 'Keywords',
+          'ui:widget': 'tagger',
           items: {
             label: 'Keyword',
             type: 'string'
@@ -44,7 +45,15 @@ export class PluginCore extends Plugin {
         },
         license: {
           label: 'License',
-          type: 'string'
+          type: 'string',
+          'ui:widget': 'tagger',
+          enum: [
+            ['Apache-2.0', 'Apache License 2.0'],
+            ['MIT', 'MIT License'],
+            ['GPL-3.0', 'GNU General Public License v3.0'],
+            ['BSD-3-Clause', 'BSD 3-Clause License'],
+            ['MPL-2.0', 'Mozilla Public License 2.0']
+          ]
         },
         providers: {
           type: 'array',
@@ -127,7 +136,7 @@ export class PluginCore extends Plugin {
           minItems: 1,
           items: {
             type: 'object',
-            // required: ['rel', 'href'],
+            required: ['rel', 'href'],
             properties: {
               href: {
                 label: 'URL',
@@ -182,7 +191,7 @@ export class PluginCore extends Plugin {
           label: 'Assets',
           items: {
             type: 'object',
-            // required: ['id', 'href'],
+            required: ['id', 'href'],
             properties: {
               id: {
                 label: 'Id',

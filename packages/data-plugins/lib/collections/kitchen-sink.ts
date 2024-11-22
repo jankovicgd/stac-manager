@@ -20,17 +20,17 @@ export class PluginKitchenSink extends Plugin {
           }
         },
         arr_strings_tags: {
-          label: 'Array of Strings (Tags widget)',
+          label: 'Array of Strings (Tagger widget)',
           type: 'array',
-          'ui:widget': 'tags',
+          'ui:widget': 'tagger',
           items: {
             type: 'string'
           }
         },
         arr_strings_tags_opts: {
-          label: 'Array of Strings (Tags widget with options)',
+          label: 'Array of Strings (Tagger widget with options)',
           type: 'array',
-          'ui:widget': 'tags',
+          'ui:widget': 'tagger',
           items: {
             type: 'string',
             enum: [
@@ -39,6 +39,16 @@ export class PluginKitchenSink extends Plugin {
               ['inferno', 'Inferno']
             ]
           }
+        },
+        select_tag: {
+          label: 'Select one string (Tagger widget with options)',
+          type: 'string',
+          'ui:widget': 'tagger',
+          enum: [
+            ['viridis', 'viridis'],
+            ['plasma', 'plasma'],
+            ['inferno', 'inferno']
+          ]
         },
         arr_obj: {
           label: 'Array of Objects (with limits 1-3)',
