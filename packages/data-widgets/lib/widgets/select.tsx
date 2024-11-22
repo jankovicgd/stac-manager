@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { FormControl, FormLabel } from '@chakra-ui/react';
-import { useField } from 'formik';
+import { FastField, FastFieldProps } from 'formik';
 import ReactSelect from 'react-select';
 import {
   SchemaFieldArray,
@@ -10,6 +10,7 @@ import {
 
 import { FieldLabel } from '../components/elements';
 import { castArray } from '../utils';
+import { useRenderKey } from '../utils/use-render-key';
 
 interface Option {
   readonly label: string;
@@ -29,6 +30,8 @@ export function WidgetSelect(props: WidgetProps) {
     throw new Error('WidgetSelect: enum is required');
   }
 
+  const key = useRenderKey([pointer, isRequired, isMulti, field]);
+
   const options = useMemo(() => {
     const enums = isMulti
       ? (field as SchemaFieldArray<SchemaFieldString>).items?.enum
@@ -40,12 +43,6 @@ export function WidgetSelect(props: WidgetProps) {
     }));
   }, [field]);
 
-  const [{ value }, , { setValue }] = useField(pointer);
-
-  const selectedOpts = options.filter((option) =>
-    castArray(value).includes(option.value)
-  );
-
   return (
     <FormControl isRequired={isRequired}>
       {field.label && (
@@ -53,22 +50,39 @@ export function WidgetSelect(props: WidgetProps) {
           <FieldLabel size='xs'>{field.label}</FieldLabel>
         </FormLabel>
       )}
-      <ReactSelect
-        name={pointer}
-        options={options}
-        isMulti={isMulti}
-        isClearable={!isRequired}
-        onChange={(option) => {
-          if (option) {
-            setValue(
-              castArray(option as Option | Option[]).map((o) => o.value)
-            );
-          } else {
-            setValue(isMulti ? [] : undefined);
-          }
+
+      <FastField name={pointer} key={key}>
+        {({
+          field: { name, value },
+          form: { setFieldValue }
+        }: FastFieldProps) => {
+          const selectedOpts = options.filter((option) =>
+            castArray(value).includes(option.value)
+          );
+
+          return (
+            <ReactSelect
+              name={name}
+              options={options}
+              isMulti={isMulti}
+              isClearable={!isRequired}
+              onChange={(option) => {
+                if (option) {
+                  setFieldValue(
+                    name,
+                    isMulti
+                      ? (option as Option[]).map((o) => o.value)
+                      : (option as Option).value
+                  );
+                } else {
+                  setFieldValue(name, isMulti ? [] : undefined);
+                }
+              }}
+              value={selectedOpts}
+            />
+          );
         }}
-        value={selectedOpts}
-      />
+      </FastField>
     </FormControl>
   );
 }

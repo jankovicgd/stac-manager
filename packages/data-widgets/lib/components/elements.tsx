@@ -108,20 +108,24 @@ export function ArrayFieldset(props: ArrayFieldsetProps) {
 
   return (
     <Fieldset className='widget--array'>
-      <FieldsetHeader>
-        <Box>
-          <FieldLabel>{label}</FieldLabel>
-        </Box>
-        {onRemove && (
-          <Box>
-            <FieldsetDeleteBtn
-              onClick={onRemove}
-              isDisabled={removeDisabled}
-              aria-label='Remove item'
-            />
-          </Box>
-        )}
-      </FieldsetHeader>
+      {(label || onRemove) && (
+        <FieldsetHeader>
+          {label && (
+            <Box>
+              <FieldLabel>{label}</FieldLabel>
+            </Box>
+          )}
+          {onRemove && (
+            <Box>
+              <FieldsetDeleteBtn
+                onClick={onRemove}
+                isDisabled={removeDisabled}
+                aria-label='Remove item'
+              />
+            </Box>
+          )}
+        </FieldsetHeader>
+      )}
       <FieldsetBody>{children}</FieldsetBody>
       {onAdd && (
         <FieldsetFooter>
