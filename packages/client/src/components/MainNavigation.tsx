@@ -1,34 +1,42 @@
-import { Link as RouterLink } from "react-router-dom";
-import { Box, List, ListItem, Link } from "@chakra-ui/react";
+import React from 'react';
+import { Box, List, ListItem, Button, ButtonProps } from '@chakra-ui/react';
+import {
+  CollecticonFolder,
+  CollecticonPlusSmall
+} from '@devseed-ui/collecticons-chakra';
 
-type NavItemProps = React.PropsWithChildren<{
-  to: string
-}>
+import SmartLink, { SmartLinkProps } from './SmartLink';
 
-function NavItem({ to, children }: NavItemProps) {
+function NavItem(props: ButtonProps & SmartLinkProps) {
   return (
     <ListItem>
-      <Link
-        as={RouterLink}
-        to={to}
-        borderRadius="5"
-        px="2"
-        py="1"
-        _hover={{ bgColor: "gray.100" }}
-      >
-        {children}
-      </Link>
+      <Button
+        as={SmartLink}
+        variant='ghost'
+        sx={{
+          '&:hover': {
+            textDecoration: 'none'
+          }
+        }}
+        {...props}
+      />
     </ListItem>
   );
 }
 
 function MainNavigation() {
   return (
-    <Box as="nav" aria-label="Main">
-      <List my="0" display="flex">
-        <NavItem to="/">Home</NavItem>
-        <NavItem to="/collections/">Collections</NavItem>
-        <NavItem to="/items/">Items</NavItem>
+    <Box as='nav' aria-label='Main'>
+      <List display='flex' gap={2}>
+        <NavItem to='/collections/' leftIcon={<CollecticonFolder />}>
+          Collections
+        </NavItem>
+        <NavItem to='/items/' leftIcon={<CollecticonFolder />}>
+          Items
+        </NavItem>
+        <NavItem to='/collections/new' leftIcon={<CollecticonPlusSmall />}>
+          Create
+        </NavItem>
       </List>
     </Box>
   );

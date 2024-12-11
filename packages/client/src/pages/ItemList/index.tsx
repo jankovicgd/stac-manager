@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Heading, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useStacSearch } from '@developmentseed/stac-react';
 
 import { usePageTitle } from '../../hooks';
 import ItemListFilter from './ItemListFilter';
 import ItemResults from '../../components/ItemResults';
+import { InnerPageHeader } from '$components/InnerPageHeader';
 
 function ItemList() {
   usePageTitle('Items');
@@ -23,14 +24,14 @@ function ItemList() {
 
   // Submit handlers and effects
   useEffect(() => {
-    // Automatically submit to receive intial results
+    // Automatically submit to receive initial results
     if (results) return;
     submit();
-  }, [submit]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [submit]);
 
   return (
-    <Flex direction='column' gap={8}>
-      <Heading>Items</Heading>
+    <Flex direction='column' gap={8} p={4}>
+      <InnerPageHeader overline='Browsing' title='All Items' />
       <ItemListFilter submit={submit} {...searchState} />
       <ItemResults
         results={results}

@@ -1,6 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ChakraProvider, Box, Container } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  Badge,
+  Divider
+} from '@chakra-ui/react';
 import { StacApiProvider } from '@developmentseed/stac-react';
 import { PluginConfigProvider } from '@stac-manager/data-core';
 
@@ -21,20 +30,25 @@ export const App = () => (
     <StacApiProvider apiUrl={process.env.REACT_APP_STAC_API!}>
       <PluginConfigProvider config={config}>
         <Router>
-          <Container mx='auto' p='5' bgColor='white' maxW='container.lg'>
-            <Box
+          <Container
+            maxW='container.lg'
+            minH='100vh'
+            display='flex'
+            flexDirection='column'
+          >
+            <Flex
               as='header'
-              borderBottom='1px dashed'
-              borderColor='gray.300'
-              mb='4'
-              pb='4'
-              display='flex'
+              gap={4}
+              alignItems='center'
+              justifyContent='space-between'
+              p={4}
             >
-              <Box flex='1' fontWeight='bold' textTransform='uppercase'>
-                STAC Admin
-              </Box>
+              <Heading as='p' size='sm'>
+                STAC Manager
+              </Heading>
+
               <MainNavigation />
-            </Box>
+            </Flex>
             <Box as='main'>
               <Routes>
                 <Route path='/' element={<Home />} />
@@ -60,6 +74,32 @@ export const App = () => (
                 <Route path='*' element={<NotFound />} />
               </Routes>
             </Box>
+            <Flex
+              as='footer'
+              gap={4}
+              alignItems='center'
+              justifyContent='space-between'
+              mt='auto'
+              p={4}
+            >
+              <Flex gap={4} alignItems='center'>
+                <Text as='span'>
+                  Powered by{' '}
+                  <strong>
+                    STAC Manager{' '}
+                    <Badge bg='base.400a' color='surface.500' px='0.375rem'>
+                      {process.env.APP_VERSION}
+                    </Badge>
+                  </strong>{' '}
+                </Text>
+                <Divider
+                  orientation='vertical'
+                  borderColor='base.200a'
+                  h='1em'
+                />
+                {new Date().getFullYear()}
+              </Flex>
+            </Flex>
           </Container>
         </Router>
       </PluginConfigProvider>

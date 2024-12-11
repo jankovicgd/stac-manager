@@ -1,14 +1,12 @@
-import { Text } from "@chakra-ui/react";
-import { usePageTitle } from "../hooks";
+import React from 'react';
 
-function Home () {
-  usePageTitle("STAC Admin");
+import { usePageTitle } from '../hooks';
+import { Navigate } from 'react-router-dom';
 
-  return (
-    <>
-      <Text as="h1">STAC Admin</Text>
-    </>
-  );
+function Home() {
+  usePageTitle('STAC Admin');
+
+  return <Navigate to='/collections' replace />;
 }
 
 export default Home;

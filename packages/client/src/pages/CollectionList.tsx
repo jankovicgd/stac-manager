@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -9,13 +9,16 @@ import {
   Th,
   Td,
   Tbody,
-  Heading,
   Flex
 } from '@chakra-ui/react';
+import { CollecticonPlusSmall } from '@devseed-ui/collecticons-chakra';
 import { useCollections } from '@developmentseed/stac-react';
 import type { StacCollection } from 'stac-ts';
+
 import { Loading } from '../components';
 import { usePageTitle } from '../hooks';
+import { InnerPageHeader } from '$components/InnerPageHeader';
+import SmartLink from '$components/SmartLink';
 
 function CollectionList() {
   usePageTitle('Collections');
@@ -23,18 +26,22 @@ function CollectionList() {
   const { collections, state } = useCollections();
 
   return (
-    <Flex direction='column' gap={8}>
-      <Flex alignItems='center' justifyContent='space-between'>
-        <Heading>Collections</Heading>
-        <Button
-          as={NavLink}
-          to='/collections/new'
-          colorScheme='primary'
-          size='sm'
-        >
-          New Collection
-        </Button>
-      </Flex>
+    <Flex direction='column' gap={8} p={4}>
+      <InnerPageHeader
+        title='Catalog'
+        overline='Browsing'
+        actions={
+          <Button
+            as={SmartLink}
+            to='/collections/new'
+            colorScheme='primary'
+            size='sm'
+            leftIcon={<CollecticonPlusSmall />}
+          >
+            Create
+          </Button>
+        }
+      />
       <TableContainer>
         <Table size='sm'>
           <Thead>

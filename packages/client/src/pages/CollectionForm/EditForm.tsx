@@ -13,11 +13,13 @@ import {
   TabList,
   TabPanel,
   TabPanels,
-  Tabs,
-  Text
+  Tabs
 } from '@chakra-ui/react';
 import { Formik, FormikHelpers } from 'formik';
 import { WidgetJSON } from '@stac-manager/data-widgets';
+import { CollecticonTickSmall } from '@devseed-ui/collecticons-chakra';
+
+import { InnerPageHeaderSticky } from '$components/InnerPageHeader';
 
 type FormView = 'fields' | 'json';
 
@@ -63,38 +65,29 @@ export function EditForm(props: {
                 // @ts-expect-error Can't detect the as=form and throws error
                 onSubmit={handleSubmit}
               >
-                <Flex
-                  gap={4}
-                  p={4}
-                  borderRadius='lg'
-                  bg='base.50'
-                  justifyContent='space-between'
-                  position='sticky'
-                  top={0}
-                  zIndex={100}
-                  boxShadow='md'
-                >
-                  <Box>
-                    <Text fontSize='sm'>
-                      {initialData && 'Edit '}Collection
-                    </Text>
-                    <Heading>
-                      {initialData
-                        ? initialData.title || 'Untitled'
-                        : 'New Collection'}
-                    </Heading>
-                  </Box>
-                  <Button
-                    type='submit'
-                    isDisabled={isSubmitting}
-                    colorScheme='primary'
-                    size='md'
-                    alignSelf='flex-end'
-                    flexShrink={0}
-                  >
-                    {initialData ? 'Save' : 'Create'}
-                  </Button>
-                </Flex>
+                <InnerPageHeaderSticky
+                  overline={
+                    initialData ? 'Editing Collection' : 'Creating Collection'
+                  }
+                  title={
+                    initialData
+                      ? initialData.title || initialData.id
+                      : 'New Collection'
+                  }
+                  actions={
+                    <>
+                      <Button
+                        type='submit'
+                        isDisabled={isSubmitting}
+                        colorScheme='primary'
+                        size='sm'
+                        leftIcon={<CollecticonTickSmall />}
+                      >
+                        {initialData ? 'Save' : 'Create'}
+                      </Button>
+                    </>
+                  }
+                />
                 <Tabs
                   isLazy
                   variant='enclosed'
