@@ -170,3 +170,26 @@ export function tuple2Object(stack: string[][]) {
     return { ...acc, [key]: item };
   }, {});
 }
+
+/**
+ * Checks if the given data has a specific STAC extension.
+ *
+ * @param data - The data object to check for the extension.
+ * @param extension - The name of the extension to look for.
+ * @param version - An optional function that takes a version string and returns
+ * a boolean indicating whether the version matches.
+ *
+ * @returns A boolean indicating whether the specified extension (and version,
+ * if provided) is present in the data.
+ */
+export function hasExtension(
+  data: any,
+  extension: string,
+  version?: (v: string) => boolean
+) {
+  const regex = new RegExp(`/${extension}/v([0-9.]+)/schema.json`);
+  return data?.stac_extensions?.some((ext: string) => {
+    const match = ext.match(regex);
+    return match && (!version || version(match[1]));
+  });
+}

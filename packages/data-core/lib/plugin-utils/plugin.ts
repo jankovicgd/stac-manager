@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 
-import { SchemaField } from '../schema/types';
+import { SchemaField, SchemaFieldObject } from '../schema/types';
+
+export type PluginEditSchema =
+  | (SchemaFieldObject & { type: 'root' })
+  | undefined
+  | symbol;
 
 export abstract class Plugin {
   static HIDDEN = Symbol('hidden');
 
   name: string = 'Plugin';
 
-  watchFields?: string[] = [];
-
   init(data: any) {}
 
-  editSchema(formData?: any): SchemaField | undefined | symbol {
+  editSchema(formData?: any): PluginEditSchema {
     return undefined;
   }
 

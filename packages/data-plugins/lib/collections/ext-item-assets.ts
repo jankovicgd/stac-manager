@@ -1,10 +1,14 @@
-import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
-import { array2Object, object2Array } from '../utils';
+import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
+import { array2Object, hasExtension, object2Array } from '../utils';
 
 export class PluginItemAssets extends Plugin {
-  name = 'Item Assets';
+  name = 'Item Assets Extension';
 
-  editSchema(): SchemaFieldObject {
+  editSchema(data: any): PluginEditSchema {
+    if (!hasExtension(data, 'item-assets')) {
+      return Plugin.HIDDEN;
+    }
+
     return {
       type: 'root',
       properties: {

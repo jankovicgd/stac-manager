@@ -1,15 +1,20 @@
-import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
+import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
 import {
   array2Object,
+  hasExtension,
   object2Array,
   object2Tuple,
   tuple2Object
 } from '../utils';
 
 export class PluginRender extends Plugin {
-  name = 'Render';
+  name = 'Render Extension';
 
-  editSchema(): SchemaFieldObject {
+  editSchema(data: any): PluginEditSchema {
+    if (!hasExtension(data, 'render')) {
+      return Plugin.HIDDEN;
+    }
+
     return {
       type: 'root',
       properties: {
