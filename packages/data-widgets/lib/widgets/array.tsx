@@ -12,8 +12,7 @@ import { getArrayLabel } from '../utils';
 import { ArrayFieldset } from '../components/elements';
 
 export function WidgetArray(props: WidgetProps) {
-  // const { pointer, isRequired } = props;
-  const { pointer } = props;
+  const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldArray;
 
   return (
@@ -21,7 +20,7 @@ export function WidgetArray(props: WidgetProps) {
       label={field.label}
       pointer={pointer}
       field={field}
-      // isRequired={isRequired}
+      isRequired={isRequired}
     />
   );
 }
@@ -30,12 +29,13 @@ interface ArrayItemProps {
   label: React.ReactNode;
   field: SchemaFieldArray;
   pointer: string;
+  isRequired?: boolean;
   onRemove?: () => void;
   removeDisabled?: boolean;
 }
 
 function ArrayItem(props: ArrayItemProps) {
-  const { label, field, pointer, onRemove, removeDisabled } = props;
+  const { label, field, pointer, onRemove, removeDisabled, isRequired } = props;
 
   const { values } = useFormikContext();
   const fields: any[] = get(values, pointer) || [];
@@ -56,6 +56,7 @@ function ArrayItem(props: ArrayItemProps) {
       render={({ remove, push }) => (
         <ArrayFieldset
           label={label}
+          isRequired={isRequired}
           onRemove={onRemove}
           onAdd={
             isFixedCount

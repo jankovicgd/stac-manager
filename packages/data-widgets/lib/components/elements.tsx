@@ -8,7 +8,8 @@ import {
   Button,
   HeadingProps,
   IconButtonProps,
-  FlexProps
+  FlexProps,
+  Text
 } from '@chakra-ui/react';
 import {
   CollecticonTrashBin,
@@ -95,6 +96,7 @@ export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
 
 interface ArrayFieldsetProps {
   label: React.ReactNode;
+  isRequired?: boolean;
   children: React.ReactNode;
   onRemove?: () => void;
   onAdd?: () => void;
@@ -103,8 +105,15 @@ interface ArrayFieldsetProps {
 }
 
 export function ArrayFieldset(props: ArrayFieldsetProps) {
-  const { label, children, onRemove, onAdd, addDisabled, removeDisabled } =
-    props;
+  const {
+    label,
+    isRequired,
+    children,
+    onRemove,
+    onAdd,
+    addDisabled,
+    removeDisabled
+  } = props;
 
   return (
     <Fieldset className='widget--array'>
@@ -112,7 +121,19 @@ export function ArrayFieldset(props: ArrayFieldsetProps) {
         <FieldsetHeader>
           {label && (
             <Box>
-              <FieldLabel>{label}</FieldLabel>
+              <FieldLabel>
+                {label}
+                {isRequired && (
+                  <Text
+                    as='span'
+                    color='danger.500'
+                    role='presentation'
+                    aria-hidden='true'
+                  >
+                    *
+                  </Text>
+                )}
+              </FieldLabel>
             </Box>
           )}
           {onRemove && (

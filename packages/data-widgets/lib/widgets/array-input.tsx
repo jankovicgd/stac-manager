@@ -13,7 +13,7 @@ import { ArrayFieldset } from '../components/elements';
 import { WidgetInput } from './input';
 
 export function WidgetArrayInput(props: WidgetProps) {
-  const { pointer } = props;
+  const { pointer, isRequired } = props;
   const field = props.field as SchemaFieldArray;
 
   const { values } = useFormikContext();
@@ -28,6 +28,7 @@ export function WidgetArrayInput(props: WidgetProps) {
       name={pointer}
       render={({ remove, push }) => (
         <ArrayFieldset
+          isRequired={isRequired}
           label={field.label}
           onAdd={
             isFixed
