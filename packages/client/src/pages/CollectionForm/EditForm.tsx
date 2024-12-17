@@ -4,22 +4,16 @@ import {
   useCollectionPlugins,
   WidgetRenderer
 } from '@stac-manager/data-core';
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs
-} from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, Heading } from '@chakra-ui/react';
 import { Formik, FormikHelpers } from 'formik';
 import { WidgetJSON } from '@stac-manager/data-widgets';
-import { CollecticonTickSmall } from '@devseed-ui/collecticons-chakra';
+import {
+  CollecticonCode,
+  CollecticonTickSmall
+} from '@devseed-ui/collecticons-chakra';
 
 import { InnerPageHeaderSticky } from '$components/InnerPageHeader';
+import { CollecticonForm } from '$components/icons/form';
 
 type FormView = 'fields' | 'json';
 
@@ -88,52 +82,60 @@ export function EditForm(props: {
                     </>
                   }
                 />
-                <Tabs
-                  isLazy
-                  variant='enclosed'
-                  index={view === 'fields' ? 0 : 1}
-                  onChange={(i) => {
-                    setView(['fields', 'json'][i] as FormView);
-                    setStacData(
-                      view === 'json' ? values.jsonData : toOutData(values)
-                    );
-                  }}
-                >
-                  <TabList>
-                    <Tab bg='base.50a'>FORM</Tab>
-                    <Tab>JSON</Tab>
-                  </TabList>
-                  <TabPanels>
-                    <TabPanel p={0} display='flex' flexFlow='column' gap={4}>
-                      {view === 'fields' &&
-                        plugins.map((pl) => (
-                          <PluginBox key={pl.name} plugin={pl}>
-                            {({ field }) => (
-                              <Box
-                                p='16'
-                                borderRadius='lg'
-                                bg='base.50a'
-                                display='flex'
-                                flexDir='column'
-                                gap={8}
-                              >
-                                <Heading size='sm'>{pl.name}</Heading>
-                                <WidgetRenderer pointer='' field={field} />
-                              </Box>
-                            )}
-                          </PluginBox>
-                        ))}
-                    </TabPanel>
-                    <TabPanel p={0} pt={4}>
-                      {view === 'json' && (
-                        <WidgetJSON
-                          field={{ type: 'json', label: 'Json Document' }}
-                          pointer='jsonData'
-                        />
-                      )}
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs>
+                <Flex alignItems='center' justifyContent='space-between' p={4}>
+                  <Heading size='md'>{initialData ? 'Edit' : 'New'}</Heading>
+
+                  <ButtonGroup isAttached variant='outline' size='sm'>
+                    <Button
+                      aria-label='Edit Form'
+                      leftIcon={<CollecticonForm />}
+                      onClick={() => {
+                        setView('fields');
+                        setStacData(values.jsonData);
+                      }}
+                      isActive={view === 'fields'}
+                    >
+                      Form
+                    </Button>
+                    <Button
+                      aria-label='Edit JSON'
+                      leftIcon={<CollecticonCode />}
+                      onClick={() => {
+                        setView('json');
+                        setStacData(toOutData(values));
+                      }}
+                      isActive={view === 'json'}
+                    >
+                      JSON
+                    </Button>
+                  </ButtonGroup>
+                </Flex>
+                <Flex flexFlow='column' gap={4}>
+                  {view === 'fields' ? (
+                    plugins.map((pl) => (
+                      <PluginBox key={pl.name} plugin={pl}>
+                        {({ field }) => (
+                          <Box
+                            p='16'
+                            borderRadius='lg'
+                            bg='base.50a'
+                            display='flex'
+                            flexDir='column'
+                            gap={8}
+                          >
+                            <Heading size='sm'>{pl.name}</Heading>
+                            <WidgetRenderer pointer='' field={field} />
+                          </Box>
+                        )}
+                      </PluginBox>
+                    ))
+                  ) : (
+                    <WidgetJSON
+                      field={{ type: 'json', label: 'Json Document' }}
+                      pointer='jsonData'
+                    />
+                  )}
+                </Flex>
               </Flex>
             )}
           </Formik>

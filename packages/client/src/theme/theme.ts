@@ -74,7 +74,10 @@ const theme = {
     Button: {
       baseStyle: {
         borderRadius: 'md',
-        fontWeight: '700'
+        fontWeight: '700',
+        ':is(a):hover': {
+          textDecoration: 'none'
+        }
       },
       sizes: {
         xs: {
