@@ -89,9 +89,16 @@ const inferFieldType = (value: any): FieldTypes => {
  * @returns A SchemaField object if the type is recognized, otherwise null.
  */
 const getFieldSchema = (type: FieldTypes): SchemaField | null => {
-  if (type === 'string' || type === 'number') {
+  if (type === 'string') {
     return {
-      type: type,
+      type: 'string',
+      label: 'Value'
+    };
+  }
+
+  if (type === 'number') {
+    return {
+      type: 'number',
       label: 'Value'
     };
   }

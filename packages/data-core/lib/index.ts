@@ -1,4 +1,5 @@
 export * from './plugin-utils/plugin';
+export * from './plugin-utils/validate';
 export * from './plugin-utils/use-plugins-hook';
 export * from './context/plugin-config';
 export * from './config';

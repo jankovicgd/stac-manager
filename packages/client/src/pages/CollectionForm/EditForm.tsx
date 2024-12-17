@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import {
   PluginBox,
   useCollectionPlugins,
+  validatePluginsFieldsData,
   WidgetRenderer
 } from '@stac-manager/data-core';
 import { Box, Button, ButtonGroup, Flex, Heading } from '@chakra-ui/react';
@@ -42,13 +43,16 @@ export function EditForm(props: {
         <Flex direction='column' gap={4}>
           <Formik
             validateOnChange={false}
-            validateOnBlur={false}
             enableReinitialize
             initialValues={editorData}
             onSubmit={(values, actions) => {
               const exitData =
                 view === 'json' ? values.jsonData : toOutData(values);
               return onSubmit(exitData, actions);
+            }}
+            validate={(values) => {
+              const [, error] = validatePluginsFieldsData(plugins, values);
+              if (error) return error;
             }}
           >
             {({ handleSubmit, values, isSubmitting }) => (

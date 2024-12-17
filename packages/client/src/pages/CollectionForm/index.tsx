@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, useToast } from '@chakra-ui/react';
 import { FormikHelpers } from 'formik';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCollection } from '@developmentseed/stac-react';
 import { StacCollection } from 'stac-ts';
 
@@ -23,6 +23,7 @@ export function CollectionFormNew() {
   usePageTitle('New collection');
 
   const toast = useToast();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any, formikHelpers: FormikHelpers<any>) => {
     try {
@@ -42,6 +43,8 @@ export function CollectionFormNew() {
         duration: 5000,
         isClosable: true
       });
+
+      navigate(`/collections/${data.id}`);
     } catch (error: any) {
       toast.update('collection-submit', {
         title: 'Collection creation failed',
@@ -63,6 +66,8 @@ export function CollectionFormEdit(props: { id: string }) {
   const [triedLoading, setTriedLoading] = useState(!!collection);
 
   usePageTitle(collection ? `Edit collection ${id}` : 'Edit collection');
+
+  const navigate = useNavigate();
 
   const toast = useToast();
 
@@ -98,6 +103,8 @@ export function CollectionFormEdit(props: { id: string }) {
         duration: 5000,
         isClosable: true
       });
+
+      navigate(`/collections/${data.id}`);
     } catch (error: any) {
       toast.update('collection-submit', {
         title: 'Collection update failed',
