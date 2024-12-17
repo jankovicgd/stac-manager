@@ -14,10 +14,7 @@
       "$pages/*": ["./src/pages/*"]
     },
     // https://www.credera.com/en-us/insights/typescript-adding-custom-type-definitions-for-existing-libraries/
-    "typeRoots": [
-      "src/_custom-types",
-      "node_modules/@types"
-    ]
+    "typeRoots": ["src/_custom-types", "node_modules/@types", "../../node_modules/@types"]
   },
   "exclude": [
     ".git",
