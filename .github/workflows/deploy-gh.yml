@@ -8,6 +8,7 @@ on:
 env:
   PUBLIC_URL: ${{ vars.PUBLIC_URL }}
   REACT_APP_STAC_API: ${{ vars.REACT_APP_STAC_API }}
+  REACT_APP_STAC_BROWSER: ${{ vars.REACT_APP_STAC_BROWSER }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
