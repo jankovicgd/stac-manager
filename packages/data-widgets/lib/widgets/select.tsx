@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { FormControl, FormLabel } from '@chakra-ui/react';
+import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/react';
 import { FastField, FastFieldProps } from 'formik';
 import ReactSelect from 'react-select';
 import {
@@ -44,23 +44,26 @@ export function WidgetSelect(props: WidgetProps) {
   }, [field]);
 
   return (
-    <FormControl isRequired={isRequired}>
-      {field.label && (
-        <FormLabel>
-          <FieldLabel size='xs'>{field.label}</FieldLabel>
-        </FormLabel>
-      )}
+    <FastField name={pointer} key={key}>
+      {({
+        field: { name, value },
+        meta,
+        form: { setFieldValue }
+      }: FastFieldProps) => {
+        const selectedOpts = options.filter((option) =>
+          castArray(value).includes(option.value)
+        );
 
-      <FastField name={pointer} key={key}>
-        {({
-          field: { name, value },
-          form: { setFieldValue }
-        }: FastFieldProps) => {
-          const selectedOpts = options.filter((option) =>
-            castArray(value).includes(option.value)
-          );
-
-          return (
+        return (
+          <FormControl
+            isRequired={isRequired}
+            isInvalid={!!(meta.touched && meta.error)}
+          >
+            {field.label && (
+              <FormLabel>
+                <FieldLabel size='xs'>{field.label}</FieldLabel>
+              </FormLabel>
+            )}
             <ReactSelect
               name={name}
               options={options}
@@ -80,9 +83,10 @@ export function WidgetSelect(props: WidgetProps) {
               }}
               value={selectedOpts}
             />
-          );
-        }}
-      </FastField>
-    </FormControl>
+            <FormErrorMessage>{meta.error}</FormErrorMessage>
+          </FormControl>
+        );
+      }}
+    </FastField>
   );
 }

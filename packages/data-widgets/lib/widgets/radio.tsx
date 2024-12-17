@@ -28,7 +28,10 @@ export function WidgetRadio(props: WidgetProps) {
         meta,
         form: { setFieldValue, setFieldTouched }
       }: FastFieldProps) => (
-        <FormControl isRequired={isRequired}>
+        <FormControl
+          isRequired={isRequired}
+          isInvalid={!!(meta.touched && meta.error)}
+        >
           {field.label && (
             <FormLabel>
               <FieldLabel size='xs'>{field.label}</FieldLabel>
@@ -50,9 +53,7 @@ export function WidgetRadio(props: WidgetProps) {
               </Radio>
             ))}
           </RadioGroup>
-          {meta.touched && meta.error && (
-            <FormErrorMessage>{meta.error}</FormErrorMessage>
-          )}
+          <FormErrorMessage>{meta.error}</FormErrorMessage>
         </FormControl>
       )}
     </FastField>

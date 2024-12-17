@@ -45,7 +45,10 @@ export function WidgetInput(props: WidgetInputProps) {
         meta,
         form: { setFieldValue }
       }: FastFieldProps) => (
-        <FormControl isRequired={isRequired}>
+        <FormControl
+          isRequired={isRequired}
+          isInvalid={meta.touched && meta.error ? true : false}
+        >
           <Flex gap={4}>
             {fieldLabel && (
               <FormLabel>
@@ -75,11 +78,8 @@ export function WidgetInput(props: WidgetInputProps) {
             onChange={(e) => {
               setFieldValue(pointer, transformValue(e.target.value));
             }}
-            isInvalid={meta.touched && meta.error ? true : false}
           />
-          {meta.touched && meta.error && (
-            <FormErrorMessage>{meta.error}</FormErrorMessage>
-          )}
+          <FormErrorMessage>{meta.error}</FormErrorMessage>
         </FormControl>
       )}
     </FastField>

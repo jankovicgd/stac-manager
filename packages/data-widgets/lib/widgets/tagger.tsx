@@ -4,7 +4,12 @@ import React, {
   useMemo,
   useState
 } from 'react';
-import { Kbd, FormControl, FormLabel } from '@chakra-ui/react';
+import {
+  Kbd,
+  FormControl,
+  FormLabel,
+  FormErrorMessage
+} from '@chakra-ui/react';
 import { FastField, FastFieldProps } from 'formik';
 import CreatableSelect from 'react-select/creatable';
 import {
@@ -81,26 +86,30 @@ function WidgetTaggerNoOptions(props: WidgetProps) {
   const key = useRenderKey([pointer, isRequired, field]);
 
   return (
-    <FormControl isRequired={isRequired}>
-      {field.label && (
-        <FormLabel>
-          <FieldLabel size='xs'>{field.label}</FieldLabel>
-        </FormLabel>
-      )}
-
-      <FastField name={pointer} key={key}>
-        {({
-          field: { value, name },
-          form: { setFieldValue }
-        }: FastFieldProps) => (
+    <FastField name={pointer} key={key}>
+      {({
+        field: { value, name },
+        meta,
+        form: { setFieldValue }
+      }: FastFieldProps) => (
+        <FormControl
+          isRequired={isRequired}
+          isInvalid={!!(meta.touched && meta.error)}
+        >
+          {field.label && (
+            <FormLabel>
+              <FieldLabel size='xs'>{field.label}</FieldLabel>
+            </FormLabel>
+          )}
           <WidgetTaggerNoOptionsSelect
             pointer={pointer}
             value={value}
             onChange={(v: string | string[]) => setFieldValue(name, v)}
           />
-        )}
-      </FastField>
-    </FormControl>
+          <FormErrorMessage>{meta.error}</FormErrorMessage>
+        </FormControl>
+      )}
+    </FastField>
   );
 }
 
@@ -178,18 +187,22 @@ function WidgetTaggerWithOptions(props: WidgetProps & { isMulti?: boolean }) {
   }, [field]);
 
   return (
-    <FormControl isRequired={isRequired}>
-      {field.label && (
-        <FormLabel>
-          <FieldLabel size='xs'>{field.label}</FieldLabel>
-        </FormLabel>
-      )}
+    <FastField name={pointer} key={key}>
+      {({
+        field: { name, value },
+        meta,
+        form: { setFieldValue }
+      }: FastFieldProps) => (
+        <FormControl
+          isRequired={isRequired}
+          isInvalid={!!(meta.touched && meta.error)}
+        >
+          {field.label && (
+            <FormLabel>
+              <FieldLabel size='xs'>{field.label}</FieldLabel>
+            </FormLabel>
+          )}
 
-      <FastField name={pointer} key={key}>
-        {({
-          field: { name, value },
-          form: { setFieldValue }
-        }: FastFieldProps) => (
           <WidgetTaggerWithOptionsSelect
             pointer={pointer}
             isMulti={!!isMulti}
@@ -197,9 +210,10 @@ function WidgetTaggerWithOptions(props: WidgetProps & { isMulti?: boolean }) {
             onChange={(v: string | string[]) => setFieldValue(name, v)}
             options={options}
           />
-        )}
-      </FastField>
-    </FormControl>
+          <FormErrorMessage>{meta.error}</FormErrorMessage>
+        </FormControl>
+      )}
+    </FastField>
   );
 }
 
