@@ -1,9 +1,9 @@
-import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
+import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
 
 export class PluginKitchenSink extends Plugin {
   name = 'Kitchen Sink';
 
-  editSchema(): SchemaFieldObject {
+  editSchema(): PluginEditSchema {
     return {
       type: 'root',
       properties: {

@@ -1,4 +1,4 @@
-import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
+import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
 
 export class PluginMeta extends Plugin {
   name = 'CollectionsMeta';
@@ -7,7 +7,7 @@ export class PluginMeta extends Plugin {
   //   await new Promise((resolve) => setTimeout(resolve, 100));
   // }
 
-  editSchema(): SchemaFieldObject {
+  editSchema(): PluginEditSchema {
     return {
       type: 'root',
       properties: {

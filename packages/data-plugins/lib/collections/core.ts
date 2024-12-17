@@ -1,4 +1,4 @@
-import { Plugin, SchemaFieldObject } from '@stac-manager/data-core';
+import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
 import { emptyString2Null, fieldIf, null2EmptyString } from '../utils';
 
 export class PluginCore extends Plugin {
@@ -10,7 +10,7 @@ export class PluginCore extends Plugin {
     this.isNew = !data?.id;
   }
 
-  editSchema(): SchemaFieldObject {
+  editSchema(): PluginEditSchema {
     return {
       type: 'root',
       required: [
@@ -47,6 +47,9 @@ export class PluginCore extends Plugin {
           label: 'License',
           type: 'string',
           'ui:widget': 'tagger',
+          allowOther: {
+            type: 'string'
+          },
           enum: [
             ['Apache-2.0', 'Apache License 2.0'],
             ['MIT', 'MIT License'],
@@ -136,7 +139,7 @@ export class PluginCore extends Plugin {
           minItems: 1,
           items: {
             type: 'object',
-            required: ['rel', 'href'],
+            required: ['rel', 'href', 'type'],
             properties: {
               href: {
                 label: 'URL',

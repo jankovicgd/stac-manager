@@ -1,35 +1,30 @@
-export interface SchemaFieldString {
-  type: 'string';
-  'ui:widget'?: string;
-  label?: string | string[];
-  enum?: [string, string][];
-}
-
-export interface SchemaFieldNumber {
-  type: 'number';
+interface FieldBase<T> {
+  type: T;
   'ui:widget'?: string;
   label?: string | string[];
 }
 
-export interface SchemaFieldJson {
-  type: 'json';
-  'ui:widget'?: string;
-  label?: string;
-}
+export type SchemaFieldString =
+  | (FieldBase<'string'> & { enum?: never; allowOther?: never })
+  | (FieldBase<'string'> & {
+      allowOther?: {
+        type: 'string';
+      };
+      enum: [string, string][];
+    });
 
-export interface SchemaFieldArray<I extends SchemaField = SchemaField> {
-  type: 'array';
-  'ui:widget'?: string;
-  label?: string | string[];
+export type SchemaFieldNumber = FieldBase<'number'>;
+
+export type SchemaFieldJson = FieldBase<'json'>;
+
+export interface SchemaFieldArray<I extends SchemaField = SchemaField>
+  extends FieldBase<'array'> {
   minItems?: number;
   maxItems?: number;
   items: I;
 }
 
-export interface SchemaFieldObject {
-  type: 'object' | 'root';
-  'ui:widget'?: string;
-  label?: string | string[];
+export interface SchemaFieldObject extends FieldBase<'object' | 'root'> {
   properties: Record<string, SchemaField>;
   additionalProperties?: boolean;
   required?: string[];
