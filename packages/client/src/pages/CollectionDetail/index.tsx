@@ -19,7 +19,6 @@ import { MdAccessTime, MdBalance, MdEdit } from 'react-icons/md';
 import { useCollection, useStacSearch } from '@developmentseed/stac-react';
 import {
   CollecticonEllipsisVertical,
-  CollecticonGlobe,
   CollecticonPencil,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
@@ -31,6 +30,7 @@ import ItemResults from '../../components/ItemResults';
 import CollectionMap from './CollectionMap';
 import SmartLink from '$components/SmartLink';
 import { InnerPageHeader } from '$components/InnerPageHeader';
+import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -115,14 +115,7 @@ function CollectionDetail() {
                 size='sm'
               />
               <MenuList>
-                <MenuItem
-                  icon={<CollecticonGlobe />}
-                  as={SmartLink}
-                  _hover={{ textDecoration: 'none' }}
-                  to={`${process.env.REACT_APP_STAC_BROWSER}/collections/${id}`}
-                >
-                  View in STAC Browser
-                </MenuItem>
+                <StacBrowserMenuItem resourcePath={`/collections/${id}`} />
                 <MenuItem
                   icon={<CollecticonTrashBin />}
                   color='danger.500'

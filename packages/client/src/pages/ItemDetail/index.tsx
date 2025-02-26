@@ -16,7 +16,6 @@ import { StacAsset } from 'stac-ts';
 import { useItem } from '@developmentseed/stac-react';
 import {
   CollecticonEllipsisVertical,
-  CollecticonGlobe,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
 import getBbox from '@turf/bbox';
@@ -28,7 +27,7 @@ import { PropertyGroup } from '../../types';
 import { BackgroundTiles } from '../../components/Map';
 import AssetList from './AssetList';
 import { InnerPageHeader } from '$components/InnerPageHeader';
-import SmartLink from '$components/SmartLink';
+import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
 
 const resultsOutline = {
   'line-color': '#C53030',
@@ -114,14 +113,9 @@ function ItemDetail() {
                 size='sm'
               />
               <MenuList>
-                <MenuItem
-                  icon={<CollecticonGlobe />}
-                  as={SmartLink}
-                  _hover={{ textDecoration: 'none' }}
-                  to={`${process.env.REACT_APP_STAC_BROWSER}/collections/${properties.collection}/items/${properties.id}/edit`}
-                >
-                  View in STAC Browser
-                </MenuItem>
+                <StacBrowserMenuItem
+                  resourcePath={`/collections/${properties.collection}/items/${properties.id}`}
+                />
                 <MenuItem
                   icon={<CollecticonTrashBin />}
                   color='danger.500'
