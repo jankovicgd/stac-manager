@@ -1,6 +1,6 @@
 # STAC-Manager 📡 📄 — PLUGINS
 
-- [STAC-Manager PLUGINS](#stac-manager-plugins)
+- [STAC-Manager 📡 📄 — PLUGINS](#stac-manager----plugins)
   - [Plugin editing schema](#plugin-editing-schema)
     - [String field](#string-field)
     - [Number field](#number-field)

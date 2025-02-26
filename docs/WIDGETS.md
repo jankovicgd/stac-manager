@@ -1,5 +1,19 @@
 # STAC-Manager 📡 📄 — WIDGETS
 
+- [STAC-Manager 📡 📄 — WIDGETS](#stac-manager----widgets)
+  - [Existent widgets](#existent-widgets)
+    - [text](#text)
+    - [number](#number)
+    - [radio](#radio)
+    - [checkbox](#checkbox)
+    - [array](#array)
+    - [array:string](#arraystring)
+    - [select](#select)
+    - [tagger](#tagger)
+    - [object](#object)
+    - [json](#json)
+  - [Creating a new widget](#creating-a-new-widget)
+
 The app will render a default widget for each field type, but this can be changed by adding a `ui:widget` property to the field.
 
 There are different widgets for different field types. The existent widgets can be found in [data-widgets/config](/packages/data-widgets/lib/config/index.ts) and the [WidgetRenderer](/packages/data-core/lib/components/widget-renderer.tsx) is the component responsible for rendering the widgets based on the field type and associated conditions.

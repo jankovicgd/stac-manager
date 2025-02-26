@@ -1,5 +1,10 @@
 # STAC-Manager 📡 📄 — Custom app
 
+- [STAC-Manager 📡 📄 — Custom app](#stac-manager----custom-app)
+  - [Provider](#provider)
+  - [Config](#config)
+  - [From](#from)
+
 If you're not using the STAC-Manager client app and want to build your own app using the plugin system, the following guide will help you set up the plugin system in your project.
 
 ## Provider

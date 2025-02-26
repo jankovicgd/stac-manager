@@ -1,5 +1,11 @@
 # STAC-Manager 📡 📄 — Technical Documentation
 
+- [STAC-Manager 📡 📄 — Technical Documentation](#stac-manager----technical-documentation)
+  - [Configuration](#configuration)
+    - [Example config](#example-config)
+  - [Plugins \& Widgets](#plugins--widgets)
+  - [Custom Client](#custom-client)
+
 STAC-Manager is a react app designed for managing the values of a STAC (SpatioTemporal Asset Catalog) collection and its items.
 The ecosystem is composed of a web app (the client) and a plugin system that powers it.
 The different parts of the project are located in the `packages` directory structured as follows:
