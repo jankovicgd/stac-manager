@@ -59,7 +59,12 @@ export function WidgetTagger(props: WidgetProps) {
     return <WidgetTaggerWithOptions {...props} />;
   }
 
-  if (field.type === 'array' && field.items.type === 'string') {
+  if (field.type === 'array') {
+    if (field.items.type !== 'string') {
+      throw new Error(
+        "WidgetTagger: 'items.type' must be 'string' for array fields"
+      );
+    }
     return field.items.enum ? (
       <WidgetTaggerWithOptions {...props} isMulti />
     ) : (

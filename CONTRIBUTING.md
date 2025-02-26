@@ -1,6 +1,6 @@
-# Contributing to STAC-Admin Interface
+# STAC-Manager 📡 📄 — Contributing
 
-First off, thank you for considering contributing to the STAC-Admin Interface! People like you make the open-source community a great place to learn, inspire, and create.
+First off, thank you for considering contributing to the STAC-Manager Interface! People like you make the open-source community a great place to learn, inspire, and create.
 
 ## How to Contribute
 
@@ -32,4 +32,4 @@ Our project adheres to a code of conduct. By participating, you are expected to 
 ## Getting Help
 If you need help, feel free to create an issue or contact the project maintainers.
 
-Thank you for contributing to the STAC-Admin Interface!
+Thank you for contributing to the STAC-Manager Interface!

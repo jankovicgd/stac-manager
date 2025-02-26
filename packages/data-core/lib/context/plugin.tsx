@@ -7,7 +7,7 @@ const PluginContext = createContext<Plugin | undefined>(undefined);
 
 /**
  * Context provider for each plugin configuration
- * 
+ *
  * @param props.config Plugin configuration object
  * @param props.children Child components
  */

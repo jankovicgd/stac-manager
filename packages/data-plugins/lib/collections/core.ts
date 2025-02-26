@@ -47,9 +47,6 @@ export class PluginCore extends Plugin {
           label: 'License',
           type: 'string',
           'ui:widget': 'tagger',
-          allowOther: {
-            type: 'string'
-          },
           enum: [
             ['Apache-2.0', 'Apache License 2.0'],
             ['MIT', 'MIT License'],

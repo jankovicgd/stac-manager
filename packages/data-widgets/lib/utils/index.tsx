@@ -22,6 +22,17 @@ export function mod(a: number, n: number) {
   return ((a % n) + n) % n;
 }
 
+/**
+ * Generates a label for an array item based on the provided field and index. If
+ * the provided label is a single string, the label is returned with a number
+ * suffix. (Eg: Label 01)
+ * If the label is an array of strings, the label is cycled based on the index.
+ *
+ * @param {SchemaField} field - The schema field containing label information.
+ * @param {number} index - The index of the array item.
+ * @returns {object | null} An object containing the label, number, and
+ * formatted JSX element, or null if the label is null.
+ */
 export function getArrayLabel(field: SchemaField, index: number) {
   const label = field.label === undefined ? 'Item' : field.label;
   if (label === null) {
@@ -62,6 +73,14 @@ export function toNumber(v: any) {
   return isNaN(n) ? null : n;
 }
 
+/**
+ * Ensures that the provided value is returned as an array.
+ * If the value is already an array, it is returned as-is.
+ * Otherwise, the value is wrapped in an array.
+ *
+ * @param {T | T[]} value - The value to be cast to an array.
+ * @returns {T[]} The value as an array.
+ */
 export function castArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];
 }

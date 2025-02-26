@@ -134,6 +134,16 @@ export class PluginKitchenSink extends Plugin {
             ['inferno', 'inferno']
           ]
         },
+        select_other: {
+          label: 'Select one string or input (Tagger widget)',
+          type: 'string',
+          'ui:widget': 'tagger',
+          enum: [
+            ['viridis', 'viridis'],
+            ['plasma', 'plasma'],
+            ['inferno', 'inferno']
+          ]
+        },
         array_checkboxes: {
           label: 'Array of array of strings (default) ',
           type: 'array',

@@ -17,7 +17,7 @@ const configStructure: PluginConfig = {
  * Successively merges multiple configurations into one.
  * The last configuration will override the previous ones.
  * The resulting configuration is to be used by the PluginConfigProvider.
- * 
+ *
  * @param ...config - The configurations to merge
  * @returns The configuration object
  */

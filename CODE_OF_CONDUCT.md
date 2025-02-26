@@ -1,4 +1,4 @@
-# Code of Conduct for STAC-Admin Interface
+# STAC-Manager 📡 📄 — Code of Conduct
 
 ## Our Pledge
 
