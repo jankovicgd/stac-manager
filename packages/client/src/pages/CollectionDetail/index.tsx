@@ -118,7 +118,8 @@ function CollectionDetail() {
                 <MenuItem
                   icon={<CollecticonGlobe />}
                   as={SmartLink}
-                  to={`${process.env.REACT_APP_STAC_BROWSER}/stac/collections/${id}`}
+                  _hover={{ textDecoration: 'none' }}
+                  to={`${process.env.REACT_APP_STAC_BROWSER}/collections/${id}`}
                 >
                   View in STAC Browser
                 </MenuItem>

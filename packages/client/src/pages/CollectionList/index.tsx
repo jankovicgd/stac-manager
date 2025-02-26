@@ -15,8 +15,8 @@ import { CollecticonPlusSmall } from '@devseed-ui/collecticons-chakra';
 import { useCollections } from '@developmentseed/stac-react';
 import type { StacCollection } from 'stac-ts';
 
-import { Loading } from '../components';
-import { usePageTitle } from '../hooks';
+import { Loading } from '../../components';
+import { usePageTitle } from '../../hooks';
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import SmartLink from '$components/SmartLink';
 

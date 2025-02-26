@@ -1,28 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
-import Map, { Layer, Source, MapRef } from "react-map-gl/maplibre";
-import { LngLatBounds } from "maplibre-gl";
-import bboxPolygon from "@turf/bbox-polygon";
+import React, { useEffect, useMemo, useState } from 'react';
+import Map, { Layer, Source, MapRef } from 'react-map-gl/maplibre';
+import { LngLatBounds } from 'maplibre-gl';
+import bboxPolygon from '@turf/bbox-polygon';
 
-import { BackgroundTiles } from "../../components/Map";
-import { StacCollection } from "stac-ts";
+import { BackgroundTiles } from '../../components/Map';
+import { StacCollection } from 'stac-ts';
 
 const extentOutline = {
-  "line-color": "#276749",
-  "line-width": 2,
-  "line-dasharray": [2, 2]
+  'line-color': '#276749',
+  'line-width': 2,
+  'line-dasharray': [2, 2]
 };
 
 const dataOutline = {
-  "line-color": "#C53030",
-  "line-width": 1,
+  'line-color': '#C53030',
+  'line-width': 1
 };
 
 type CollectionMapProps = {
-  collection: StacCollection
-}
+  collection: StacCollection;
+};
 
 function CollectionMap({ collection }: CollectionMapProps) {
-  const [ map, setMap ] = useState<MapRef>();
+  const [map, setMap] = useState<MapRef>();
   const setMapRef = (m: MapRef) => setMap(m);
 
   // Create GeoJSON polygon from extent
@@ -36,9 +36,10 @@ function CollectionMap({ collection }: CollectionMapProps) {
   const dataExtents = useMemo(() => {
     if (!collection) return;
     if (collection.extent.spatial.bbox.length > 1) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, ...data] = collection.extent.spatial.bbox;
       return {
-        type: "FeatureCollection",
+        type: 'FeatureCollection',
         features: data.map(([x1, y1, x2, y2]) => bboxPolygon([x1, y1, x2, y2]))
       };
     }
@@ -49,9 +50,13 @@ function CollectionMap({ collection }: CollectionMapProps) {
     if (collection && map) {
       let [x1, y1, x2, y2] = collection.extent.spatial.bbox[0];
       const bounds = new LngLatBounds([x1, y1, x2, y2]);
-      for(let i = 1, len = collection.extent.spatial.bbox.length; i < len; i++) {
+      for (
+        let i = 1, len = collection.extent.spatial.bbox.length;
+        i < len;
+        i++
+      ) {
         [x1, y1, x2, y2] = collection.extent.spatial.bbox[i];
-        bounds.extend([x1, y1, x2, y2] );
+        bounds.extend([x1, y1, x2, y2]);
       }
       [x1, y1, x2, y2] = bounds.toArray().flat();
       map.fitBounds([x1, y1, x2, y2], { padding: 30, duration: 0 });
@@ -59,26 +64,18 @@ function CollectionMap({ collection }: CollectionMapProps) {
   }, [collection, map]);
 
   return (
-    <Map ref={setMapRef} dragPan={false} scrollZoom={false} cursor="default">
+    <Map ref={setMapRef} dragPan={false} scrollZoom={false} cursor='default'>
       <BackgroundTiles />
-      { extent && (
-        <Source
-          id="extent"
-          type="geojson"
-          data={extent}
-        >
-          <Layer id="extent-line" type="line" paint={extentOutline} />
+      {extent && (
+        <Source id='extent' type='geojson' data={extent}>
+          <Layer id='extent-line' type='line' paint={extentOutline} />
         </Source>
-      ) }
-      { dataExtents && (
-        <Source
-          id="data-extent"
-          type="geojson"
-          data={dataExtents}
-        >
-          <Layer id="data-extent-line" type="line" paint={dataOutline} />
+      )}
+      {dataExtents && (
+        <Source id='data-extent' type='geojson' data={dataExtents}>
+          <Layer id='data-extent-line' type='line' paint={dataOutline} />
         </Source>
-      ) }
+      )}
     </Map>
   );
 }

@@ -1,5 +1,3 @@
-import BackgroundTiles from "./BackgroundTiles";
+import BackgroundTiles from './BackgroundTiles';
 
-export { 
-  BackgroundTiles
-};
+export { BackgroundTiles };

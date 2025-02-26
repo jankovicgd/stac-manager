@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 function usePrevious<T>(value: T) {
   const [current, setCurrent] = useState<T>(value);

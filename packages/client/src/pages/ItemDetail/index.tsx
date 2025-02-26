@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Text,
-  Icon,
-  Button,
   Flex,
   IconButton,
   Menu,
@@ -12,7 +10,6 @@ import {
   MenuList,
   MenuItem
 } from '@chakra-ui/react';
-import { MdEdit } from 'react-icons/md';
 import Map, { Source, Layer, MapRef } from 'react-map-gl/maplibre';
 import StacFields from '@radiantearth/stac-fields';
 import { StacAsset } from 'stac-ts';
@@ -20,7 +17,6 @@ import { useItem } from '@developmentseed/stac-react';
 import {
   CollecticonEllipsisVertical,
   CollecticonGlobe,
-  CollecticonPencil,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
 import getBbox from '@turf/bbox';
@@ -97,10 +93,10 @@ function ItemDetail() {
     <Flex direction='column' gap={8} p={4}>
       <InnerPageHeader
         overline='Viewing Item'
-        title={title || properties.id}
+        title={title || item.id}
         actions={
           <>
-            <Button
+            {/* <Button
               as={SmartLink}
               to={`/collections/${properties.collection}/items/${properties.id}/edit`}
               colorScheme='primary'
@@ -108,7 +104,7 @@ function ItemDetail() {
               leftIcon={<CollecticonPencil />}
             >
               Edit
-            </Button>
+            </Button> */}
             <Menu>
               <MenuButton
                 as={IconButton}
@@ -121,7 +117,8 @@ function ItemDetail() {
                 <MenuItem
                   icon={<CollecticonGlobe />}
                   as={SmartLink}
-                  to={`${process.env.REACT_APP_STAC_BROWSER}/stac/collections/${properties.collection}/items/${properties.id}/edit`}
+                  _hover={{ textDecoration: 'none' }}
+                  to={`${process.env.REACT_APP_STAC_BROWSER}/collections/${properties.collection}/items/${properties.id}/edit`}
                 >
                   View in STAC Browser
                 </MenuItem>
@@ -182,9 +179,6 @@ function ItemDetail() {
             <Text as='h3' fontSize='md' my='0' flex='1'>
               About
             </Text>
-            <Link to='edit/' title='Edit item'>
-              <Icon as={MdEdit} boxSize='4' />
-            </Link>
           </Box>
           {(title || description) && (
             <Text mt='0'>
