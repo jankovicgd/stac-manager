@@ -22,6 +22,12 @@ export function WidgetCheckbox(props: WidgetProps) {
 
   const options = field.items.enum;
 
+  if (field.items.allowOther) {
+    throw new Error(
+      "WidgetCheckbox: allowOther is not supported. Use widget 'tagger' instead"
+    );
+  }
+
   if (!options?.length) {
     throw new Error('WidgetCheckbox: items.enum is required');
   }

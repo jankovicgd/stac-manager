@@ -17,6 +17,12 @@ export function WidgetRadio(props: WidgetProps) {
 
   const options = field.enum;
 
+  if (field.allowOther) {
+    throw new Error(
+      "WidgetCheckbox: allowOther is not supported. Use widget 'tagger' instead"
+    );
+  }
+
   if (!options?.length) {
     throw new Error('WidgetRadio: enum is required');
   }

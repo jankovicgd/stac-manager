@@ -16,7 +16,10 @@ import { Plugin } from './plugin';
  * @param {any} data - The data to validate.
  * @returns {[any, any]} - Returns a tuple with the validated data or errors.
  */
-export function validatePluginsFieldsData(plugins: Plugin[], data: any) {
+export function validatePluginsFieldsData(
+  plugins: Plugin[],
+  data: any
+): [any, Record<string, any> | null] {
   const validationSchema = plugins.reduce((acc, plugin) => {
     const editSchema = plugin.editSchema(data);
     if (!editSchema || editSchema === Plugin.HIDDEN) return acc;
@@ -176,4 +179,30 @@ function createArraySchema(
     .max(data.maxItems || Infinity);
 
   return isRequired ? schema.required() : schema;
+}
+
+/**
+ * Recursively retrieves the first path of keys in a nested object.
+ *
+ * @param obj - The object from which to retrieve the first path.
+ * @returns The first path of keys as a string, separated by dots. If the object
+ * is not valid or empty, returns an empty string.
+ *
+ * @example
+ * const obj = { a: { b: { c: 1 }, z: 3 } };
+ * const path = getFirstPath(obj); // Output: "a.b.c"
+ */
+export function getFirstPath(obj: any): string {
+  if (typeof obj !== 'object' || obj === null) {
+    return '';
+  }
+
+  const firstKey = Object.keys(obj)[0];
+
+  if (!firstKey) {
+    return '';
+  }
+
+  const path = getFirstPath(obj[firstKey]);
+  return path ? `${firstKey}.${path}` : firstKey;
 }

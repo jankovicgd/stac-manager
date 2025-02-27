@@ -1,5 +1,5 @@
 import { Plugin, PluginEditSchema } from './plugin';
-import { validatePluginsFieldsData } from './validate';
+import { getFirstPath, validatePluginsFieldsData } from './validate';
 
 describe('validatePluginsFieldsData', () => {
   test('No data', () => {
@@ -259,5 +259,39 @@ describe('validatePluginsFieldsData', () => {
     expect(errors).toEqual({
       spatial: ['Value must be a number', 'Value must be a number']
     });
+  });
+});
+
+describe('getFirstPath', () => {
+  test('should return the first path', () => {
+    const obj = {
+      test: {
+        one: {
+          v: [{ b: 1 }]
+        },
+        two: 'error'
+      }
+    };
+    expect(getFirstPath(obj)).toBe('test.one.v.0.b');
+  });
+
+  test('should return empty for null', () => {
+    expect(getFirstPath(null)).toBe('');
+  });
+
+  test('should return empty for non-object', () => {
+    expect(getFirstPath(1)).toBe('');
+  });
+
+  test('should return empty for empty object', () => {
+    expect(getFirstPath({})).toBe('');
+  });
+
+  test('should return empty for empty array', () => {
+    expect(getFirstPath([])).toBe('');
+  });
+
+  test('should return empty for empty string', () => {
+    expect(getFirstPath('')).toBe('');
   });
 });

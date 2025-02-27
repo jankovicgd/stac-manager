@@ -3,7 +3,8 @@ import {
   PluginBox,
   useCollectionPlugins,
   validatePluginsFieldsData,
-  WidgetRenderer
+  WidgetRenderer,
+  ScrollToInvalidField
 } from '@stac-manager/data-core';
 import { Box, Button, ButtonGroup, Flex, Heading } from '@chakra-ui/react';
 import { Formik, FormikHelpers } from 'formik';
@@ -63,6 +64,7 @@ export function EditForm(props: {
                 // @ts-expect-error Can't detect the as=form and throws error
                 onSubmit={handleSubmit}
               >
+                <ScrollToInvalidField />
                 <InnerPageHeaderSticky
                   overline={
                     initialData ? 'Editing Collection' : 'Creating Collection'

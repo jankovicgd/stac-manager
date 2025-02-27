@@ -3,6 +3,7 @@ import React from 'react';
 import { usePluginConfig } from '../context/plugin-config';
 import { ErrorBox } from './error-box';
 import { SchemaField } from '../schema/types';
+import { Box, Text } from '@chakra-ui/react';
 
 interface WidgetProps {
   pointer: string;
@@ -24,10 +25,14 @@ export function WidgetRenderer(props: WidgetProps) {
   const renderWidget = (widget: string) => {
     const Widget = config['ui:widget'][widget];
 
-    return Widget ? (
-      <Widget pointer={pointer} field={field} isRequired={isRequired} />
-    ) : (
-      <ErrorBox>Widget &quot;{widget}&quot; not found</ErrorBox>
+    return (
+      <WidgetErrorBoundary field={field} widget={widget} pointer={pointer}>
+        {Widget ? (
+          <Widget pointer={pointer} field={field} isRequired={isRequired} />
+        ) : (
+          <ErrorBox>Widget &quot;{widget}&quot; not found</ErrorBox>
+        )}
+      </WidgetErrorBoundary>
     );
   };
 
@@ -65,4 +70,58 @@ export function WidgetRenderer(props: WidgetProps) {
   }
 
   return renderWidget('text');
+}
+
+interface WidgetErrorBoundaryProps {
+  children: React.ReactNode;
+  field: SchemaField;
+  widget: string;
+  pointer: string;
+}
+
+interface WidgetErrorBoundaryState {
+  error: Error | null;
+}
+
+class WidgetErrorBoundary extends React.Component<
+  WidgetErrorBoundaryProps,
+  WidgetErrorBoundaryState
+> {
+  constructor(props: WidgetErrorBoundaryProps) {
+    super(props);
+    this.state = { error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): WidgetErrorBoundaryState {
+    return { error };
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <ErrorBox color='base.500' alignItems='left' p={4}>
+          <Text textTransform='uppercase' color='red.500'>
+            💔 Error rendering widget ({this.props.widget})
+          </Text>
+          <Text>
+            {this.state.error.message || 'Something is wrong with this widget'}
+          </Text>
+          <Box
+            as='pre'
+            bg='base.100'
+            borderRadius='md'
+            p={2}
+            fontSize='small'
+            maxH={64}
+            overflow='auto'
+          >
+            @.{this.props.pointer} <br />
+            <code>{JSON.stringify(this.props.field, null, 2)}</code>
+          </Box>
+        </ErrorBox>
+      );
+    }
+
+    return this.props.children;
+  }
 }

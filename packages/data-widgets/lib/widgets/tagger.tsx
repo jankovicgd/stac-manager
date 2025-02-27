@@ -56,6 +56,12 @@ export function WidgetTagger(props: WidgetProps) {
       throw new Error("WidgetTagger: 'enum' is required for string fields");
     }
 
+    if (field.allowOther?.type !== 'string') {
+      throw new Error(
+        "WidgetTagger: 'allowOther.type' is required for the 'tagger' widget. Use the 'select' widget instead."
+      );
+    }
+
     return <WidgetTaggerWithOptions {...props} />;
   }
 
@@ -65,11 +71,18 @@ export function WidgetTagger(props: WidgetProps) {
         "WidgetTagger: 'items.type' must be 'string' for array fields"
       );
     }
-    return field.items.enum ? (
-      <WidgetTaggerWithOptions {...props} isMulti />
-    ) : (
-      <WidgetTaggerNoOptions {...props} />
-    );
+
+    if (field.items.enum) {
+      if (field.items.allowOther?.type !== 'string') {
+        throw new Error(
+          "WidgetTagger: 'items.allowOther.type' is required for the 'tagger' widget with 'enum'. Use the 'select' widget instead."
+        );
+      }
+
+      return <WidgetTaggerWithOptions {...props} isMulti />;
+    }
+
+    return <WidgetTaggerNoOptions {...props} />;
   }
 
   throw new Error(

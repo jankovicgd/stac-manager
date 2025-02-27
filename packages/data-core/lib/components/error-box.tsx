@@ -1,23 +1,20 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Flex, FlexProps, forwardRef } from '@chakra-ui/react';
 
-interface ErrorProps {
-  children: React.ReactNode;
-}
-
-export function ErrorBox(props: ErrorProps) {
-  const { children } = props;
-
-  return (
-    <Box
-      maxW='container.md'
-      textAlign='center'
-      py='4rem'
-      px='2rem'
-      color='red'
-      border='1px dashed red'
-    >
-      {children}
-    </Box>
-  );
-}
+export const ErrorBox = forwardRef<FlexProps, typeof Flex>((props, ref) => (
+  <Flex
+    ref={ref}
+    maxW='container.md'
+    alignItems='center'
+    direction='column'
+    gap={4}
+    py={16}
+    px={8}
+    color='red.500'
+    borderRadius='md'
+    borderWidth={1}
+    borderStyle='dashed'
+    borderColor='red.500'
+    {...props}
+  />
+));

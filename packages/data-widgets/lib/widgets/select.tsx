@@ -30,6 +30,16 @@ export function WidgetSelect(props: WidgetProps) {
     throw new Error('WidgetSelect: enum is required');
   }
 
+  if (
+    isMulti
+      ? (field as SchemaFieldArray<SchemaFieldString>).items.allowOther
+      : (field as SchemaFieldString).allowOther
+  ) {
+    throw new Error(
+      "WidgetSelect: allowOther is not supported. Use widget 'tagger' instead"
+    );
+  }
+
   const key = useRenderKey([pointer, isRequired, isMulti, field]);
 
   const options = useMemo(() => {
