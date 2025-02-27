@@ -298,7 +298,7 @@ Defining and object as the type of another object's properties will result in a 
 Whenever the original data has this type of structure, consider transforming the data to a more user-friendly format using the `enterData` and `exitData` methods.
 
 Example:
-```json
+```ts
 {
   extent: {
     spatial: {
