@@ -15,7 +15,7 @@ The different parts of the project are located in the `packages` directory struc
 - [`@stac-manager/data-widgets`](./packages/data-widgets) - Form components to be used by the form builder plugin system, when custom ones are not provided.
 - [`@stac-manager/data-plugins`](./packages/data-plugins) - Data plugins for the forms. Each plugin defines how a section of the data structure is displayed and edited.
 
-The `@sta-manager/data-*` packages contain the default implementation of the plugin system, the widgets used to render the forms and some core functions to allow the system to be extended.
+The `@stac-manager/data-*` packages contain the default implementation of the plugin system, the widgets used to render the forms and some core functions to allow the system to be extended.
 
 The plugin system is responsible to dynamically generate forms based on a schema definition.  
 Each plugin handles a specific part of the data and is responsible for defining the schema for the form, converting the data to the form format, and converting the form data back to the original data format.
@@ -58,7 +58,7 @@ export const config = extendPluginConfig(defaultPluginWidgetConfig, {
 
 ## Plugins & Widgets
 
-Data plugins are the central part of STAC-Manager. Check the [plugin system documentation](./PLUGINS.md.md) for to understand how they work and how to create a new plugin.
+Data plugins are the central part of STAC-Manager. Check the [plugin system documentation](./PLUGINS.md.md) to understand how they work and how to create a new plugin.
 
 Widgets are the visual representation of the fields in the form. Check the [widget documentation](./WIDGETS.md) for more information on how to create a new widget.
 
