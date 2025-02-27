@@ -58,7 +58,7 @@ export const config = extendPluginConfig(defaultPluginWidgetConfig, {
 
 ## Plugins & Widgets
 
-Data plugins are the central part of STAC-Manager. Check the [plugin system documentation](./PLUGINS.md.md) to understand how they work and how to create a new plugin.
+Data plugins are the central part of STAC-Manager. Check the [plugin system documentation](./PLUGINS.md) to understand how they work and how to create a new plugin.
 
 Widgets are the visual representation of the fields in the form. Check the [widget documentation](./WIDGETS.md) for more information on how to create a new widget.
 
