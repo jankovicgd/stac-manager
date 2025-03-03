@@ -54,6 +54,8 @@ export function EditForm(props: {
               return onSubmit(exitData, actions);
             }}
             validate={(values) => {
+              if (view === 'json') return;
+
               const [, error] = validatePluginsFieldsData(plugins, values);
               if (error) return error;
             }}
