@@ -16,14 +16,16 @@ import {
 
 import { InnerPageHeaderSticky } from '$components/InnerPageHeader';
 import { CollecticonForm } from '$components/icons/form';
+import { AppNotification, NotificationButton } from '$components/Notifications';
 
 type FormView = 'fields' | 'json';
 
 export function EditForm(props: {
   initialData?: any;
   onSubmit: (data: any, formikHelpers: FormikHelpers<any>) => void;
+  notifications?: AppNotification[];
 }) {
-  const { initialData, onSubmit } = props;
+  const { initialData, onSubmit, notifications = [] } = props;
   const [stacData, setStacData] = useState(initialData || {});
 
   const { plugins, formData, toOutData, isLoading } =
@@ -75,17 +77,18 @@ export function EditForm(props: {
                       : 'New Collection'
                   }
                   actions={
-                    <>
+                    <Flex gap={4}>
+                      <NotificationButton notifications={notifications} />
                       <Button
                         type='submit'
                         isDisabled={isSubmitting}
                         colorScheme='primary'
-                        size='sm'
+                        size='md'
                         leftIcon={<CollecticonTickSmall />}
                       >
                         {initialData ? 'Save' : 'Create'}
                       </Button>
-                    </>
+                    </Flex>
                   }
                 />
                 <Flex alignItems='center' justifyContent='space-between' p={4}>

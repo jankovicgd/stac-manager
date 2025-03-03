@@ -8,6 +8,10 @@ import { StacCollection } from 'stac-ts';
 import usePageTitle from '$hooks/usePageTitle';
 import Api from 'src/api';
 import { EditForm } from './EditForm';
+import {
+  AppNotification,
+  parseResponseForNotifications
+} from '$components/Notifications';
 
 export function CollectionForm() {
   const { collectionId } = useParams();
@@ -24,9 +28,14 @@ export function CollectionFormNew() {
 
   const toast = useToast();
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState<
+    AppNotification[] | undefined
+  >();
 
   const onSubmit = async (data: any, formikHelpers: FormikHelpers<any>) => {
     try {
+      toast.closeAll();
+      setNotifications(undefined);
       toast({
         id: 'collection-submit',
         title: 'Creating collection...',
@@ -46,24 +55,22 @@ export function CollectionFormNew() {
 
       navigate(`/collections/${data.id}`);
     } catch (error: any) {
-      toast.update('collection-submit', {
-        title: 'Collection creation failed',
-        description: error.detail?.code,
-        status: 'error',
-        duration: 8000,
-        isClosable: true
-      });
+      toast.close('collection-submit');
+      setNotifications(parseResponseForNotifications(error));
     }
     formikHelpers.setSubmitting(false);
   };
 
-  return <EditForm onSubmit={onSubmit} />;
+  return <EditForm onSubmit={onSubmit} notifications={notifications} />;
 }
 
 export function CollectionFormEdit(props: { id: string }) {
   const { id } = props;
   const { collection, state, error } = useCollection(id);
   const [triedLoading, setTriedLoading] = useState(!!collection);
+  const [notifications, setNotifications] = useState<
+    AppNotification[] | undefined
+  >();
 
   usePageTitle(collection ? `Edit collection ${id}` : 'Edit collection');
 
@@ -87,6 +94,8 @@ export function CollectionFormEdit(props: { id: string }) {
 
   const onSubmit = async (data: any, formikHelpers: FormikHelpers<any>) => {
     try {
+      toast.closeAll();
+      setNotifications(undefined);
       toast({
         id: 'collection-submit',
         title: 'Updating collection...',
@@ -94,7 +103,6 @@ export function CollectionFormEdit(props: { id: string }) {
         duration: null,
         position: 'bottom-right'
       });
-
       await collectionTransaction().update(id, data);
 
       toast.update('collection-submit', {
@@ -106,18 +114,19 @@ export function CollectionFormEdit(props: { id: string }) {
 
       navigate(`/collections/${data.id}`);
     } catch (error: any) {
-      toast.update('collection-submit', {
-        title: 'Collection update failed',
-        description: error.detail?.code,
-        status: 'error',
-        duration: 8000,
-        isClosable: true
-      });
+      toast.close('collection-submit');
+      setNotifications(parseResponseForNotifications(error));
     }
     formikHelpers.setSubmitting(false);
   };
 
-  return <EditForm onSubmit={onSubmit} initialData={collection} />;
+  return (
+    <EditForm
+      onSubmit={onSubmit}
+      initialData={collection}
+      notifications={notifications}
+    />
+  );
 }
 
 type collectionTransactionType = {
