@@ -23,6 +23,7 @@ import ItemDetail from './pages/ItemDetail';
 import ItemForm from './pages/ItemForm';
 import NotFound from './pages/NotFound';
 import CollectionDetail from './pages/CollectionDetail';
+import Sandbox from './pages/Sandbox';
 import { config } from './plugin-system/config';
 
 export const App = () => (
@@ -31,7 +32,7 @@ export const App = () => (
       <PluginConfigProvider config={config}>
         <Router>
           <Container
-            maxW='container.lg'
+            maxW='container.xl'
             minH='100vh'
             display='flex'
             flexDirection='column'
@@ -71,6 +72,7 @@ export const App = () => (
                   path='/collections/:collectionId/items/:itemId/edit/'
                   element={<ItemForm />}
                 />
+                <Route path='/sandbox' element={<Sandbox />} />
                 <Route path='*' element={<NotFound />} />
               </Routes>
             </Box>
