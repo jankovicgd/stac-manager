@@ -11,7 +11,7 @@ export default function Sandbox() {
   return (
     <Flex direction='column' gap={8} p={4}>
       <InnerPageHeader overline='Sandbox' title='Sandbox' />
-      <Flex direction='column' gap={8} p={4}>
+      <Flex direction='column' gap={8}>
         <p>This is the sandbox.</p>
 
         <SimpleGrid

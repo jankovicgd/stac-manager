@@ -15,23 +15,26 @@ import {
   MenuButton,
   Menu,
   MenuList,
-  MenuItem
+  MenuItem,
+  Link
 } from '@chakra-ui/react';
 import { CollecticonEllipsisVertical } from '@devseed-ui/collecticons-chakra';
 
 export default function ItemCard() {
   return (
     <Card as='article' variant='filled'>
-      <Image
-        src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-        alt='Green double couch with wooden legs'
-        borderRadius='lg'
-      />
+      <Link href='#'>
+        <Image
+          src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+          alt='Green double couch with wooden legs'
+          borderRadius='md'
+        />
+      </Link>
       <CardHeader as='header'>
         <Flex direction='row' gap={4}>
           <Box flexBasis='100%'>
-            <Heading size='md' as='h3'>
-              Card title
+            <Heading size='sm' as='h3'>
+              <Link href='#' color='inherit'>Card title</Link>
             </Heading>
             <Text as='p' fontSize='sm' color='base.400'>
               Card lipsum subtitle
