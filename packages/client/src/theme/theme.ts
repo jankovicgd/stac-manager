@@ -71,6 +71,15 @@ const theme = {
         fontSize: 'sm'
       }
     },
+    Card: {
+      variants: {
+        filled: {
+          container: {
+            background: 'base.50'
+          }
+        }
+      }
+    },
     Button: {
       baseStyle: {
         borderRadius: 'md',
