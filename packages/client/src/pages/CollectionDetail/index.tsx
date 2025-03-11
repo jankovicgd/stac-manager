@@ -100,7 +100,7 @@ function CollectionDetail() {
     collection as StacCollection;
 
   return (
-    <Flex direction='column' gap={8} p={4}>
+    <Flex direction='column' gap={8}>
       <InnerPageHeader
         overline='Viewing Collection'
         title={id}

@@ -35,7 +35,7 @@ function CollectionList() {
   const { collections, state } = useCollections();
 
   return (
-    <Flex direction='column' gap={8} p={4}>
+    <Flex direction='column' gap={8}>
       <InnerPageHeader
         title='Catalog'
         overline='Browsing'
