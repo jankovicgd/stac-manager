@@ -80,6 +80,24 @@ const theme = {
         }
       }
     },
+    Input: {
+      variants: {
+        outline: {
+          field: {
+            border: '2px solid'
+          }
+        }
+      }
+    },
+    Select: {
+      variants: {
+        outline: {
+          field: {
+            border: '2px solid'
+          }
+        }
+      }
+    },
     Button: {
       baseStyle: {
         borderRadius: 'md',
