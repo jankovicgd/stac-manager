@@ -157,6 +157,7 @@ function CollectionDetail() {
               p={8}
               direction='column'
               gap={4}
+              minH='100%'
             >
               <Flex direction='column' gap='2'>
                 <Heading size='sm' as='h3'>
