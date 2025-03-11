@@ -25,8 +25,11 @@ export default function ItemCard() {
     <Card as='article' variant='filled'>
       <Link href='#'>
         <Image
-          src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-          alt='Green double couch with wooden legs'
+          src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=3464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+          alt='Abstract 3D render'
+          height='16rem'
+          width='100%'
+          objectFit='cover'
           borderRadius='md'
         />
       </Link>
