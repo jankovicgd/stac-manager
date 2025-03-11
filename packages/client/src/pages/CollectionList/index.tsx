@@ -9,9 +9,17 @@ import {
   Th,
   Td,
   Tbody,
-  Flex
+  Flex,
+  Heading,
+  Box,
+  SimpleGrid,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  InputRightElement,
+  Select
 } from '@chakra-ui/react';
-import { CollecticonPlusSmall } from '@devseed-ui/collecticons-chakra';
+import { CollecticonMagnifierRight, CollecticonPlusSmall } from '@devseed-ui/collecticons-chakra';
 import { useCollections } from '@developmentseed/stac-react';
 import type { StacCollection } from 'stac-ts';
 
@@ -19,6 +27,7 @@ import { Loading } from '../../components';
 import { usePageTitle } from '../../hooks';
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import SmartLink from '$components/SmartLink';
+import ItemCard from '$components/ItemCard';
 
 function CollectionList() {
   usePageTitle('Collections');
@@ -35,13 +44,53 @@ function CollectionList() {
             as={SmartLink}
             to='/collections/new'
             colorScheme='primary'
-            size='sm'
+            size='md'
             leftIcon={<CollecticonPlusSmall />}
           >
             Create
           </Button>
         }
       />
+      <Flex direction='column' as='section'>
+        <Flex direction='row' px='8' gap='8' as='header'>
+          <Box flexBasis='100%'>
+            <Heading size='md' as='h2'>
+              Collections
+            </Heading>
+          </Box>
+          <Flex direction='row' gap='4'>
+            <Flex direction='row' gap='2' alignItems='center'>
+              <Heading size='xs' as='h3'>
+                Search
+              </Heading>
+              <InputGroup width='16rem'>
+                <Input type='search' placeholder='Title or description' />
+                <InputRightElement pointerEvents='none'>
+                  <CollecticonMagnifierRight />
+                </InputRightElement>
+              </InputGroup>
+            </Flex>
+
+            <Flex direction='row' gap='2' alignItems='center'>
+              <Heading size='xs' as='h3'>
+                Filter
+              </Heading>
+              <Select placeholder='All keywords' size='md' width='12rem' />
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
+
+      <SimpleGrid
+        gap={8}
+        templateColumns='repeat(auto-fill, minmax(26rem, 1fr))'
+      >
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+        <ItemCard />
+      </SimpleGrid>
+
       <TableContainer>
         <Table size='sm'>
           <Thead>

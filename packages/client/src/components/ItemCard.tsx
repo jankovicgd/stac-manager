@@ -34,10 +34,12 @@ export default function ItemCard() {
         <Flex direction='row' gap={4}>
           <Box flexBasis='100%'>
             <Heading size='sm' as='h3'>
-              <Link href='#' color='inherit'>Card title</Link>
+              <Link href='#' color='inherit'>
+                Card title
+              </Link>
             </Heading>
             <Text as='p' fontSize='sm' color='base.400'>
-              Card lipsum subtitle
+              Card subtitle
             </Text>
           </Box>
           <Box>
