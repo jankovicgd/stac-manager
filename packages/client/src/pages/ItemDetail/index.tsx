@@ -15,7 +15,8 @@ import {
   GridItem,
   HStack,
   Tag,
-  Grid
+  Grid,
+  VisuallyHidden
 } from '@chakra-ui/react';
 import Map, { Source, Layer, MapRef } from 'react-map-gl/maplibre';
 import StacFields from '@radiantearth/stac-fields';
@@ -176,8 +177,12 @@ function ItemDetail() {
               gap={2}
               position='relative'
               overflow='hidden'
+              height='20rem'
             >
-              Map goes here.
+              <Heading size='sm' as='h3'>
+                <VisuallyHidden>Spacial extent</VisuallyHidden>
+              </Heading>
+              <Text size='md'>Map goes here.</Text>
             </Flex>
           </GridItem>
         </Grid>

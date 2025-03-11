@@ -55,6 +55,7 @@ export default function ItemCard() {
                 size='sm'
               />
               <MenuList>
+                <MenuItem>View</MenuItem>
                 <MenuItem>Edit</MenuItem>
                 <MenuItem>Delete</MenuItem>
               </MenuList>

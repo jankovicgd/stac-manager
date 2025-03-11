@@ -19,7 +19,8 @@ import {
   Badge,
   Grid,
   GridItem,
-  HStack
+  HStack,
+  VisuallyHidden
 } from '@chakra-ui/react';
 import { MdAccessTime, MdBalance, MdEdit } from 'react-icons/md';
 import { useCollection, useStacSearch } from '@developmentseed/stac-react';
@@ -212,8 +213,14 @@ function CollectionDetail() {
               gap={2}
               position='relative'
               overflow='hidden'
+              height='20rem'
             >
-              Map goes here.
+              <Heading size='sm' as='h3'>
+                <VisuallyHidden>Spacial extent</VisuallyHidden>
+              </Heading>
+              <Box position='absolute' inset='0'>
+                <CollectionMap collection={collection} />
+              </Box>
             </Flex>
           </GridItem>
         </Grid>
