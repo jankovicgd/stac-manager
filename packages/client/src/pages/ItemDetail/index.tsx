@@ -8,7 +8,14 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem
+  MenuItem,
+  SimpleGrid,
+  Heading,
+  Badge,
+  GridItem,
+  HStack,
+  Tag,
+  Grid
 } from '@chakra-ui/react';
 import Map, { Source, Layer, MapRef } from 'react-map-gl/maplibre';
 import StacFields from '@radiantearth/stac-fields';
@@ -28,6 +35,7 @@ import { BackgroundTiles } from '../../components/Map';
 import AssetList from './AssetList';
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
+import ItemCard from '$components/ItemCard';
 
 const resultsOutline = {
   'line-color': '#C53030',
@@ -110,7 +118,7 @@ function ItemDetail() {
                 aria-label='Options'
                 icon={<CollecticonEllipsisVertical />}
                 variant='outline'
-                size='sm'
+                size='md'
               />
               <MenuList>
                 <StacBrowserMenuItem
@@ -130,6 +138,71 @@ function ItemDetail() {
           </>
         }
       />
+
+      <Flex direction='column' gap='8' as='section'>
+        <Flex direction='row' px='8' gap='8' as='header'>
+          <Box flexBasis='100%'>
+            <Heading size='md' as='h2'>
+              Overview
+            </Heading>
+          </Box>
+        </Flex>
+
+        <Grid templateColumns='repeat(12, 1fr)' gap={8}>
+          <GridItem colSpan={8}>
+            <Flex
+              bg='base.50'
+              borderRadius='md'
+              p={8}
+              direction='column'
+              gap={4}
+            >
+              <Flex direction='column' gap='2'>
+                <Heading size='sm' as='h3'>
+                  Collection
+                </Heading>
+                <Text size='md'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </Text>
+              </Flex>
+            </Flex>
+          </GridItem>
+          <GridItem colSpan={4}>
+            <Flex
+              bg='base.50'
+              borderRadius='md'
+              p={8}
+              direction='column'
+              gap={2}
+              position='relative'
+              overflow='hidden'
+            >
+              Map goes here.
+            </Flex>
+          </GridItem>
+        </Grid>
+      </Flex>
+
+      <Flex direction='column' gap='8' as='section'>
+        <Flex direction='row' px='8' gap='8' as='header'>
+          <Box flexBasis='100%'>
+            <Heading size='md' as='h2'>
+              Assets <Badge variant='solid'>04</Badge>
+            </Heading>
+          </Box>
+        </Flex>
+
+        <SimpleGrid
+          gap={8}
+          templateColumns='repeat(auto-fill, minmax(26rem, 1fr))'
+        >
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+        </SimpleGrid>
+      </Flex>
+
       <Box display='grid' gridTemplateColumns='minmax(0, 2fr) 1fr' gap='8'>
         <Box>
           <Box
