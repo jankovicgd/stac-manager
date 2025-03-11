@@ -64,7 +64,7 @@ export function EditForm(props: {
               <Flex
                 as='form'
                 direction='column'
-                gap={4}
+                gap={8}
                 // @ts-expect-error Can't detect the as=form and throws error
                 onSubmit={handleSubmit}
               >
@@ -93,10 +93,12 @@ export function EditForm(props: {
                     </Flex>
                   }
                 />
-                <Flex alignItems='center' justifyContent='space-between' p={4}>
-                  <Heading size='md'>{initialData ? 'Edit' : 'New'}</Heading>
+                <Flex alignItems='center' justifyContent='space-between' px={8}>
+                  <Heading size='md' as='h2'>
+                    {initialData ? 'Edit' : 'New'}
+                  </Heading>
 
-                  <ButtonGroup isAttached variant='outline' size='sm'>
+                  <ButtonGroup isAttached variant='outline' size='md'>
                     <Button
                       aria-label='Edit Form'
                       leftIcon={<CollecticonForm />}
@@ -127,7 +129,7 @@ export function EditForm(props: {
                       <PluginBox key={pl.name} plugin={pl}>
                         {({ field }) => (
                           <Box
-                            p='16'
+                            p='8'
                             borderRadius='lg'
                             bg='base.50a'
                             display='flex'
