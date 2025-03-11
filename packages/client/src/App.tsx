@@ -42,7 +42,7 @@ export const App = () => (
               gap={4}
               alignItems='center'
               justifyContent='space-between'
-              p={4}
+              py={8}
             >
               <Heading as='p' size='sm'>
                 STAC Manager
