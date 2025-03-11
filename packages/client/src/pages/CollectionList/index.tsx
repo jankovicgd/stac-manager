@@ -17,7 +17,8 @@ import {
   InputLeftElement,
   Input,
   InputRightElement,
-  Select
+  Select,
+  Badge
 } from '@chakra-ui/react';
 import { CollecticonMagnifierRight, CollecticonPlusSmall } from '@devseed-ui/collecticons-chakra';
 import { useCollections } from '@developmentseed/stac-react';
@@ -51,11 +52,11 @@ function CollectionList() {
           </Button>
         }
       />
-      <Flex direction='column' as='section'>
+      <Flex direction='column' gap='8' as='section'>
         <Flex direction='row' px='8' gap='8' as='header'>
           <Box flexBasis='100%'>
             <Heading size='md' as='h2'>
-              Collections
+              Collections <Badge variant='solid'>04</Badge>
             </Heading>
           </Box>
           <Flex direction='row' gap='4'>
@@ -70,7 +71,6 @@ function CollectionList() {
                 </InputRightElement>
               </InputGroup>
             </Flex>
-
             <Flex direction='row' gap='2' alignItems='center'>
               <Heading size='xs' as='h3'>
                 Filter
@@ -79,17 +79,17 @@ function CollectionList() {
             </Flex>
           </Flex>
         </Flex>
-      </Flex>
 
-      <SimpleGrid
-        gap={8}
-        templateColumns='repeat(auto-fill, minmax(26rem, 1fr))'
-      >
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-      </SimpleGrid>
+        <SimpleGrid
+          gap={8}
+          templateColumns='repeat(auto-fill, minmax(26rem, 1fr))'
+        >
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+        </SimpleGrid>
+      </Flex>
 
       <TableContainer>
         <Table size='sm'>

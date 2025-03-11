@@ -13,13 +13,20 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem
+  MenuItem,
+  SimpleGrid,
+  Heading,
+  Badge,
+  Grid,
+  GridItem,
+  HStack
 } from '@chakra-ui/react';
 import { MdAccessTime, MdBalance, MdEdit } from 'react-icons/md';
 import { useCollection, useStacSearch } from '@developmentseed/stac-react';
 import {
   CollecticonEllipsisVertical,
   CollecticonPencil,
+  CollecticonPlusSmall,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
 import { StacCollection } from 'stac-ts';
@@ -31,6 +38,7 @@ import CollectionMap from './CollectionMap';
 import SmartLink from '$components/SmartLink';
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
+import ItemCard from '$components/ItemCard';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -101,7 +109,7 @@ function CollectionDetail() {
               as={SmartLink}
               to={`/collections/${id}/edit`}
               colorScheme='primary'
-              size='sm'
+              size='md'
               leftIcon={<CollecticonPencil />}
             >
               Edit
@@ -112,7 +120,7 @@ function CollectionDetail() {
                 aria-label='Options'
                 icon={<CollecticonEllipsisVertical />}
                 variant='outline'
-                size='sm'
+                size='md'
               />
               <MenuList>
                 <StacBrowserMenuItem resourcePath={`/collections/${id}`} />
@@ -130,6 +138,118 @@ function CollectionDetail() {
           </>
         }
       />
+
+      <Flex direction='column' gap='8' as='section'>
+        <Flex direction='row' px='8' gap='8' as='header'>
+          <Box flexBasis='100%'>
+            <Heading size='md' as='h2'>
+              Overview
+            </Heading>
+          </Box>
+        </Flex>
+
+        <Grid templateColumns='repeat(12, 1fr)' gap={8}>
+          <GridItem colSpan={8}>
+            <Flex
+              bg='base.50'
+              borderRadius='md'
+              p={8}
+              direction='column'
+              gap={4}
+            >
+              <Flex direction='column' gap='2'>
+                <Heading size='sm' as='h3'>
+                  Description
+                </Heading>
+                <Text size='md'>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non
+                  impedit vitae tempore repellat neque sunt aut, veniam facere,
+                  corporis nihil voluptas quis quia magni.
+                </Text>
+              </Flex>
+
+              <Flex direction='column' gap='2'>
+                <Heading size='sm' as='h3'>
+                  Temporal extent
+                </Heading>
+                <Text size='md'>2020-12-01 16:50:26 UTC</Text>
+              </Flex>
+
+              <Flex direction='column' gap='2'>
+                <Heading size='sm' as='h3'>
+                  License
+                </Heading>
+                <Text size='md'>CC-BY-4.0</Text>
+              </Flex>
+
+              <Flex direction='column' gap='2'>
+                <Heading size='sm' as='h3'>
+                  Keywords
+                </Heading>
+                <HStack spacing={4}>
+                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                    Tag
+                  </Tag>
+                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                    Tag
+                  </Tag>
+                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                    Tag
+                  </Tag>
+                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                    Tag
+                  </Tag>
+                </HStack>
+              </Flex>
+            </Flex>
+          </GridItem>
+          <GridItem colSpan={4}>
+            <Flex
+              bg='base.50'
+              borderRadius='md'
+              p={8}
+              direction='column'
+              gap={2}
+              position='relative'
+              overflow='hidden'
+            >
+              Map goes here.
+            </Flex>
+          </GridItem>
+        </Grid>
+      </Flex>
+
+      <Flex direction='column' gap='8' as='section'>
+        <Flex direction='row' px='8' gap='8' as='header'>
+          <Box flexBasis='100%'>
+            <Heading size='md' as='h2'>
+              Items <Badge variant='solid'>04</Badge>
+            </Heading>
+          </Box>
+          <Flex direction='row' gap='4'>
+            <Button
+              as={SmartLink}
+              to='/item/new'
+              colorScheme='primary'
+              size='md'
+              leftIcon={<CollecticonPlusSmall />}
+            >
+              Add new
+            </Button>
+          </Flex>
+        </Flex>
+
+        <SimpleGrid
+          gap={8}
+          templateColumns='repeat(auto-fill, minmax(18rem, 1fr))'
+        >
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+          <ItemCard />
+        </SimpleGrid>
+      </Flex>
+
       <Box
         display='grid'
         gap='8'
