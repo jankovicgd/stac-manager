@@ -188,17 +188,17 @@ function CollectionDetail() {
                 <Heading size='sm' as='h3'>
                   Keywords
                 </Heading>
-                <HStack spacing={4}>
-                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                <HStack spacing={2}>
+                  <Tag size='md' colorScheme='primary' as='a' href='#'>
                     Tag
                   </Tag>
-                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                  <Tag size='md' colorScheme='primary' as='a' href='#'>
                     Tag
                   </Tag>
-                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                  <Tag size='md' colorScheme='primary' as='a' href='#'>
                     Tag
                   </Tag>
-                  <Tag size='sm' colorScheme='primary' as='a' href='#'>
+                  <Tag size='md' colorScheme='primary' as='a' href='#'>
                     Tag
                   </Tag>
                 </HStack>

@@ -13,8 +13,6 @@ import {
   Heading,
   Badge,
   GridItem,
-  HStack,
-  Tag,
   Grid,
   VisuallyHidden
 } from '@chakra-ui/react';
@@ -183,7 +181,43 @@ function ItemDetail() {
               <Heading size='sm' as='h3'>
                 <VisuallyHidden>Spacial extent</VisuallyHidden>
               </Heading>
-              <Text size='md'>Map goes here.</Text>
+              <Box position='absolute' inset='0'>
+                <Map
+                  ref={setMapRef}
+                  dragPan={false}
+                  scrollZoom={false}
+                  cursor='default'
+                >
+                  <BackgroundTiles />
+                  {previewAsset && (
+                    <Source
+                      id='preview'
+                      type='raster'
+                      tiles={[
+                        `http://tiles.rdnt.io/tiles/{z}/{x}/{y}@2x?url=${previewAsset}`
+                      ]}
+                      tileSize={256}
+                      attribution="Background tiles: © <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap contributors</a>"
+                    >
+                      <Layer id='preview-tiles' type='raster' />
+                    </Source>
+                  )}
+                  <Source id='results' type='geojson' data={item}>
+                    <Layer
+                      id='results-line'
+                      type='line'
+                      paint={resultsOutline}
+                    />
+                    {!previewAsset && (
+                      <Layer
+                        id='results-fill'
+                        type='fill'
+                        paint={resultsFill}
+                      />
+                    )}
+                  </Source>
+                </Map>
+              </Box>
             </Flex>
           </GridItem>
         </Grid>

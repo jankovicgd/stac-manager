@@ -71,7 +71,7 @@ export default function ItemCard() {
         </Text>
       </CardBody>
       <CardFooter as='footer'>
-        <HStack spacing={4}>
+        <HStack spacing={2}>
           <Tag size='sm' colorScheme='primary' as='a' href='#'>
             Tag
           </Tag>

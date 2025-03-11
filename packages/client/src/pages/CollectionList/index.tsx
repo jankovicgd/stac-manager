@@ -14,7 +14,6 @@ import {
   Box,
   SimpleGrid,
   InputGroup,
-  InputLeftElement,
   Input,
   InputRightElement,
   Select,
