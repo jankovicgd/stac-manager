@@ -19,7 +19,9 @@ import {
 import {
   CollecticonEllipsisVertical,
   CollecticonMagnifierRight,
-  CollecticonPlusSmall
+  CollecticonPencil,
+  CollecticonPlusSmall,
+  CollecticonTextBlock
 } from '@devseed-ui/collecticons-chakra';
 import { useCollections } from '@developmentseed/stac-react';
 import type { StacCollection } from 'stac-ts';
@@ -158,16 +160,22 @@ function CollectionList() {
                       as={IconButton}
                       aria-label='Options'
                       icon={<CollecticonEllipsisVertical />}
-                      variant='outline'
+                      variant='soft-outline'
+                      colorScheme='base'
                       size='sm'
                     />
                     <MenuList>
-                      <MenuItem as={SmartLink} to={`/collections/${col.id}/`}>
+                      <MenuItem
+                        as={SmartLink}
+                        to={`/collections/${col.id}/`}
+                        icon={<CollecticonTextBlock />}
+                      >
                         View
                       </MenuItem>
                       <MenuItem
                         as={SmartLink}
                         to={`/collections/${col.id}/edit`}
+                        icon={<CollecticonPencil />}
                       >
                         Edit
                       </MenuItem>

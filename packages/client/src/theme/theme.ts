@@ -71,6 +71,11 @@ const theme = {
         color: 'primary.500'
       }
     },
+    Menu: {
+      baseStyle: {
+        item: { _hover: { textDecoration: 'none !important' } }
+      }
+    },
     FormLabel: {
       baseStyle: {
         fontSize: 'sm'

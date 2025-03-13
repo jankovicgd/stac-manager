@@ -25,6 +25,7 @@ import { useCollection, useStacSearch } from '@developmentseed/stac-react';
 import {
   CollecticonEllipsisVertical,
   CollecticonPencil,
+  CollecticonTextBlock,
   CollecticonTrashBin
 } from '@devseed-ui/collecticons-chakra';
 import { StacCollection, StacItem } from 'stac-ts';
@@ -294,6 +295,7 @@ function CollectionDetail() {
                         <MenuItem
                           as={SmartLink}
                           to={`/collections/${id}/items/${item.id}`}
+                          icon={<CollecticonTextBlock />}
                         >
                           View
                         </MenuItem>

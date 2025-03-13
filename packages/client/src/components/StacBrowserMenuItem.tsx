@@ -15,7 +15,6 @@ export function StacBrowserMenuItem(
     <MenuItem
       icon={<CollecticonGlobe />}
       as={SmartLink}
-      _hover={{ textDecoration: 'none' }}
       to={`${baseStacBrowserUrl}${resourcePath}`}
       {...rest}
     >
