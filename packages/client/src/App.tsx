@@ -18,9 +18,7 @@ import { MainNavigation } from './components';
 import Home from './pages/Home';
 import CollectionList from './pages/CollectionList';
 import { CollectionForm } from './pages/CollectionForm';
-import ItemList from './pages/ItemList';
 import ItemDetail from './pages/ItemDetail';
-import ItemForm from './pages/ItemForm';
 import NotFound from './pages/NotFound';
 import CollectionDetail from './pages/CollectionDetail';
 import Sandbox from './pages/Sandbox';
@@ -63,14 +61,9 @@ export const App = () => (
                   path='/collections/:collectionId/edit/'
                   element={<CollectionForm />}
                 />
-                <Route path='/items/' element={<ItemList />} />
                 <Route
                   path='/collections/:collectionId/items/:itemId/'
                   element={<ItemDetail />}
-                />
-                <Route
-                  path='/collections/:collectionId/items/:itemId/edit/'
-                  element={<ItemForm />}
                 />
                 <Route path='/sandbox' element={<Sandbox />} />
                 <Route path='*' element={<NotFound />} />

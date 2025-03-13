@@ -29,10 +29,7 @@ function MainNavigation() {
     <Box as='nav' aria-label='Main'>
       <List display='flex' gap={2}>
         <NavItem to='/collections/' leftIcon={<CollecticonFolder />}>
-          Collections
-        </NavItem>
-        <NavItem to='/items/' leftIcon={<CollecticonFolder />}>
-          Items
+          Browse
         </NavItem>
         <NavItem to='/collections/new' leftIcon={<CollecticonPlusSmall />}>
           Create
