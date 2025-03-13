@@ -15,7 +15,8 @@ const theme = {
     warning: createColorPalette('#FFC849'),
     success: createColorPalette('#46D6CD'),
     info: createColorPalette('#1A5BDB'),
-    surface: createColorPalette('#FFF')
+    surface: createColorPalette('#FFF'),
+    gray: createColorPalette(base)
   },
   fonts: {
     body: 'Inter',
@@ -142,7 +143,7 @@ const theme = {
           const { colorScheme: c } = props;
           return {
             border: '2px solid',
-            borderColor: `${c}.200a`,
+            borderColor: `${c}.200`,
             '.chakra-button__group[data-attached][data-orientation=horizontal] > &:not(:last-of-type)':
               { marginEnd: '-2px' },
             '.chakra-button__group[data-attached][data-orientation=vertical] > &:not(:last-of-type)':
