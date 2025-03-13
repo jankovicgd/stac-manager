@@ -34,6 +34,7 @@ export const App = () => (
             minH='100vh'
             display='flex'
             flexDirection='column'
+            gap={4}
           >
             <Flex
               as='header'
@@ -75,7 +76,7 @@ export const App = () => (
               alignItems='center'
               justifyContent='space-between'
               mt='auto'
-              p={4}
+              py={8}
             >
               <Flex gap={4} alignItems='center'>
                 <Text as='span'>
