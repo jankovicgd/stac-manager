@@ -1,9 +1,9 @@
 import React from 'react';
-import { Flex, Grid, SimpleGrid } from '@chakra-ui/react';
+import { Flex, SimpleGrid } from '@chakra-ui/react';
 
 import { usePageTitle } from '../../hooks';
 import { InnerPageHeader } from '$components/InnerPageHeader';
-import ItemCard from '$components/ItemCard';
+import {ItemCard} from '$components/ItemCard';
 
 export default function Sandbox() {
   usePageTitle('Sandbox');

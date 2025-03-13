@@ -9,15 +9,14 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  SimpleGrid,
   Heading,
-  Badge,
   GridItem,
   Grid,
-  VisuallyHidden
+  VisuallyHidden,
+  Skeleton,
+  SkeletonText
 } from '@chakra-ui/react';
 import Map, { Source, Layer, MapRef } from 'react-map-gl/maplibre';
-import StacFields from '@radiantearth/stac-fields';
 import { StacAsset } from 'stac-ts';
 import { useItem } from '@developmentseed/stac-react';
 import {
@@ -27,14 +26,10 @@ import {
 import getBbox from '@turf/bbox';
 
 import { usePageTitle } from '../../hooks';
-import { Loading } from '../../components';
-import PropertyList from './PropertyList';
-import { PropertyGroup } from '../../types';
-import { BackgroundTiles } from '../../components/Map';
+import { BackgroundTiles } from '$components/Map';
 import AssetList from './AssetList';
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
-import ItemCard from '$components/ItemCard';
 
 const resultsOutline = {
   'line-color': '#C53030',
@@ -50,6 +45,12 @@ const cogMediaTypes = [
   'image/tiff; application=geotiff; profile=cloud-optimized',
   'image/vnd.stac.geotiff'
 ];
+
+const dateFormat: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+};
 
 function ItemDetail() {
   const { collectionId, itemId } = useParams();
@@ -89,11 +90,25 @@ function ItemDetail() {
   }, [item]);
 
   if (!item || state === 'LOADING') {
-    return <Loading>Loading item...</Loading>;
+    return (
+      <Box p={8}>
+        <Flex direction='column' gap={4}>
+          <Skeleton h={6} maxW='25rem' />
+          <Skeleton h={12} maxW='30rem' />
+        </Flex>
+
+        <SkeletonText
+          mt={8}
+          noOfLines={4}
+          spacing='4'
+          skeletonHeight='2'
+          maxW='50rem'
+        />
+      </Box>
+    );
   }
 
-  const { title, description, ...properties } = item.properties;
-  const formattedProperties = StacFields.formatItemProperties({ properties });
+  const { title, description,  ...properties } = item.properties;
 
   return (
     <Flex direction='column' gap={8}>
@@ -111,7 +126,7 @@ function ItemDetail() {
             >
               Edit
             </Button> */}
-            <Menu>
+            <Menu placement='bottom-end'>
               <MenuButton
                 as={IconButton}
                 aria-label='Options'
@@ -161,10 +176,29 @@ function ItemDetail() {
                 <Heading size='sm' as='h3'>
                   Collection
                 </Heading>
-                <Text size='md'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </Text>
+                <Text size='md'>{item.collection}</Text>
               </Flex>
+              {description && (
+                <Flex direction='column' gap='2'>
+                  <Heading size='sm' as='h3'>
+                    Description
+                  </Heading>
+                  <Text size='md'>{description} </Text>
+                </Flex>
+              )}
+              {properties.datetime && (
+                <Flex direction='column' gap='2'>
+                  <Heading size='sm' as='h3'>
+                    Date
+                  </Heading>
+                  <Text size='md'>
+                    {new Date(properties.datetime).toLocaleString(
+                      'en-GB',
+                      dateFormat
+                    )}
+                  </Text>
+                </Flex>
+              )}
             </Flex>
           </GridItem>
           <GridItem colSpan={4}>
@@ -182,12 +216,7 @@ function ItemDetail() {
                 <VisuallyHidden>Spacial extent</VisuallyHidden>
               </Heading>
               <Box position='absolute' inset='0'>
-                <Map
-                  ref={setMapRef}
-                  dragPan={false}
-                  scrollZoom={false}
-                  cursor='default'
-                >
+                <Map ref={setMapRef}>
                   <BackgroundTiles />
                   {previewAsset && (
                     <Source
@@ -223,84 +252,7 @@ function ItemDetail() {
         </Grid>
       </Flex>
 
-      <Flex direction='column' gap='8' as='section'>
-        <Flex direction='row' px='8' gap='8' as='header'>
-          <Box flexBasis='100%'>
-            <Heading size='md' as='h2'>
-              Assets <Badge variant='solid'>04</Badge>
-            </Heading>
-          </Box>
-        </Flex>
-
-        <SimpleGrid
-          gap={8}
-          templateColumns='repeat(auto-fill, minmax(26rem, 1fr))'
-        >
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-        </SimpleGrid>
-      </Flex>
-
-      <Box display='grid' gridTemplateColumns='minmax(0, 2fr) 1fr' gap='8'>
-        <Box>
-          <Box
-            height='60'
-            borderBottom='1px solid'
-            borderColor='gray.200'
-            pb='8'
-          >
-            <Map
-              ref={setMapRef}
-              dragPan={false}
-              scrollZoom={false}
-              cursor='default'
-            >
-              <BackgroundTiles />
-              {previewAsset && (
-                <Source
-                  id='preview'
-                  type='raster'
-                  tiles={[
-                    `http://tiles.rdnt.io/tiles/{z}/{x}/{y}@2x?url=${previewAsset}`
-                  ]}
-                  tileSize={256}
-                  attribution="Background tiles: © <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap contributors</a>"
-                >
-                  <Layer id='preview-tiles' type='raster' />
-                </Source>
-              )}
-              <Source id='results' type='geojson' data={item}>
-                <Layer id='results-line' type='line' paint={resultsOutline} />
-                {!previewAsset && (
-                  <Layer id='results-fill' type='fill' paint={resultsFill} />
-                )}
-              </Source>
-            </Map>
-          </Box>
-          <AssetList assets={item.assets} />
-        </Box>
-        <Box fontSize='sm' borderLeft='1px solid' borderColor='gray.100' pl='8'>
-          <Box display='flex' gap='4' alignItems='baseline'>
-            <Text as='h3' fontSize='md' my='0' flex='1'>
-              About
-            </Text>
-          </Box>
-          {(title || description) && (
-            <Text mt='0'>
-              {title && <Text as='b'>{title} </Text>}
-              {description}
-            </Text>
-          )}
-          {formattedProperties.map((property: PropertyGroup) => (
-            <PropertyList
-              key={property.extension || 'default-props'}
-              properties={property}
-            />
-          ))}
-        </Box>
-      </Box>
+      <AssetList assets={item.assets} />
     </Flex>
   );
 }
