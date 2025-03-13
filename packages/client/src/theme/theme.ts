@@ -1,11 +1,16 @@
 import { extendTheme } from '@chakra-ui/react';
 import { createColorPalette } from './color-palette';
+import { adjustHue, setLightness, setSaturation } from 'polished';
+
+const primary = process.env.REACT_APP_THEME_PRIMARY_COLOR || '#6A5ACD';
+const secondary = process.env.REACT_APP_THEME_SECONDARY_COLOR || '#048A81';
+const base = setSaturation(0.32, setLightness(0.16, adjustHue(48, primary)));
 
 const theme = {
   colors: {
-    primary: createColorPalette('#6A5ACD'),
-    secondary: createColorPalette('#048A81'),
-    base: createColorPalette('#331A33'),
+    primary: createColorPalette(primary),
+    secondary: createColorPalette(secondary),
+    base: createColorPalette(base),
     danger: createColorPalette('#FF5353'),
     warning: createColorPalette('#FFC849'),
     success: createColorPalette('#46D6CD'),
