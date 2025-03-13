@@ -308,7 +308,6 @@ function CollectionDetail() {
               <ItemCardLoading mini />
               <ItemCardLoading mini />
               <ItemCardLoading mini />
-              <ItemCardLoading mini />
             </>
           )}
         </SimpleGrid>

@@ -141,7 +141,6 @@ function CollectionList() {
             <>
               <ItemCardLoading />
               <ItemCardLoading />
-              <ItemCardLoading />
             </>
           ) : (
             filteredCollections.map((col) => (
