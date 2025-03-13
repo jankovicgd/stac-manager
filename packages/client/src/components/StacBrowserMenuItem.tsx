@@ -5,7 +5,7 @@ import SmartLink from './SmartLink';
 
 const baseStacBrowserUrl =
   process.env.REACT_APP_STAC_BROWSER ||
-  'https://radiantearth.github.io/stac-browser/#/external';
+  `https://radiantearth.github.io/stac-browser/#/external/${process.env.REACT_APP_STAC_API}`;
 
 export function StacBrowserMenuItem(
   props: MenuItemProps & { resourcePath: string }

@@ -108,7 +108,7 @@ function ItemDetail() {
     );
   }
 
-  const { title, description,  ...properties } = item.properties;
+  const { title, description, ...properties } = item.properties;
 
   return (
     <Flex direction='column' gap={8}>
@@ -136,7 +136,7 @@ function ItemDetail() {
               />
               <MenuList>
                 <StacBrowserMenuItem
-                  resourcePath={`/collections/${properties.collection}/items/${properties.id}`}
+                  resourcePath={`/collections/${item.collection}/items/${item.id}`}
                 />
                 <MenuItem
                   icon={<CollecticonTrashBin />}
