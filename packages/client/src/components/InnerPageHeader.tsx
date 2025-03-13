@@ -14,7 +14,7 @@ export const InnerPageHeader = forwardRef<InnerPageHeaderProps, 'div'>(
         ref={ref}
         bg='base.50'
         borderRadius='md'
-        p={4}
+        p={8}
         direction='column'
         gap={2}
         {...rest}
@@ -25,7 +25,7 @@ export const InnerPageHeader = forwardRef<InnerPageHeaderProps, 'div'>(
           </Text>
         )}
         <Flex gap={4} justifyContent='space-between' alignItems='center'>
-          <Heading size='md' noOfLines={1}>
+          <Heading size='lg' noOfLines={1} as='h1'>
             {title}
           </Heading>
           {actions && <Flex gap={2}>{actions}</Flex>}

@@ -64,7 +64,7 @@ function CollectionMap({ collection }: CollectionMapProps) {
   }, [collection, map]);
 
   return (
-    <Map ref={setMapRef} dragPan={false} scrollZoom={false} cursor='default'>
+    <Map ref={setMapRef}>
       <BackgroundTiles />
       {extent && (
         <Source id='extent' type='geojson' data={extent}>

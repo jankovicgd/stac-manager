@@ -18,11 +18,10 @@ import { MainNavigation } from './components';
 import Home from './pages/Home';
 import CollectionList from './pages/CollectionList';
 import { CollectionForm } from './pages/CollectionForm';
-import ItemList from './pages/ItemList';
 import ItemDetail from './pages/ItemDetail';
-import ItemForm from './pages/ItemForm';
 import NotFound from './pages/NotFound';
 import CollectionDetail from './pages/CollectionDetail';
+import Sandbox from './pages/Sandbox';
 import { config } from './plugin-system/config';
 
 export const App = () => (
@@ -31,17 +30,18 @@ export const App = () => (
       <PluginConfigProvider config={config}>
         <Router>
           <Container
-            maxW='container.lg'
+            maxW='container.xl'
             minH='100vh'
             display='flex'
             flexDirection='column'
+            gap={4}
           >
             <Flex
               as='header'
               gap={4}
               alignItems='center'
               justifyContent='space-between'
-              p={4}
+              py={8}
             >
               <Heading as='p' size='sm'>
                 STAC Manager
@@ -62,15 +62,11 @@ export const App = () => (
                   path='/collections/:collectionId/edit/'
                   element={<CollectionForm />}
                 />
-                <Route path='/items/' element={<ItemList />} />
                 <Route
                   path='/collections/:collectionId/items/:itemId/'
                   element={<ItemDetail />}
                 />
-                <Route
-                  path='/collections/:collectionId/items/:itemId/edit/'
-                  element={<ItemForm />}
-                />
+                <Route path='/sandbox' element={<Sandbox />} />
                 <Route path='*' element={<NotFound />} />
               </Routes>
             </Box>
@@ -80,7 +76,7 @@ export const App = () => (
               alignItems='center'
               justifyContent='space-between'
               mt='auto'
-              p={4}
+              py={8}
             >
               <Flex gap={4} alignItems='center'>
                 <Text as='span'>

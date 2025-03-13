@@ -1,16 +1,22 @@
 import { extendTheme } from '@chakra-ui/react';
 import { createColorPalette } from './color-palette';
+import { adjustHue, setLightness, setSaturation } from 'polished';
+
+const primary = process.env.REACT_APP_THEME_PRIMARY_COLOR || '#6A5ACD';
+const secondary = process.env.REACT_APP_THEME_SECONDARY_COLOR || '#048A81';
+const base = setSaturation(0.32, setLightness(0.16, adjustHue(48, primary)));
 
 const theme = {
   colors: {
-    primary: createColorPalette('#6A5ACD'),
-    secondary: createColorPalette('#048A81'),
-    base: createColorPalette('#331A33'),
+    primary: createColorPalette(primary),
+    secondary: createColorPalette(secondary),
+    base: createColorPalette(base),
     danger: createColorPalette('#FF5353'),
     warning: createColorPalette('#FFC849'),
     success: createColorPalette('#46D6CD'),
     info: createColorPalette('#1A5BDB'),
-    surface: createColorPalette('#FFF')
+    surface: createColorPalette('#FFF'),
+    gray: createColorPalette(base)
   },
   fonts: {
     body: 'Inter',
@@ -66,9 +72,41 @@ const theme = {
         color: 'primary.500'
       }
     },
+    Menu: {
+      baseStyle: {
+        item: { _hover: { textDecoration: 'none !important' } }
+      }
+    },
     FormLabel: {
       baseStyle: {
         fontSize: 'sm'
+      }
+    },
+    Card: {
+      variants: {
+        filled: {
+          container: {
+            background: 'base.50'
+          }
+        }
+      }
+    },
+    Input: {
+      variants: {
+        outline: {
+          field: {
+            border: '2px solid'
+          }
+        }
+      }
+    },
+    Select: {
+      variants: {
+        outline: {
+          field: {
+            border: '2px solid'
+          }
+        }
       }
     },
     Button: {
@@ -105,7 +143,7 @@ const theme = {
           const { colorScheme: c } = props;
           return {
             border: '2px solid',
-            borderColor: `${c}.200a`,
+            borderColor: `${c}.200`,
             '.chakra-button__group[data-attached][data-orientation=horizontal] > &:not(:last-of-type)':
               { marginEnd: '-2px' },
             '.chakra-button__group[data-attached][data-orientation=vertical] > &:not(:last-of-type)':

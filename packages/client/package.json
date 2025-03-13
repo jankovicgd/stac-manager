@@ -24,7 +24,7 @@
     "lint": "yarn lint:scripts",
     "lint:scripts": "eslint app/",
     "ts-check": "yarn tsc --noEmit --skipLibCheck",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest"
   },
   "engines": {
     "node": "20.x"
@@ -64,7 +64,7 @@
     "@stac-manager/data-plugins": "*",
     "@stac-manager/data-widgets": "*",
     "@testing-library/jest-dom": "^6.6.2",
-    "@testing-library/react": "^16.0.1",
+    "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.5.2",
     "@turf/bbox": "^7.1.0",
     "@turf/bbox-polygon": "^7.1.0",
