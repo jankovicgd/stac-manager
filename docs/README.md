@@ -22,12 +22,18 @@ Each plugin handles a specific part of the data and is responsible for defining 
 
 ## Configuration
 
+### Client
+
+See the client-specific instructions, such as configuring the server's STAC API, in the [README of the client package](../packages/client#client-specific-instructions).
+
+### Plugins
+
 STAC-Manager's [config file](/packages/client/src/plugin-system/config.ts) specifies the plugins that the app uses for Collections and Items while extending the `Default Plugin Widget Configuration` which defines the widgets for the basic field types.  
 _See the [data-widgets/config](/packages/data-widgets/lib/config/index.ts) for a list of existent widgets._
 
 When creating a new plugin or a new widget, the configuration should be updated with the new plugin/widget.
 
-### Example config
+#### Example config
 
 The config object should contain a list of plugins to use for the collections and items, as well as the widget configuration (which widgets to use for which field types).
 
