@@ -10,10 +10,10 @@ STAC-Manager is a react app designed for managing the values of a STAC (SpatioTe
 The ecosystem is composed of a web app (the client) and a plugin system that powers it.
 The different parts of the project are located in the `packages` directory structured as follows:
 
-- [`@stac-manager/client`](./packages/client) - STAC-Manager web app.
-- [`@stac-manager/data-core`](./packages/data-core) - Core functionality of the form builder plugin system.
-- [`@stac-manager/data-widgets`](./packages/data-widgets) - Form components to be used by the form builder plugin system, when custom ones are not provided.
-- [`@stac-manager/data-plugins`](./packages/data-plugins) - Data plugins for the forms. Each plugin defines how a section of the data structure is displayed and edited.
+- [`@stac-manager/client`](../packages/client) - STAC-Manager web app.
+- [`@stac-manager/data-core`](../packages/data-core) - Core functionality of the form builder plugin system.
+- [`@stac-manager/data-widgets`](../packages/data-widgets) - Form components to be used by the form builder plugin system, when custom ones are not provided.
+- [`@stac-manager/data-plugins`](../packages/data-plugins) - Data plugins for the forms. Each plugin defines how a section of the data structure is displayed and edited.
 
 The `@stac-manager/data-*` packages contain the default implementation of the plugin system, the widgets used to render the forms and some core functions to allow the system to be extended.
 
