@@ -14,8 +14,12 @@ export const Auth0ProviderWithNavigate = (props: {
     navigate(appState?.returnTo || window.location.pathname);
   };
 
-  if (!(domain && clientId)) {
-    return null;
+  if (!domain || !clientId) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      'Auth0 domain or client ID not set. Authentication is disabled.'
+    );
+    return props.children;
   }
 
   return (

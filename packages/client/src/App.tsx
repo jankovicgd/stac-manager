@@ -11,11 +11,11 @@ import {
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 import { Route, Routes } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import { CollecticonCog } from '@devseed-ui/collecticons-chakra';
 
-import { MainNavigation } from './components';
 import { RequireAuth } from '$components/auth/RequireAuth';
+import { useAuth0IfEnabled } from '$components/auth/authIfEnabled';
+import MainNavigation from '$components/MainNavigation';
 import Home from '$pages/Home';
 import CollectionList from '$pages/CollectionList';
 import { CollectionForm } from '$pages/CollectionForm';
@@ -43,7 +43,7 @@ const rotate2 = keyframes`
 `;
 
 export function App() {
-  const { isLoading } = useAuth0();
+  const { isLoading } = useAuth0IfEnabled();
 
   return (
     <>

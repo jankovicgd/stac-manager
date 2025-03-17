@@ -35,7 +35,7 @@ import { StacBrowserMenuItem } from '$components/StacBrowserMenuItem';
 import { ItemCard, ItemCardLoading } from '$components/ItemCard';
 import { zeroPad } from '$utils/format';
 import { ButtonWithAuth } from '$components/auth/ButtonWithAuth';
-import { DeleteMenuItem } from '$components/auth/DeleteMenuItem';
+import { DeleteMenuItem } from '$components/DeleteMenuItem';
 import SmartLink from '$components/SmartLink';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
@@ -130,7 +130,6 @@ function CollectionDetail() {
           <>
             <ButtonWithAuth
               colorScheme='primary'
-              size='sm'
               to={`/collections/${id}/edit`}
               leftIcon={<CollecticonPencil />}
             >

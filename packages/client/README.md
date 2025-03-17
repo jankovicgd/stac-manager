@@ -29,3 +29,9 @@ REACT_APP_THEME_SECONDARY_COLOR
 You must provide a value for the `REACT_APP_STAC_API` environment variable. This should be the URL of the STAC API you wish to interact with.
 
 If the `REACT_APP_STAC_BROWSER` environment variable is not set, [Radiant Earth's STAC Browser](https://radiantearth.github.io/stac-browser/) will be used by default, which will connect to the STAC API specified in `REACT_APP_STAC_API`.
+
+**Auth**  
+The client uses Auth0 for authentication, which is disabled by default. To
+enable it you must provide values for the `REACT_APP_AUTH0_DOMAIN` and
+`REACT_APP_AUTH0_CLIENT_ID` environment variables. These can be obtained by
+creating an Auth0 account and setting up a new application.

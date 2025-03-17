@@ -79,7 +79,6 @@ function CollectionList() {
         actions={
           <ButtonWithAuth
             colorScheme='primary'
-            size='sm'
             to='/collections/new'
             leftIcon={<CollecticonPlusSmall />}
           >

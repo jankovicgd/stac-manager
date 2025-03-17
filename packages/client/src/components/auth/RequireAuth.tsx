@@ -3,7 +3,7 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import usePageTitle from '$hooks/usePageTitle';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0IfEnabled } from './authIfEnabled';
 
 export function RequireAuth(
   props: {
@@ -13,7 +13,12 @@ export function RequireAuth(
   const { Component, ...rest } = props;
   usePageTitle('Authentication Required');
 
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const auth = useAuth0IfEnabled();
+
+  if (!auth.isEnabled) {
+    return <Component {...rest} />;
+  }
+  const { isAuthenticated, loginWithRedirect } = auth;
 
   if (isAuthenticated) {
     return <Component {...rest} />;

@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import {
   Avatar,
   Box,
@@ -9,10 +8,16 @@ import {
   MenuList
 } from '@chakra-ui/react';
 import React from 'react';
+import { useAuth0IfEnabled } from './authIfEnabled';
 
 export function UserInfo() {
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
-    useAuth0();
+  const auth = useAuth0IfEnabled();
+
+  if (!auth.isEnabled) {
+    return null;
+  }
+
+  const { isAuthenticated, user, isLoading, loginWithRedirect, logout } = auth;
 
   if (!isAuthenticated || !user || isLoading) {
     return (
