@@ -99,16 +99,7 @@ export class PluginCore extends Plugin {
             allowOther: {
               type: 'string'
             },
-            enum: [
-              [
-                'https://stac-extensions.github.io/item-assets/v1.0.0/schema.json',
-                'Item Assets Defenition'
-              ],
-              [
-                'https://stac-extensions.github.io/render/v2.0.0/schema.json',
-                'Render'
-              ]
-            ]
+            enum: []
           }
         },
         spatial: {

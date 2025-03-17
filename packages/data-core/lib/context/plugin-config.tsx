@@ -13,7 +13,7 @@ const PluginConfigContext = createContext<PluginConfigContextProps | null>(
 
 /**
  * Global context provider for the configuration
- * 
+ *
  * @param props.config Configuration object
  * @param props.children Child components
  */
