@@ -3,7 +3,7 @@ name: Deploy Github Pages
 on:
   push:
     branches:
-    - 'stac-manager'
+    - 'main'
 
 env:
   PUBLIC_URL: ${{ vars.PUBLIC_URL }}
