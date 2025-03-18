@@ -150,6 +150,7 @@ function CollectionList() {
                 key={col.id}
                 imageSrc={col.assets?.thumbnail?.href}
                 imageAlt={col.assets?.thumbnail?.title}
+                showPlaceholder
                 title={col.title || col.id}
                 description={col.description}
                 tags={col.keywords}

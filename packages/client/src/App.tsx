@@ -8,12 +8,13 @@ import {
   Heading,
   Text,
   Badge,
-  Divider
+  Divider,
+  Image
 } from '@chakra-ui/react';
 import { StacApiProvider } from '@developmentseed/stac-react';
 import { PluginConfigProvider } from '@stac-manager/data-core';
 
-import theme from './theme';
+import theme from './theme/theme';
 import { MainNavigation } from './components';
 import Home from './pages/Home';
 import CollectionList from './pages/CollectionList';
@@ -43,9 +44,23 @@ export const App = () => (
               justifyContent='space-between'
               py={8}
             >
-              <Heading as='p' size='sm'>
-                STAC Manager
-              </Heading>
+              <Flex gap={4} alignItems='center'>
+                <Image
+                  src='/meta/icon-512.png'
+                  width={8}
+                  aspectRatio={1}
+                  borderRadius='md'
+                />
+                <Divider
+                  orientation='vertical'
+                  borderColor='base.200a'
+                  h='1rem'
+                  borderLeftWidth='2px'
+                />
+                <Heading as='p' size='sm'>
+                  STAC Manager
+                </Heading>
+              </Flex>
 
               <MainNavigation />
             </Flex>
