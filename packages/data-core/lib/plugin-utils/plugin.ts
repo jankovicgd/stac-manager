@@ -54,10 +54,21 @@ export abstract class Plugin {
    *
    * @param targetName - The name of the target plugin to which the hook will be
    * applied.
-   * @param hooks - The hook details.
+   * @param hookName - The name of the hook.
+   * @param hook - The hook function.
    */
-  registerHook(targetName: string, hooks: Omit<PluginHook, 'name'>) {
-    this[Plugin.HOOKS].push({ name: targetName, ...hooks });
+  registerHook<K extends keyof Omit<PluginHook, 'name'>>(
+    targetName: string,
+    hookName: K,
+    hook: PluginHook[K]
+  ) {
+    const hookEntry = this[Plugin.HOOKS].find((h) => h.name === targetName);
+
+    if (hookEntry) {
+      hookEntry[hookName] = hook;
+    } else {
+      this[Plugin.HOOKS].push({ name: targetName, [hookName]: hook });
+    }
   }
 }
 

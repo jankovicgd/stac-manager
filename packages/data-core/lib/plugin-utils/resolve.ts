@@ -50,12 +50,12 @@ export const resolvePlugins = (plugins: PluginConfigItem[], data: any) => {
  *  [Plugin.HOOKS]: [
  *   {
  *     name: 'pluginA', // Target plugin
- *     onAfterInit: async (target, data) => { },  // Executes after pluginA's init function.
- *     onAfterEditSchema: (target, formData, origEditSchema) => { } // Composes with pluginA's editSchema function and returns a new one.
+ *     onAfterInit: async (targetInstance, data) => { },  // Executes after pluginA's init function.
+ *     onAfterEditSchema: (targetInstance, formData, origEditSchema) => { } // Composes with pluginA's editSchema function and returns a new one.
  *   },
  *   {
  *     name: 'pluginB', // Target plugin
- *     onAfterInit: async (target, data) => { }, // Executes after pluginB's init function.
+ *     onAfterInit: async (targetInstance, data) => { }, // Executes after pluginB's init function.
  *   }
  *  ];
  * }

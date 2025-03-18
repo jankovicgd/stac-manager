@@ -1,6 +1,5 @@
 import {
   Plugin,
-  PluginEditSchema,
   SchemaField,
   SchemaFieldArray,
   SchemaFieldString
@@ -217,19 +216,17 @@ export function addStacExtensionOption(
 ) {
   // Quick way to get the name.
   const name = new PluginCore().name;
-  $this.registerHook(name, {
-    onAfterEditSchema: (pl, formData: any, schema: PluginEditSchema) => {
-      if (!schema || typeof schema === 'symbol') {
-        return schema;
-      }
-
-      const stac_extensions = schema.properties
-        .stac_extensions as SchemaFieldArray<SchemaFieldString>;
-
-      // Set the new extension value in the schema.
-      stac_extensions.items.enum!.push([value, label]);
-
+  $this.registerHook(name, 'onAfterEditSchema', (pl, formData, schema) => {
+    if (!schema || typeof schema === 'symbol') {
       return schema;
     }
+
+    const stac_extensions = schema.properties
+      .stac_extensions as SchemaFieldArray<SchemaFieldString>;
+
+    // Set the new extension value in the schema.
+    stac_extensions.items.enum!.push([value, label]);
+
+    return schema;
   });
 }

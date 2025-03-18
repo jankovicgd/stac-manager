@@ -12,7 +12,7 @@
     - [Object field](#object-field)
       - [Restrictions](#restrictions)
     - [Json field](#json-field)
-
+  - [Hooks](#hooks)
 
 Each plugin should be created handle a specific part of the data.  
 Avoid creating a single plugin to handle all the data, as this will make the code harder to maintain and understand.
@@ -389,3 +389,91 @@ The `json` field is an escape-hatch that allows the user to input any JSON data.
 ```
 
 ![JSON](images/field-json.png)
+
+## Hooks
+
+> [!WARNING]
+> The hooks are an advanced feature and should be used with caution.
+
+Hooks are functions that can be added to the plugins to perform actions at specific points in their lifecycle.
+
+Available hooks:
+- `onAfterInit(targetInstance: Plugin, data: any) => void` - Executed after the target plugin's `init` function. Can be a promise.
+- `onAfterEditSchema(targetInstance: Plugin, formData: any, schema: PluginEditSchema) => PluginEditSchema` - Allows changing a plugin's schema. Receives the schema returned by the target plugin's `editSchema` function and the data entered in the form. Should return the modified schema.
+
+Hooks should be registered in the plugin's constructor:
+
+```ts
+import { Plugin } from '@stac-manager/data-core';
+
+export class PluginName extends Plugin {
+  name = 'Plugin Name';
+
+  constructor() {
+    super();
+    this.registerHook(
+      'Target plugin name',
+      'onAfterInit',
+      (targetInstance: Plugin, data: any) => {
+        // Do something.
+      }
+    );
+
+    this.registerHook(
+      'Target plugin name',
+      'onAfterEditSchema',
+      (targetInstance: Plugin, formData: any, schema: PluginEditSchema) => {
+        // Do something.
+        return schema;
+      }
+    );
+  }
+}
+```
+
+**Real world example**  
+Whenever an STAC extension plugin is added, it should add the extension to the `stac_extensions` field of the CollectionsCore plugin. This will allow the interface to show the extension as an option in the dropdown.
+
+This can be achieved with th `onAfterEditSchema` hook:
+```ts
+import { Plugin } from '@stac-manager/data-core';
+
+export class PluginName extends Plugin {
+  name = 'Plugin Name';
+
+  constructor() {
+    super();
+    this.registerHook(
+      'CollectionsCore',
+      'onAfterEditSchema',
+      (targetInstance: Plugin, formData: any, schema: PluginEditSchema) => {
+        const stac_extensions = schema.properties
+          .stac_extensions as SchemaFieldArray<SchemaFieldString>;
+
+        // Set the new extension value in the schema.
+        stac_extensions.items.enum!.push([value, label]);
+
+        return schema;
+      }
+    );
+  }
+}
+```
+
+> [!TIP]
+> Given that this is a common enough use-case there is a helper function (`addStacExtensionOption`) that can be used.
+> ```ts
+>import { Plugin } from '@stac-manager/data-core';
+>import { addStacExtensionOption } from '@stac-manager/data-plugins';
+>
+>class PluginName extends Plugin {
+>  constructor() {
+>    super();
+>
+>    addStacExtensionOption(
+>      this,
+>      'Item Assets Definition',
+>      'https://stac-extensions.github.io/item-assets/v1.0.0/schema.json'
+>    );
+>  }
+>}
