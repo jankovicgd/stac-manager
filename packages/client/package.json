@@ -50,7 +50,6 @@
     "watcher": "^2.3.1"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^2.3.0",
     "@chakra-ui/react": "^2.8.2",
     "@developmentseed/stac-react": "^0.1.0-alpha.10",
     "@devseed-ui/collecticons-chakra": "^3.0.3",
@@ -70,11 +69,13 @@
     "@turf/bbox": "^7.1.0",
     "@turf/bbox-polygon": "^7.1.0",
     "@types/jest": "^29.5.14",
+    "@types/keycloak-js": "^2.5.4",
     "@types/mapbox__mapbox-gl-draw": "^1.4.8",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "formik": "^2.4.6",
     "framer-motion": "^10.16.5",
+    "keycloak-js": "^26.1.4",
     "mapbox-gl-draw-rectangle-mode": "^1.0.4",
     "maplibre-gl": "^3.6.2",
     "polished": "^4.3.1",

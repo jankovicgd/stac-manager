@@ -7,26 +7,43 @@ import {
   MenuItem,
   MenuList
 } from '@chakra-ui/react';
-import React from 'react';
-import { useAuth0IfEnabled } from './authIfEnabled';
+import React, { useEffect, useState } from 'react';
+import { useKeycloak } from 'src/auth/Context';
+
+async function hash(string: string) {
+  const utf8 = new TextEncoder().encode(string);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+    .join('');
+  return hashHex;
+}
 
 export function UserInfo() {
-  const auth = useAuth0IfEnabled();
+  const { profile, isLoading, isEnabled, keycloak } = useKeycloak();
 
-  if (!auth.isEnabled) {
+  const [userEmailHash, setUserEmailHash] = useState<string>('');
+  useEffect(() => {
+    if (profile?.email) {
+      hash(profile.email).then(setUserEmailHash);
+    }
+  }, [profile?.email]);
+
+  if (!isEnabled) {
     return null;
   }
 
-  const { isAuthenticated, user, isLoading, loginWithRedirect, logout } = auth;
+  const isAuthenticated = keycloak.authenticated;
 
-  if (!isAuthenticated || !user || isLoading) {
+  if (!isAuthenticated || !profile || isLoading) {
     return (
       <Box
         as='button'
         onClick={() => {
           if (!isLoading) {
-            loginWithRedirect({
-              appState: { returnTo: window.location.pathname }
+            keycloak.login({
+              redirectUri: window.location.href
             });
           }
         }}
@@ -38,12 +55,19 @@ export function UserInfo() {
     );
   }
 
-  const username = user.preferred_username || user.nickname || user.name;
+  const username =
+    `${profile.firstName} ${profile.lastName}`.trim() || profile.username;
 
   return (
     <Menu>
       <Box as={MenuButton} _hover={{ opacity: 0.8 }} transition='opacity 0.32s'>
-        <Avatar size='sm' name={username} src={user.picture} />
+        <Avatar
+          size='sm'
+          name={username}
+          bg='primary.500'
+          borderRadius='md'
+          src={`https://www.gravatar.com/avatar/${userEmailHash}`}
+        />
       </Box>
       <MenuList>
         <MenuGroup title='Account'>
@@ -53,7 +77,9 @@ export function UserInfo() {
             _hover={{ bg: 'danger.200' }}
             _focus={{ bg: 'danger.200' }}
             onClick={() => {
-              logout({ logoutParams: { returnTo: window.location.origin } });
+              keycloak.logout({
+                redirectUri: window.location.origin
+              });
             }}
           >
             Log Out

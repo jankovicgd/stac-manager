@@ -1,15 +1,15 @@
 import React from 'react';
 import { forwardRef, MenuItem, MenuItemProps } from '@chakra-ui/react';
-import { useAuth0IfEnabled } from './authIfEnabled';
+import { useKeycloak } from 'src/auth/Context';
 
 export const MenuItemWithAuth = forwardRef<MenuItemProps, typeof MenuItem>(
   (props, ref) => {
-    const auth = useAuth0IfEnabled();
+    const { isEnabled, keycloak } = useKeycloak();
 
-    if (!auth.isEnabled) {
+    if (!isEnabled) {
       return <MenuItem ref={ref} {...props} />;
     }
 
-    return auth.isAuthenticated && <MenuItem ref={ref} {...props} />;
+    return keycloak.authenticated && <MenuItem ref={ref} {...props} />;
   }
 );

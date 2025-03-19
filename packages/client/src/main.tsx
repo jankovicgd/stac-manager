@@ -8,12 +8,12 @@ import { PluginConfigProvider } from '@stac-manager/data-core';
 import { App } from './App';
 import theme from './theme';
 import { config } from './plugin-system/config';
-import { Auth0ProviderWithNavigate } from '$components/auth/Auth0ProviderNavigate';
+import { KeycloakProvider } from './auth/Context';
 
 const composingComponents = [
   [ChakraProvider, { theme }],
   [Router, {}],
-  [Auth0ProviderWithNavigate, {}],
+  [KeycloakProvider, {}],
   [StacApiProvider, { apiUrl: process.env.REACT_APP_STAC_API! }],
   [PluginConfigProvider, { config }]
 ] as const;

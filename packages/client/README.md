@@ -21,6 +21,11 @@ PUBLIC_URL
 REACT_APP_STAC_BROWSER
 REACT_APP_STAC_API
 
+# Auth
+REACT_APP_KEYCLOAK_URL
+REACT_APP_KEYCLOAK_CLIENT_ID
+REACT_APP_KEYCLOAK_REALM
+
 # Theming
 REACT_APP_THEME_PRIMARY_COLOR
 REACT_APP_THEME_SECONDARY_COLOR
@@ -31,7 +36,5 @@ You must provide a value for the `REACT_APP_STAC_API` environment variable. This
 If the `REACT_APP_STAC_BROWSER` environment variable is not set, [Radiant Earth's STAC Browser](https://radiantearth.github.io/stac-browser/) will be used by default, which will connect to the STAC API specified in `REACT_APP_STAC_API`.
 
 **Auth**  
-The client uses Auth0 for authentication, which is disabled by default. To
-enable it you must provide values for the `REACT_APP_AUTH0_DOMAIN` and
-`REACT_APP_AUTH0_CLIENT_ID` environment variables. These can be obtained by
-creating an Auth0 account and setting up a new application.
+The client uses Keycloack for authentication, which is disabled by default. To
+enable it you must provide values for the `REACT_APP_KEYCLOAK_*` environment variables. These can be obtained through the Keycloak server.

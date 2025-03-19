@@ -14,7 +14,6 @@ import { Route, Routes } from 'react-router-dom';
 import { CollecticonCog } from '@devseed-ui/collecticons-chakra';
 
 import { RequireAuth } from '$components/auth/RequireAuth';
-import { useAuth0IfEnabled } from '$components/auth/authIfEnabled';
 import MainNavigation from '$components/MainNavigation';
 import Home from '$pages/Home';
 import CollectionList from '$pages/CollectionList';
@@ -23,6 +22,8 @@ import ItemDetail from '$pages/ItemDetail';
 import NotFound from '$pages/NotFound';
 import CollectionDetail from '$pages/CollectionDetail';
 import Sandbox from '$pages/Sandbox';
+
+import { useKeycloak } from './auth/Context';
 
 const rotate = keyframes`
   from {
@@ -43,7 +44,9 @@ const rotate2 = keyframes`
 `;
 
 export function App() {
-  const { isLoading } = useAuth0IfEnabled();
+  const { initStatus } = useKeycloak();
+
+  const isLoading = initStatus === 'loading';
 
   return (
     <>

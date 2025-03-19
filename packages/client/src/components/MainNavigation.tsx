@@ -1,5 +1,12 @@
 import React from 'react';
-import { List, ListItem, Button, ButtonProps, Flex } from '@chakra-ui/react';
+import {
+  List,
+  ListItem,
+  Button,
+  ButtonProps,
+  Flex,
+  Divider
+} from '@chakra-ui/react';
 import {
   CollecticonFolder,
   CollecticonPlusSmall
@@ -7,7 +14,7 @@ import {
 
 import SmartLink, { SmartLinkProps } from './SmartLink';
 import { UserInfo } from './auth/UserInfo';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useKeycloak } from 'src/auth/Context';
 
 function NavItem(props: ButtonProps & SmartLinkProps) {
   return (
@@ -27,20 +34,26 @@ function NavItem(props: ButtonProps & SmartLinkProps) {
 }
 
 function MainNavigation() {
-  const { isAuthenticated } = useAuth0();
+  const { keycloak } = useKeycloak();
 
   return (
-    <Flex as='nav' aria-label='Main' gap={8}>
+    <Flex as='nav' aria-label='Main' gap={4} alignItems='center'>
       <List display='flex' gap={2}>
         <NavItem to='/collections/' leftIcon={<CollecticonFolder />}>
           Browse
         </NavItem>
-        {isAuthenticated && (
+        {keycloak?.authenticated && (
           <NavItem to='/collections/new' leftIcon={<CollecticonPlusSmall />}>
             Create
           </NavItem>
         )}
       </List>
+      <Divider
+        orientation='vertical'
+        borderLeftWidth='2px'
+        borderColor='base.200'
+        h='1rem'
+      />
       <UserInfo />
     </Flex>
   );

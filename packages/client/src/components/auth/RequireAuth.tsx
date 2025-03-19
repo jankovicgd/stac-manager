@@ -3,7 +3,7 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 
 import { InnerPageHeader } from '$components/InnerPageHeader';
 import usePageTitle from '$hooks/usePageTitle';
-import { useAuth0IfEnabled } from './authIfEnabled';
+import { useKeycloak } from 'src/auth/Context';
 
 export function RequireAuth(
   props: {
@@ -13,14 +13,14 @@ export function RequireAuth(
   const { Component, ...rest } = props;
   usePageTitle('Authentication Required');
 
-  const auth = useAuth0IfEnabled();
+  const auth = useKeycloak();
 
   if (!auth.isEnabled) {
     return <Component {...rest} />;
   }
-  const { isAuthenticated, loginWithRedirect } = auth;
+  const { keycloak } = auth;
 
-  if (isAuthenticated) {
+  if (keycloak.authenticated) {
     return <Component {...rest} />;
   }
 
@@ -34,8 +34,8 @@ export function RequireAuth(
           variant='solid'
           colorScheme='primary'
           onClick={() => {
-            loginWithRedirect({
-              appState: { returnTo: window.location.pathname }
+            keycloak.login({
+              redirectUri: window.location.href
             });
           }}
         >
