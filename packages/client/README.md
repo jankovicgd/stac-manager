@@ -29,3 +29,23 @@ REACT_APP_THEME_SECONDARY_COLOR
 You must provide a value for the `REACT_APP_STAC_API` environment variable. This should be the URL of the STAC API you wish to interact with.
 
 If the `REACT_APP_STAC_BROWSER` environment variable is not set, [Radiant Earth's STAC Browser](https://radiantearth.github.io/stac-browser/) will be used by default, which will connect to the STAC API specified in `REACT_APP_STAC_API`.
+
+### Theming
+
+The Stac manager client allows for simple theming to give the instance a different look and feel.  
+The primary and secondary colors can be set using the `REACT_APP_THEME_PRIMARY_COLOR` and `REACT_APP_THEME_SECONDARY_COLOR` environment variables. These should be set to a valid CSS color value.
+
+The app has a default logo shown below, but it can be customized by replacing the necessary files.
+
+<img src='./static/meta/icon-512.png' alt='STAC Manager Logo' width='100px' />
+
+The logo should be a square image with a size of 512x512 pixels and should be placed in the `static/meta` folder with the name `icon-512.png`.
+
+To ensure the branding is consistent, the remaining meta images (in the `static/meta` folder) should also be replaced:
+```
+icon-192.png            192x192
+icon-512.png            512x512
+favicon.png             32x32
+apple-touch-icon.png    360x360
+meta-image.png          1920x1080
+```
