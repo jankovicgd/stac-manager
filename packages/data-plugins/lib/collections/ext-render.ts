@@ -1,7 +1,8 @@
 import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
 import {
+  addStacExtensionOption,
   array2Object,
-  hasExtension,
+  hasStacExtension,
   object2Array,
   object2Tuple,
   tuple2Object
@@ -10,8 +11,18 @@ import {
 export class PluginRender extends Plugin {
   name = 'Render Extension';
 
+  constructor() {
+    super();
+
+    addStacExtensionOption(
+      this,
+      'Render',
+      'https://stac-extensions.github.io/render/v2.0.0/schema.json'
+    );
+  }
+
   editSchema(data: any): PluginEditSchema {
-    if (!hasExtension(data, 'render')) {
+    if (!hasStacExtension(data, 'render')) {
       return Plugin.HIDDEN;
     }
 

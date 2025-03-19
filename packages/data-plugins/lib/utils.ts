@@ -1,4 +1,10 @@
-import { SchemaField } from '@stac-manager/data-core';
+import {
+  Plugin,
+  SchemaField,
+  SchemaFieldArray,
+  SchemaFieldString
+} from '@stac-manager/data-core';
+import { PluginCore } from './collections/core';
 
 /**
  *
@@ -182,7 +188,7 @@ export function tuple2Object(stack: string[][]) {
  * @returns A boolean indicating whether the specified extension (and version,
  * if provided) is present in the data.
  */
-export function hasExtension(
+export function hasStacExtension(
   data: any,
   extension: string,
   version?: (v: string) => boolean
@@ -191,5 +197,36 @@ export function hasExtension(
   return data?.stac_extensions?.some((ext: string) => {
     const match = ext.match(regex);
     return match && (!version || version(match[1]));
+  });
+}
+
+/**
+ * Adds a STAC extension option to the stac_extensions field of the
+ * CollectionsCore plugin.
+ *
+ * @param $this - The plugin instance on which the hook will be registered. Must
+ * be `this`.
+ * @param label - The label for the new STAC extension option.
+ * @param value - The value for the new STAC extension option.
+ */
+export function addStacExtensionOption(
+  $this: Plugin,
+  label: string,
+  value: string
+) {
+  // Quick way to get the name.
+  const name = new PluginCore().name;
+  $this.registerHook(name, 'onAfterEditSchema', (pl, formData, schema) => {
+    if (!schema || typeof schema === 'symbol') {
+      return schema;
+    }
+
+    const stac_extensions = schema.properties
+      .stac_extensions as SchemaFieldArray<SchemaFieldString>;
+
+    // Set the new extension value in the schema.
+    stac_extensions.items.enum!.push([value, label]);
+
+    return schema;
   });
 }

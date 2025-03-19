@@ -1,11 +1,26 @@
 import { Plugin, PluginEditSchema } from '@stac-manager/data-core';
-import { array2Object, hasExtension, object2Array } from '../utils';
+import {
+  addStacExtensionOption,
+  array2Object,
+  hasStacExtension,
+  object2Array
+} from '../utils';
 
 export class PluginItemAssets extends Plugin {
   name = 'Item Assets Extension';
 
+  constructor() {
+    super();
+
+    addStacExtensionOption(
+      this,
+      'Item Assets Definition',
+      'https://stac-extensions.github.io/item-assets/v1.0.0/schema.json'
+    );
+  }
+
   editSchema(data: any): PluginEditSchema {
-    if (!hasExtension(data, 'item-assets')) {
+    if (!hasStacExtension(data, 'item-assets')) {
       return Plugin.HIDDEN;
     }
 
