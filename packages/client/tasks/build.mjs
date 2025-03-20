@@ -35,6 +35,14 @@ async function copyFiles() {
 }
 
 async function parcelServe() {
+  const publicUrl = process.env.PUBLIC_URL || '';
+
+  if (publicUrl) {
+    log.warn(`🌍 Building using public URL: ${publicUrl}`);
+  } else {
+    log.warn(`🌍 Building without public URL`);
+  }
+
   const bundler = new Parcel({
     entries: `${__dirname}/../src/index.html`,
     defaultConfig: `${__dirname}/../.parcelrc`,
@@ -42,7 +50,7 @@ async function parcelServe() {
     mode: 'production',
     defaultTargetOptions: {
       distDir: `${__dirname}/../dist`,
-      publicUrl: process.env.PUBLIC_URL || '/'
+      publicUrl
     },
     additionalReporters: [
       {
