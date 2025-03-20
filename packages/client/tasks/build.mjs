@@ -34,10 +34,10 @@ async function copyFiles() {
   log.info('📦 Copied static files to dist.');
 }
 
-async function parcelServe() {
-  const publicUrl = process.env.PUBLIC_URL || '';
+async function parcelBuild() {
+  const publicUrl = process.env.PUBLIC_URL || '/';
 
-  if (publicUrl) {
+  if (publicUrl && publicUrl !== '/') {
     log.warn(`🌍 Building using public URL: ${publicUrl}`);
   } else {
     log.warn(`🌍 Building without public URL`);
@@ -66,8 +66,9 @@ async function parcelServe() {
     log.info(`✨ Built ${bundles.length} bundles in ${buildTime}ms!`);
   } catch (err) {
     log.warn(err.diagnostics);
+    process.exit(1);
   }
 }
 
 copyFiles();
-parcelServe();
+parcelBuild();
