@@ -65,7 +65,7 @@ export function ItemCard({
             borderRadius='md'
           />
         )}
-      {shouldUsePlaceholder && <ItemCardThumbPlaceholder />}
+      {shouldUsePlaceholder && renderLink(<ItemCardThumbPlaceholder />)}
       <CardHeader as='header'>
         <Flex direction='row' gap={4}>
           {(title || subtitle) && (
