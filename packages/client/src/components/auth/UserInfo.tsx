@@ -1,13 +1,10 @@
-import {
-  Avatar,
-  Box,
-  Menu,
-  MenuButton,
-  MenuGroup,
-  MenuItem,
-  MenuList
-} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { Avatar, Button } from '@chakra-ui/react';
+import {
+  CollecticonLogin,
+  CollecticonLogout
+} from '@devseed-ui/collecticons-chakra';
+
 import { useKeycloak } from 'src/auth/Context';
 
 async function hash(string: string) {
@@ -38,8 +35,9 @@ export function UserInfo() {
 
   if (!isAuthenticated || !profile || isLoading) {
     return (
-      <Box
-        as='button'
+      <Button
+        variant='outline'
+        rightIcon={<CollecticonLogin />}
         onClick={() => {
           if (!isLoading) {
             keycloak.login({
@@ -47,11 +45,9 @@ export function UserInfo() {
             });
           }
         }}
-        _hover={{ opacity: 0.8 }}
-        transition='opacity 0.32s'
       >
-        <Avatar size='sm' />
-      </Box>
+        Login
+      </Button>
     );
   }
 
@@ -59,33 +55,22 @@ export function UserInfo() {
     `${profile.firstName} ${profile.lastName}`.trim() || profile.username;
 
   return (
-    <Menu>
-      <Box as={MenuButton} _hover={{ opacity: 0.8 }} transition='opacity 0.32s'>
+    <Button
+      variant='outline'
+      rightIcon={<CollecticonLogout />}
+      leftIcon={
         <Avatar
           size='sm'
           name={username}
           bg='secondary.500'
           color='white'
-          borderRadius='md'
+          borderRadius='4px'
           src={`https://www.gravatar.com/avatar/${userEmailHash}?d=404`}
         />
-      </Box>
-      <MenuList>
-        <MenuGroup title='Account'>
-          <MenuItem
-            color='danger.500'
-            _hover={{ bg: 'danger.200' }}
-            _focus={{ bg: 'danger.200' }}
-            onClick={() => {
-              keycloak.logout({
-                redirectUri: window.location.origin
-              });
-            }}
-          >
-            Log Out
-          </MenuItem>
-        </MenuGroup>
-      </MenuList>
-    </Menu>
+      }
+      pl='2px'
+    >
+      Logout
+    </Button>
   );
 }

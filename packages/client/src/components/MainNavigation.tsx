@@ -39,11 +39,11 @@ function MainNavigation() {
   return (
     <Flex as='nav' aria-label='Main' gap={4} alignItems='center'>
       <List display='flex' gap={2}>
-        <NavItem to='/collections/' leftIcon={<CollecticonFolder />}>
+        <NavItem to='/collections/' rightIcon={<CollecticonFolder />}>
           Browse
         </NavItem>
         {keycloak?.authenticated && (
-          <NavItem to='/collections/new' leftIcon={<CollecticonPlusSmall />}>
+          <NavItem to='/collections/new' rightIcon={<CollecticonPlusSmall />}>
             Create
           </NavItem>
         )}
