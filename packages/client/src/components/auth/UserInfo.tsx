@@ -71,7 +71,6 @@ export function UserInfo() {
       </Box>
       <MenuList>
         <MenuGroup title='Account'>
-          <MenuItem>Profile</MenuItem>
           <MenuItem
             color='danger.500'
             _hover={{ bg: 'danger.200' }}
