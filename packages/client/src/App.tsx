@@ -12,7 +12,10 @@ import {
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 import { Route, Routes } from 'react-router-dom';
-import { CollecticonCog } from '@devseed-ui/collecticons-chakra';
+import {
+  CollecticonCog,
+  CollecticonHeart
+} from '@devseed-ui/collecticons-chakra';
 
 import { RequireAuth } from '$components/auth/RequireAuth';
 import MainNavigation from '$components/MainNavigation';
@@ -25,6 +28,7 @@ import CollectionDetail from '$pages/CollectionDetail';
 import Sandbox from '$pages/Sandbox';
 
 import { useKeycloak } from './auth/Context';
+import SmartLink from '$components/SmartLink';
 
 const rotate = keyframes`
   from {
@@ -148,7 +152,7 @@ function AppFooter() {
       mt='auto'
       p={4}
     >
-      <Flex gap={4} alignItems='center'>
+      <Flex gap={4} alignItems='center' width='100%'>
         <Text as='span'>
           Powered by{' '}
           <strong>
@@ -160,6 +164,13 @@ function AppFooter() {
         </Text>
         <Divider orientation='vertical' borderColor='base.200a' h='1em' />
         {new Date().getFullYear()}
+        <Text as='span' ml='auto'>
+          Made with <CollecticonHeart meaningful title='love' /> by{' '}
+          <SmartLink to='https://developmentseed.org' color='inherit'>
+            Development Seed
+          </SmartLink>
+          .
+        </Text>
       </Flex>
     </Flex>
   );
