@@ -7,7 +7,8 @@ import {
   Text,
   Badge,
   Divider,
-  Fade
+  Fade,
+  Image
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
 import { Route, Routes } from 'react-router-dom';
@@ -86,9 +87,23 @@ export function App() {
             justifyContent='space-between'
             py={8}
           >
-            <Heading as='p' size='sm'>
-              STAC Manager
-            </Heading>
+            <Flex gap={4} alignItems='center'>
+              <Image
+                src={`${process.env.PUBLIC_URL || ''}/meta/icon-512.png`}
+                width={8}
+                aspectRatio={1}
+                borderRadius='md'
+              />
+              <Divider
+                orientation='vertical'
+                borderColor='base.200a'
+                h='1rem'
+                borderLeftWidth='2px'
+              />
+              <Heading as='p' size='sm'>
+                STAC Manager
+              </Heading>
+            </Flex>
 
             <MainNavigation />
           </Flex>

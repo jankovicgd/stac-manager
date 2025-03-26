@@ -15,10 +15,12 @@ import {
   SkeletonText
 } from '@chakra-ui/react';
 import SmartLink from './SmartLink';
+import { ItemCardThumbPlaceholder } from './ItemCardThumbPlaceholder';
 
 interface ItemCardProps {
   imageSrc?: string;
   imageAlt?: string;
+  showPlaceholder?: boolean;
   title?: string;
   subtitle?: string;
   description?: string;
@@ -30,6 +32,7 @@ interface ItemCardProps {
 export function ItemCard({
   imageSrc,
   imageAlt,
+  showPlaceholder,
   title,
   subtitle,
   description,
@@ -47,6 +50,8 @@ export function ItemCard({
     );
   };
 
+  const shouldUsePlaceholder = showPlaceholder && !imageSrc;
+
   return (
     <Card as='article' variant='filled'>
       {imageSrc &&
@@ -54,12 +59,13 @@ export function ItemCard({
           <Image
             src={imageSrc}
             alt={imageAlt}
-            height='16rem'
             width='100%'
+            aspectRatio={2}
             objectFit='cover'
             borderRadius='md'
           />
         )}
+      {shouldUsePlaceholder && renderLink(<ItemCardThumbPlaceholder />)}
       <CardHeader as='header'>
         <Flex direction='row' gap={4}>
           {(title || subtitle) && (

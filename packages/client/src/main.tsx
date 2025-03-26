@@ -6,13 +6,25 @@ import { StacApiProvider } from '@developmentseed/stac-react';
 import { PluginConfigProvider } from '@stac-manager/data-core';
 
 import { App } from './App';
-import theme from './theme';
+import theme from './theme/theme';
 import { config } from './plugin-system/config';
 import { KeycloakProvider } from './auth/Context';
 
+const publicUrl = process.env.PUBLIC_URL || '';
+
+let basename: string | undefined;
+if (publicUrl) {
+  try {
+    basename = new URL(publicUrl).pathname;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // no-op
+  }
+}
+
 const composingComponents = [
   [ChakraProvider, { theme }],
-  [Router, {}],
+  [Router, { basename }],
   [KeycloakProvider, {}],
   [StacApiProvider, { apiUrl: process.env.REACT_APP_STAC_API! }],
   [PluginConfigProvider, { config }]
