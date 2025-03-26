@@ -64,9 +64,10 @@ export function UserInfo() {
         <Avatar
           size='sm'
           name={username}
-          bg='primary.500'
+          bg='secondary.500'
+          color='white'
           borderRadius='md'
-          src={`https://www.gravatar.com/avatar/${userEmailHash}`}
+          src={`https://www.gravatar.com/avatar/${userEmailHash}?d=404`}
         />
       </Box>
       <MenuList>
