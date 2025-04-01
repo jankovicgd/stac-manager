@@ -34,7 +34,7 @@ function NavItem(props: ButtonProps & SmartLinkProps) {
 }
 
 function MainNavigation() {
-  const { keycloak } = useKeycloak();
+  const { keycloak, isEnabled } = useKeycloak();
 
   return (
     <Flex as='nav' aria-label='Main' gap={4} alignItems='center'>
@@ -48,13 +48,17 @@ function MainNavigation() {
           </NavItem>
         )}
       </List>
-      <Divider
-        orientation='vertical'
-        borderLeftWidth='2px'
-        borderColor='base.200'
-        h='1rem'
-      />
-      <UserInfo />
+      {isEnabled && (
+        <>
+          <Divider
+            orientation='vertical'
+            borderLeftWidth='2px'
+            borderColor='base.200'
+            h='1rem'
+          />
+          <UserInfo />
+        </>
+      )}
     </Flex>
   );
 }

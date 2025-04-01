@@ -49,9 +49,7 @@ const rotate2 = keyframes`
 `;
 
 export function App() {
-  const { initStatus } = useKeycloak();
-
-  const isLoading = initStatus === 'loading';
+  const { isLoading } = useKeycloak();
 
   return (
     <>
