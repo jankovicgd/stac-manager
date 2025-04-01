@@ -29,7 +29,7 @@ const renderWithProviders = (
 };
 
 describe('PluginBox', () => {
-  it.only('renders ErrorBox when editSchema is null', () => {
+  it('renders ErrorBox when editSchema is null', () => {
     mockPlugin.editSchema.mockReturnValue(null);
 
     const { getByTestId } = renderWithProviders(
