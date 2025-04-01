@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { PluginBox } from './plugin-box';
+import { Plugin } from '../plugin-utils/plugin';
 
 const mockPlugin = {
   name: 'TestPlugin',
@@ -44,9 +45,9 @@ describe('PluginBox', () => {
   });
 
   it('renders nothing when editSchema is Plugin.HIDDEN', () => {
-    mockPlugin.editSchema.mockReturnValue('HIDDEN');
+    mockPlugin.editSchema.mockReturnValue(Plugin.HIDDEN);
 
-    const { container } = renderWithProviders(
+    const { container } = render(
       <Formik initialValues={{}} onSubmit={() => {}}>
         <PluginBox plugin={mockPlugin as any}>
           {({ field }) => <div>{field.label}</div>}
