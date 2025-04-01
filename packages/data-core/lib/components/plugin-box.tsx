@@ -27,7 +27,7 @@ export function PluginBox(props: PluginBoxProps) {
 
   if (!editSchema) {
     return (
-      <ErrorBox>
+      <ErrorBox data-testid='plugin-box-error'>
         Plugin <Code color='red'>{plugin.name}</Code> has no edit schema.
       </ErrorBox>
     );

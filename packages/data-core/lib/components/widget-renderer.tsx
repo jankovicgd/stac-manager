@@ -1,9 +1,9 @@
 import React from 'react';
+import { Box, Text } from '@chakra-ui/react';
 
 import { usePluginConfig } from '../context/plugin-config';
 import { ErrorBox } from './error-box';
 import { SchemaField } from '../schema/types';
-import { Box, Text } from '@chakra-ui/react';
 
 interface WidgetProps {
   pointer: string;
@@ -26,7 +26,7 @@ export function WidgetRenderer(props: WidgetProps) {
     const Widget = config['ui:widget'][widget];
 
     return (
-      <WidgetErrorBoundary field={field} widget={widget} pointer={pointer}>
+      <WidgetErrorBoundary field={field} widgetName={widget} pointer={pointer}>
         {Widget ? (
           <Widget pointer={pointer} field={field} isRequired={isRequired} />
         ) : (
@@ -75,7 +75,7 @@ export function WidgetRenderer(props: WidgetProps) {
 interface WidgetErrorBoundaryProps {
   children: React.ReactNode;
   field: SchemaField;
-  widget: string;
+  widgetName: string;
   pointer: string;
 }
 
@@ -101,7 +101,7 @@ class WidgetErrorBoundary extends React.Component<
       return (
         <ErrorBox color='base.500' alignItems='left' p={4}>
           <Text textTransform='uppercase' color='red.500'>
-            💔 Error rendering widget ({this.props.widget})
+            💔 Error rendering widget ({this.props.widgetName})
           </Text>
           <Text>
             {this.state.error.message || 'Something is wrong with this widget'}

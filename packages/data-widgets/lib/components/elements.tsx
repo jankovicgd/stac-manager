@@ -95,7 +95,7 @@ export const FieldsetDeleteBtn = forwardRef<IconButtonProps, 'button'>(
 );
 
 interface ArrayFieldsetProps {
-  label: React.ReactNode;
+  label?: React.ReactNode;
   isRequired?: boolean;
   children: React.ReactNode;
   onRemove?: () => void;

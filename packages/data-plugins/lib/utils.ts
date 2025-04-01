@@ -27,7 +27,7 @@ export function fieldIf<I extends string>(
         }
       : ifFalse
         ? {
-            [id]: ifTrue
+            [id]: ifFalse
           }
         : {}
   ) as Record<I, SchemaField>;
@@ -171,7 +171,7 @@ export function array2Object(
  * console.log(result); // { a: 1, b: 2, c: 3 }
  * ```
  */
-export function tuple2Object(stack: string[][]) {
+export function tuple2Object(stack: [string, any][]) {
   return (stack || []).reduce((acc, [key, item]) => {
     return { ...acc, [key]: item };
   }, {});

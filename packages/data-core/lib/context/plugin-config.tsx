@@ -34,7 +34,7 @@ export const usePluginConfig = () => {
 
   if (!context) {
     throw new Error(
-      'usePluginConfig must be used within a PluginConfigContextProvider'
+      'usePluginConfig must be used within a PluginConfigProvider'
     );
   }
 

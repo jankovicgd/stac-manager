@@ -69,7 +69,7 @@ export const applyHooks = (plugins: Plugin[]) => {
   for (const plSource of pluginsCopy) {
     for (const hook of plSource[Plugin.HOOKS]) {
       // Target where to apply the hook
-      const plTarget = plugins.find((p) => p.name === hook.name);
+      const plTarget = pluginsCopy.find((p) => p.name === hook.name);
       if (!plTarget) {
         continue;
       }
