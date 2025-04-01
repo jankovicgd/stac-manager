@@ -94,6 +94,9 @@ jobs:
       - name: Install
         run: npm install
 
+      - name: Build plugins
+        run: npm run plugins:build
+
       - name: Test
         run: npm run test
 
