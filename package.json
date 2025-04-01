@@ -13,7 +13,8 @@
     "client:stage": "lerna run stage --scope='@stac-manager/client'",
     "all:build": "lerna run build",
     "all:clean": "lerna run clean",
-    "test": "jest"
+    "test": "jest",
+    "lint": "lerna run lint"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
