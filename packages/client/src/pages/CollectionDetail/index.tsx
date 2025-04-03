@@ -24,7 +24,8 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverContent,
-  ButtonGroup
+  ButtonGroup,
+  Button
 } from '@chakra-ui/react';
 import { useCollection, useStacSearch } from '@developmentseed/stac-react';
 import {

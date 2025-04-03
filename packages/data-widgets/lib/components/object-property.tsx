@@ -22,12 +22,7 @@ import {
 } from '@chakra-ui/react';
 import { CollecticonTag } from '@devseed-ui/collecticons-chakra';
 import { useFormikContext } from 'formik';
-import get from 'lodash-es/get';
-import set from 'lodash-es/set';
-import unset from 'lodash-es/unset';
-import mapKeys from 'lodash-es/mapKeys';
-import toPath from 'lodash-es/toPath';
-import cloneDeep from 'lodash-es/cloneDeep';
+import { get, set, unset, mapKeys, toPath, cloneDeep } from 'lodash-es';
 
 const fieldTypes = [
   { value: 'string', label: 'String' },
@@ -52,22 +47,16 @@ type FieldTypes = (typeof fieldTypes)[number]['value'];
  * - 'json' for arrays with mixed types or objects.
  * - 'string' for all other types.
  */
-const inferFieldType = (value: any): FieldTypes => {
+export const inferFieldType = (value: any): FieldTypes => {
   if (typeof value === 'number') {
     return 'number';
   }
-
-  // if (typeof value === 'boolean') {
-  //   return 'boolean';
-  // }
 
   if (Array.isArray(value)) {
     if (value.every((v) => typeof v === 'number')) {
       return 'number[]';
     }
-    // if (value.every((v) => typeof v === 'boolean')) {
-    //   return 'boolean[]';
-    // }
+
     if (value.every((v) => typeof v === 'string')) {
       return 'string[]';
     }
@@ -88,7 +77,7 @@ const inferFieldType = (value: any): FieldTypes => {
  * 'number[]', or 'json'.
  * @returns A SchemaField object if the type is recognized, otherwise null.
  */
-const getFieldSchema = (type: FieldTypes): SchemaField | null => {
+export const getFieldSchema = (type: FieldTypes): SchemaField | null => {
   if (type === 'string') {
     return {
       type: 'string',
@@ -134,7 +123,7 @@ const getFieldSchema = (type: FieldTypes): SchemaField | null => {
  * @param newKey - The new key that will replace the old key.
  * @returns A new object with the key replaced at the specified path.
  */
-const replaceObjectKeyAt = (obj: any, path: string, newKey: string) => {
+export const replaceObjectKeyAt = (obj: any, path: string, newKey: string) => {
   const parts = toPath(path);
   const last = parts.pop()!;
   const isRoot = !parts.length;

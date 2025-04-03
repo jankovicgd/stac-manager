@@ -21,8 +21,7 @@
     "build": "npm run clean && NODE_ENV=production node tasks/build.mjs",
     "stage": "npm run clean && NODE_ENV=staging node tasks/build.mjs",
     "clean": "rm -rf dist .parcel-cache",
-    "lint": "yarn lint:scripts",
-    "lint:scripts": "eslint app/",
+    "lint": "eslint src/",
     "ts-check": "yarn tsc --noEmit --skipLibCheck",
     "test": "jest"
   },

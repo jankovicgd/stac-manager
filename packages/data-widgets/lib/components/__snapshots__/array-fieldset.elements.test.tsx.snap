@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArrayFieldset renders layout correctly 1`] = `
+<fieldset
+  class="widget--array css-g02mvc"
+>
+  <div
+    class="css-1811skr"
+  >
+    <div>
+      Child Content
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`ArrayFieldset renders layout correctly 2`] = `
+<fieldset
+  class="widget--array css-g02mvc"
+>
+  <div
+    class="css-3fqpsw"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-heading css-1b4wzgc"
+      >
+        Test Label
+      </span>
+    </div>
+  </div>
+  <div
+    class="css-1811skr"
+  >
+    <div>
+      Child Content
+    </div>
+  </div>
+</fieldset>
+`;
+
+exports[`ArrayFieldset renders layout correctly 3`] = `
+<fieldset
+  class="widget--array css-g02mvc"
+>
+  <div
+    class="css-3fqpsw"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-heading css-1b4wzgc"
+      >
+        Test Label
+      </span>
+    </div>
+  </div>
+  <div
+    class="css-1811skr"
+  >
+    <div>
+      Child Content
+    </div>
+  </div>
+  <div
+    class="css-1azotaz"
+  >
+    <button
+      aria-label="Add item"
+      class="chakra-button css-1ktmsdb"
+      type="button"
+    >
+      <span
+        class="chakra-button__icon css-1wh2kri"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-9a149e"
+          focusable="false"
+          role="img"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h16v16H0z"
+            fill="none"
+          />
+          <path
+            d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"
+          />
+        </svg>
+      </span>
+      Add another
+    </button>
+  </div>
+</fieldset>
+`;
+
+exports[`ArrayFieldset renders layout correctly 4`] = `
+<fieldset
+  class="widget--array css-g02mvc"
+>
+  <div
+    class="css-3fqpsw"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-heading css-1b4wzgc"
+      >
+        Test Label
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <button
+        aria-label="Remove item"
+        class="chakra-button css-12ozy5e"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-9a149e"
+          focusable="false"
+          role="img"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h16v16H0z"
+            fill="none"
+          />
+          <path
+            d="M11 5h2v8.5c0 .825-.675 1.5-1.5 1.5h-7c-.825 0-1.5-.675-1.5-1.5V5h2v8h2V5h2v8h2zM2 2h12v2H2zm4-2h4v1H6z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div
+    class="css-1811skr"
+  >
+    <div>
+      Child Content
+    </div>
+  </div>
+  <div
+    class="css-1azotaz"
+  >
+    <button
+      aria-label="Add item"
+      class="chakra-button css-1ktmsdb"
+      type="button"
+    >
+      <span
+        class="chakra-button__icon css-1wh2kri"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-9a149e"
+          focusable="false"
+          role="img"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h16v16H0z"
+            fill="none"
+          />
+          <path
+            d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"
+          />
+        </svg>
+      </span>
+      Add another
+    </button>
+  </div>
+</fieldset>
+`;
+
+exports[`ArrayFieldset renders layout correctly 5`] = `
+<fieldset
+  class="widget--array css-g02mvc"
+>
+  <div
+    class="css-3fqpsw"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-heading css-1b4wzgc"
+      >
+        Test Label
+        <span
+          aria-hidden="true"
+          class="chakra-text css-ai0irq"
+          role="presentation"
+        >
+          *
+        </span>
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <button
+        aria-label="Remove item"
+        class="chakra-button css-12ozy5e"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-9a149e"
+          focusable="false"
+          role="img"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h16v16H0z"
+            fill="none"
+          />
+          <path
+            d="M11 5h2v8.5c0 .825-.675 1.5-1.5 1.5h-7c-.825 0-1.5-.675-1.5-1.5V5h2v8h2V5h2v8h2zM2 2h12v2H2zm4-2h4v1H6z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div
+    class="css-1811skr"
+  >
+    <div>
+      Child Content
+    </div>
+  </div>
+  <div
+    class="css-1azotaz"
+  >
+    <button
+      aria-label="Add item"
+      class="chakra-button css-1ktmsdb"
+      type="button"
+    >
+      <span
+        class="chakra-button__icon css-1wh2kri"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-9a149e"
+          focusable="false"
+          role="img"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h16v16H0z"
+            fill="none"
+          />
+          <path
+            d="M14 7H9V2H7v5H2v2h5v5h2V9h5z"
+          />
+        </svg>
+      </span>
+      Add another
+    </button>
+  </div>
+</fieldset>
+`;

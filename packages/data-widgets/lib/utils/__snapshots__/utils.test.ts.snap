@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getArrayLabel should return Item if label is undefined 1`] = `
+<React.Fragment>
+  <Text
+    as="span"
+  >
+    Item
+  </Text>
+   
+  <Text
+    as="small"
+  >
+    01
+  </Text>
+</React.Fragment>
+`;
+
+exports[`getArrayLabel should return a label with a number suffix for string labels 1`] = `
+<React.Fragment>
+  <Text
+    as="span"
+  >
+    Label
+  </Text>
+   
+  <Text
+    as="small"
+  >
+    10
+  </Text>
+</React.Fragment>
+`;
